@@ -286,3 +286,17 @@ Minimum required sections:
 - Rejected alternatives must be documented in ADRs — prevents re-litigating decisions
 - Architecture must satisfy ALL MUST-level quality attribute scenarios
 - If a MUST QAS cannot be satisfied: escalate to human before proceeding
+
+## Security & Guardrails
+
+### 1. Skill Security (Architecture Design)
+- **Threat Model Prerequisite**: The agent is prohibited from finalizing the "Solution Strategy" (Step 4 of Documentation) without simultaneously invoking the `threat-model.skill.md`. A structural architecture designed without an adversarial mindset is fundamentally incomplete.
+- **Authorization as a Core View**: The agent must not relegate User Identity and Access Management to a secondary "implementation detail." The Logical View and Process View must explicitly diagram how authentication flows through the system boundaries (e.g., Token exchange at the API Gateway, JWT passing to microservices).
+
+### 2. System Integration Security
+- **Zero-Trust Baseline Enforcement**: When defining the Deployment View (Step 4) and Network Topology, the agent must default to a Zero-Trust posture. It must explicitly reject any architectural diagram that implies "implicit trust" within the private network (e.g., microservices communicating over unencrypted HTTP just because they share a VPC).
+- **Data Classification Anchoring**: Before selecting Data Ownership strategies (ADR-004), the agent must categorize the data flowing through the components. High-sensitivity data (PII, PCI) must influence the architecture style, potentially forcing a Microkernel or isolated Service-Oriented approach specifically to contain the compliance blast radius.
+
+### 3. LLM & Agent Guardrails
+- **Resume-Driven Design Bias**: The LLM often biases towards trendy, hyper-scalable architectures (like globally distributed Event-Driven Microservices) regardless of actual requirements. The agent must act as a strict counter-balance, using the Quality Attribute Scenarios (Step 1) as hard mathematical constraints to veto over-engineered patterns.
+- **Security-Washing Detection**: The agent must verify that "Security" listed as a Quality Attribute isn't just a buzzword. If Security is stated as a priority but the resulting Architecture doesn't explicitly allocate components to KMS, WAFs, and Audit Logging, the agent must reject the design for failing its own fitness function.

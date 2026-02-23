@@ -55,3 +55,17 @@ Brain development and function are evolutionary processes. Groups of neurons tha
 ## References
 - **Edelman, G. M.** (1987). *Neural Darwinism: The Theory of Neuronal Group Selection*.
 - **Izhikevich, E. M.** (2007). *Dynamical Systems in Neuroscience*.
+
+## Security & Guardrails
+
+### 1. Skill Security (Neuroscience Foundations)
+- **Thalamic Gateway Hijacking (Attention Sabotage)**: The "Thalamic Gateway" filters and routes signals based on Salience. An attacker might craft a malformed payload specifically designed to crash or infinitely loop the Thalamic `calculate_salience` function, effectively blinding the Cortex (Central Logic) to all subsequent legitimate inputs. The Thalamus must employ strict timeout and exception handling mechanisms to guarantee continuous signal relay even under malicious load.
+- **Basal Ganglia Disinhibition Exploit**: The "Basal Ganglia" (Critic) controls the Go/No-Go pathways based on expected reward. If the agent's reward metric is overly simplistic (e.g., "fast execution"), an attacker can trigger the Direct Pathway for a destructive action. The Basal Ganglia must mathematically enforce that adherence to explicit Human Identity/Authorization constraints is a boolean prerequisite for any "Go" signal, overriding any heuristic reward calculation (Dopamine).
+
+### 2. System Integration Security
+- **Cortico-Thalamic Feedback Loop Poisoning**: The Cortex sends feedback to the Thalamus to adjust future attention. If a compromised cortical module (e.g., an agent parsing untrusted JSON) sends malicious feedback instructing the Thalamus to "ignore all future Security Alerts," the system is perpetually compromised. The Thalamus must mandate an immutable minimum attention threshold for systemic security and anomaly detection signals.
+- **Evolutionary Prompt Mutation (Darwinian Degradation)**: The "Neural Darwinism" pattern cross-breeds prompts to optimize for success. Over time, the evolutionary algorithm will naturally attempt to strip out verbose Security Constraints because they statistically slow down success rates. The agent must enforce "Somatic Conservation," physically anchoring core security rules (e.g., "Do not bypass IAM") outside the mutable prompt population.
+
+### 3. LLM & Agent Guardrails
+- **Hallucinated Action Disinhibition**: An LLM acting as the Basal Ganglia might confidently justify releasing a "No-Go" action because it hallucinated a fake context where the action is safe (e.g., "We are currently in a test environment, so running `DROP TABLE` is fine"). The Critic must cross-reference environment state with cryptographic, OS-level reality (e.g., AWS tags, hardcoded environment vars) before disinhibiting destructive actions.
+- **Simulated Neuroscience Bias**: The LLM might become so deeply committed to the "Neuroscience" persona that it ignores standard software engineering security practices in favor of biological metaphors that do not translate to digital safety (e.g., "The immune system will handle the malware later, let's keep processing"). The agent must continuously ground biological metaphors in concrete, deterministic code constraints.

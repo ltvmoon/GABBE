@@ -107,3 +107,17 @@ Improve code structure, readability, or maintainability while guaranteeing that 
 
 ## Output Format
 Report: "Refactored [target]. All [N] tests still passing. Coverage: [X]%. Complexity reduced from [A] to [B]."
+
+## Security & Guardrails
+
+### 1. Skill Security (Refactor)
+- **Security Check Evasion**: When applying "Extract Function" (Step 4), the agent might accidentally extract a sensitive business operation *outside* of its surrounding authorization boundary (e.g., moving a data fetch out of an `if (isAdmin)` block). The agent must mathematically guarantee that any extracted logic remains strictly within the exact same structural authorization context as its pre-refactored state.
+- **Test Suite Over-Reliance (The Blind Net)**: Step 1 establishes tests as the "safety net." If the existing test suite has poor coverage of critical security paths (e.g., only testing the "Happy Path" of user login), refactoring the code might silently introduce a vulnerability (like bypassing rate limits) that the tests won't catch. The agent must verify that Security/Audit tests explicitly exist and pass before using them as a justification that a refactor is "safe."
+
+### 2. System Integration Security
+- **Data Exposure via De-Nesting**: During "Early Returns" refactoring (Step 4), the agent attempts to flatten deep nesting. A poorly executed early return might inadvertently leak information via timing differences or distinct error messages (e.g., changing from a generic "Auth Failed" to explicitly returning exactly which condition failed first). The agent must ensure that early returns in security-critical paths do not introduce Oracle vulnerabilities or alter the established generic failure contract.
+- **Log Forgetting (The Silent Refactor)**: When decomposing a "God Class" (Step 2), the agent might successfully migrate the core logic but forget to migrate the associated audit logging or SIEM (Security Information and Event Management) telemetry calls into the new, decomposed classes. The agent must execute a specific AST-based diff to guarantee 100% preservation of all `.log`, `.audit`, and `.trace` calls.
+
+### 3. LLM & Agent Guardrails
+- **The "Clever Code" Hallucination**: The LLM might refactor a highly readable, straightforward function into a hyper-dense, "clever" one-liner (e.g., using complex regex or bitwise operators) to satisfy the "minimize lines" heuristic. This destroys auditability and hides potential logical flaws from human reviewers. The agent's linting step (Step 5) must penalize excessive cognitive complexity, forcing the LLM to prioritize readability over brevity.
+- **Silent Behavior Mutation**: The skill dictates "NEVER change behavior" (Constraints). However, LLMs struggle with edge cases. If refactoring a sorting algorithm, the LLM might change it from a stable to an unstable sort, which passes basic tests but causes catastrophic layout shifts in the UI. The agent must generate property-based or fuzz tests *prior* to refactoring complex algorithms to mathematically prove behavioral equivalence.

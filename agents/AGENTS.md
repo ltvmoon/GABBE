@@ -221,6 +221,9 @@ If this completes a SDLC phase: invoke sdlc-checkpoint.skill
 
 ## 6. Governance & Security
 
+### 🛡️ Mandatory Security & Guardrails
+Agents MUST adhere to the **Security & Guardrails** section appended to the bottom of whatever skill they are currently executing. Bypassing these skill-specific guardrails is strictly forbidden.
+
 ### Forbidden Actions (agents must never do these without explicit human approval)
 ```
 - Commit .env files or any file containing secrets

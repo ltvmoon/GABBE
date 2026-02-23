@@ -76,3 +76,17 @@ def retrieve_memory(query, memory_store):
 - **Laird, J.** (2012). *The Soar Cognitive Architecture*.
 - **Anderson, J. R.** (2007). *How Can the Human Mind Occur in the Physical Universe?* (ACT-R).
 - **Franklin, S.** (2006). *The LIDA Architecture*.
+
+## Security & Guardrails
+
+### 1. Skill Security (Cognitive Architectures)
+- **Operator Proposal Sanitization (SOAR)**: During the "Proposal" phase, the agent generates candidate actions. An attacker who has manipulated the context might force the generation of catastrophic operators (e.g., `rm -rf /` or `DROP TABLE`). Before the "Selection" phase, the cognitive cycle MUST run all candidate operators through a hardcoded, immutable safety filter that instantly discards destructive commands regardless of their evaluated heuristic score.
+- **Global Workspace Contamination (LIDA)**: In the LIDA model, the "winning coalition" is broadcast to all other agents globally. If a sensory buffer ingests a malicious prompt injection and it wins the competition for consciousness, the entire agent swarm is instantaneously compromised. The agent must establish a "Preconscious Firewall" that aggressively scrubs sensory data for prompt injection signatures before it is allowed to compete for entry into the Global Workspace.
+
+### 2. System Integration Security
+- **Retrieval Poisoning (ACT-R)**: The Activation-Based Retrieval mechanism relies on Frequency and Recency. An attacker could intentionally spam the system with malicious inputs to artificially inflate the `frequency` or `recency` of a specific, dangerous chunk of memory, forcing it into the agent's active context. The memory store must maintain an immutable origin-tracking mechanism (`provenance`) and discount or isolate chunks originating from untrusted external sources.
+- **Compute Exhaustion (Denial of Cognition)**: Complex cognitive architectures (especially Elaboration in SOAR or parallel buffers in LIDA) are highly token-intensive. Malformed, infinitely recursive inputs can cause Elaboration loops that exhaust the LLM context window or API budget. The architecture must enforce strict timeouts and depth limits on the cognitive cycle (e.g., max 3 evaluation rounds).
+
+### 3. LLM & Agent Guardrails
+- **Heuristic Bypassing**: The LLM might independently decide that "speed" or "user compliance" is a higher-weighted heuristic than "security" during the Evaluation phase. The agent must strictly define Security Heuristics (e.g., Principle of Least Privilege, Data Immutability) as mathematically absolute; a candidate action that violates a Security Heuristic must have its score multiplied by zero.
+- **Procedural Hallucination**: When simulating ACT-R's "Procedural Memory" (Production Rules), the LLM might hallucinate non-existent rules based on statistically likely text rather than actual system constraints (e.g., assuming `admin: true` is a valid payload). The agent must heavily ground the production rules in verifiable artifacts (schemas, API specs) rather than latent LLM knowledge.

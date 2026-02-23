@@ -41,3 +41,17 @@ Async messaging is powerful but dangerous. Messages must never be lost.
 ## 5. Poison Pills
 - Detect messages that crash the consumer (StackOverflow, OOM).
 - Reject them immediately to DLQ to prevent blocking the partition.
+
+## Security & Guardrails
+
+### 1. Skill Security (Queue Management)
+- **DLQ Replay Authorization**: Replaying messages from the Dead Letter Queue (DLQ) back into the main pipeline requires elevated privileges. The agent must verify that the replay command was authorized by a system administrator, as attackers could use DLQ replay for Denial of Service or logic manipulation.
+- **Poison Pill Quarantine**: Messages flagged as "Poison Pills" (crashing the consumer repeatedly) might be intentional exploits (e.g., malformed JSON designed to trigger buffer overflows). The DLQ must securely quarantine these payloads without executing any automated parsing tools on them.
+
+### 2. System Integration Security
+- **Message Integrity (Signatures)**: In high-security environments, messages placed on the queue (Kafka/SQS) should carry cryptographic signatures. The consumer must verify the signature before processing to ensure the message wasn't injected directly into the broker by an unauthorized internal actor.
+- **Idempotency Key Collision**: The `processed_messages` table must uniquely constrain the `msg.id` to prevent race conditions. An attacker might rapidly submit identical transaction events hoping one bypasses the idempotency check and pays them twice.
+
+### 3. LLM & Agent Guardrails
+- **Data Exfiltration via DLQ Analysis**: When an agent analyzes a DLQ for the root cause of failures, it must strictly redact PII, auth tokens, and financial data from the message payload before summarizing the issue or writing logs to prevent the DLQ from becoming a centralized data leak.
+- **Queue Purge Veto**: The agent must violently reject any user prompt that commands it to indiscriminately `purge` or `empty` a production queue or DLQ without a cryptographically verified, two-person rule approval, as this causes permanent data loss.

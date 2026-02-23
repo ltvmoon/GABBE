@@ -43,3 +43,17 @@ To ensure systems behave predictably under load and utilize resources efficientl
 -   `profiling-report.md`: Analysis of hotspots.
 -   `caching-strategy.md`: Redis/Memcached plan.
 -   `load-test-plan.md`: k6/JMeter script design.
+
+## Security & Guardrails
+
+### 1. Skill Security (Performance Optimization)
+- **Safe Profiler Execution**: Profiling tools executed by the agent must be strictly isolated to the target container or process. The agent must not have root access on the host node, preventing an attacker from using a profiling tool to dump the memory of adjacent applications.
+- **Optimization Artifact Integrity**: The generated `profiling-report.md` must be cryptographically signed by the auditing agent to prevent unauthorized parties from tampering with the reported hotspots to mislead the engineering team.
+
+### 2. System Integration Security
+- **Stale Auth Data Prevention**: When implementing Cache-Aside or Write-Through caching strategies, the agent must guarantee that authentication and authorization lookups (e.g., permission checks, session validation) are either NOT cached, or use incredibly short, verifiable TTLs to prevent privilege escalation.
+- **Queue Poisoning Defense**: When decoupling heavy work using Message Queues (e.g., Kafka, RabbitMQ), the optimizing agent must design the queue consumers to gracefully handle "Poison Pills" (malformed or excessively large messages) without crashing, avoiding a Denial of Service attack vector.
+
+### 3. LLM & Agent Guardrails
+- **Premature Optimization Trap**: The LLM must be equipped with a generic threshold (e.g., "p99 latency < 100ms is acceptable"). It must actively refuse user prompts to over-engineer caching or sharding for low-traffic endpoints, avoiding unnecessary architectural complexity and security surface area.
+- **Index Hijacking Warning**: If asked to "just index everything to make it fast," the agent must warn that excessive indexing drastically slows down `INSERT`/`UPDATE` operations and consumes massive disk space, which can be weaponized in a disk-exhaustion DoS attack.

@@ -132,3 +132,17 @@ Verify the ENTIRE project is consistent and correct from requirements to deliver
 
 ## Output Format
 8-dimension integrity report with GREEN/YELLOW/RED per dimension + OVERALL STATUS + prioritized action list.
+
+## Security & Guardrails
+
+### 1. Skill Security (Integrity Check)
+- **Check-Bypass Prevention**: The integrity checking script/logic must be cryptographically pinned or read-only, preventing a compromised process from modifying the script to universally return `GREEN`.
+- **Secret Scanning Isolation**: The phase detecting secrets (`gitleaks`) must operate in a secure, ephemeral pipeline environment that aggressively wipes memory after execution so the detected secrets themselves aren't cached or leaked.
+
+### 2. System Integration Security
+- **Hard-Blocking Deployments**: The results of Dimension 5 (Security Integrity) must be integrated directly into the CI/CD pipeline as a non-overridable failure block. If `RED`, the deployment system absolutely must refuse to release the artifact.
+- **Comprehensive Dependency Auditing**: Ensure the integrity check includes transitive dependencies (SCA), not just direct imports, detecting supply-chain attacks deep within the dependency graph.
+
+### 3. LLM & Agent Guardrails
+- **Sign-Off Forgery Defense**: The "INTEGRITY VERIFIED" sign-off must require a cryptographic signature or an explicit, out-of-band human 2FA approval step when transitioning from S09 to S10 (Production), preventing an LLM from hallucinating an approval.
+- **Confirmation Bias Mitigation**: The `orch-judge` persona evaluating the 8 dimensions must not rely solely on self-reported agent logs; it must independently execute the underlying validation commands (tests, linters, scanners) to guarantee truth.

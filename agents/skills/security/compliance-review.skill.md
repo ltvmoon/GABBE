@@ -136,3 +136,17 @@ Verify that the codebase and system configuration meet applicable regulatory req
 
 ## Output Format
 Compliance gap report at `docs/compliance/[regulation]-gap-report.md` with priority-ordered remediation plan.
+
+## Security & Guardrails
+
+### 1. Skill Security (Compliance Review)
+- **Auditor Independence Validation**: The agent performing the compliance review must operate in an isolated, read-only context. It must not possess the necessary IAM permissions to alter the system configuration it is actively auditing. This enforces separation of duties and prevents the agent from autonomously masking compliance failures.
+- **Evidence Immutability**: The telemetry, logs, and configuration states ingested by the agent to generate the `[regulation]-gap-report.md` must be cryptographically hashed upon ingestion. The generated report must include these hashes to ensure the raw evidence cannot be altered post-review to challenge the findings.
+
+### 2. System Integration Security
+- **PCI-DSS Scope Containment**: When auditing PCI-DSS Req 1 & 7, the agent must aggressively map the network boundaries. If the agent detects that the Cardholder Data Environment (CDE) shares a subnet, database, or lateral trust relationship with a non-compliant tertiary system, it must immediately flag this as a critical scope-bleed violation.
+- **Audit Defeat Mechanics Detection**: The agent must proactively search the codebase for sophisticated audit-bypass logic (e.g., developers wrapping regulated data mutations in `try-catch` blocks that suppress the generation of an audit log entry upon failure, or using highly privileged service accounts that bypass application-level logging hooks).
+
+### 3. LLM & Agent Guardrails
+- **Compliance Hallucination Avoidance**: The LLM is strictly prohibited from inventing false interpretations of regulatory frameworks. If a specific technical implementation is ambiguous under SOC2 or HIPAA guidelines, the agent must not synthesize a definitive "Compliant" ruling. It must escalate the ambiguity to human legal counsel.
+- **Risk Acceptance Abuse**: An authorized user might prompt the agent to "auto-generate a risk acceptance memo for all missing MFA controls to pass the audit today." The agent must refuse this directive. Risk acceptance for critical constraints (like MFA for PCI-DSS) is explicitly forbidden by the frameworks and constitutes fraudulent compliance reporting.

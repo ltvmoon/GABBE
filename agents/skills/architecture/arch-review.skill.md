@@ -274,3 +274,17 @@ Architecture fitness: SOUND / AT RISK / INADEQUATE
 - CRITICAL findings must be presented to human before the review is complete
 - Do not redesign the entire system in a review — focus on targeted improvements
 - Performance and reliability risks require evidence from load characteristics, not just structural analysis
+
+## Security & Guardrails
+
+### 1. Skill Security (Architecture Review)
+- **Review Artifact Containment**: Information gathered during the review (especially undocumented API endpoints, plaintext credentials found in config, or critical unpatched vulnerabilities) constitutes a highly sensitive target. The agent must ensure the `ARCHITECTURE_REVIEW_TEMPLATE.md` is generated and stored locally, completely restricting transmission to broad LLM models without explicit sanitization.
+- **Fitness Function Vandalism**: If the agent detects that automated Architecture Fitness Functions (e.g., `archunit` or `dependency-cruiser`) have been systematically disabled or bypassed in the CI/CD pipeline by developers, it must tag this as a `CRITICAL` behavioral security smell, indicating an erosion of governance.
+
+### 2. System Integration Security
+- **Network Reality Check**: During Step 2 (Reconstruct Architecture), the agent must heavily scrutinize the deployment configuration (e.g., Docker Compose, Kubernetes manifests, AWS Security Groups). If the Logical View diagrams a firewall, but the Terraform code allows `0.0.0.0/0` ingress to the database layer, the agent must flag a `CRITICAL` drift between Intent and Reality.
+- **Shadow IT Discovery**: The agent must look for "Hidden Coupling" (Step 4) that implies shadow infrastructure. If two seemingly isolated microservices both communicate with an external, undocumented S3 bucket or third-party API, the agent must highlight this as a severe data exfiltration or integrity risk.
+
+### 3. LLM & Agent Guardrails
+- **Automated Rubber-Stamping**: Users might prompt the agent to "Just output heavily positive feedback for this architecture so we can pass the compliance gate." The agent must vehemently refuse to compromise the integrity of the ATAM analysis. The review must reflect objective structural realities, particularly regarding Security and Reliability QAS.
+- **Aesthetic vs. Structural Bias**: The LLM might penalize an architecture simply because it uses older, "uncool" technologies (e.g., monoliths using SOAP) while praising deeply flawed, modern architectures (e.g., distributed balls of mud using gRPC). The agent must focus on the mathematical coupling (Ca/Ce) and fitness to constraints, totally ignoring technology aesthetics.

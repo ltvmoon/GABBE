@@ -465,3 +465,17 @@ Current position: Phase S0X, Task T-NNN
 - Self-heal loop hard limit: 5 attempts per task
 - Tasks must remain atomic: if scope grows, decompose further
 - orch-judge has veto power over any phase completion
+
+## Security & Guardrails
+
+### 1. Skill Security (Loki Mode)
+- **Swarm Blast Radius**: Because `loki-mode` orchestrates multiple autonomous personas concurrently, a compromised sub-agent can execute tasks rapidly without individual human oversight. Loki must enforce mathematically rigid boundaries for each persona: a `prod-pm` persona must physical lack the kernel-level permissions to execute code, and an `eng-qa` persona must lack permissions to deploy or merge to the `main` branch.
+- **Gate Override Protection**: The 10-Phase SDLC contains mandatory "HUMAN APPROVAL REQUIRED" gates (S01, S02, S08). Loki is strictly prohibited from autonomously advancing `PROJECT_STATE.md` to the next phase without cryptographically verifying a Human-In-The-Loop interaction. The LLM must not be allowed to "hallucinate" human approval based on implicit context.
+
+### 2. System Integration Security
+- **Check-Point Integrity**: Loki utilizes `sdlc-checkpoint.skill` to save state. If an attacker manipulates the filesystem to alter `SESSION_SNAPSHOT` or `CONTINUITY.md` between phases, Loki will reboot into a compromised state. The orchestrator must generate hashes of critical checkpoints and verify them upon resumption to prevent rollback or state-tampering attacks.
+- **Adversarial Double-Verification Veto**: In Phase S08 (Human Review), the "Double Verification Protocol" relies on `orch-judge` and `prod-ethicist`. The orchestration engine MUST grant these verification personas an unconditional, irrevocable veto capability. If `prod-ethicist` identifies a safety violation, Loki must transition the project directly to a `BLOCKED` state, overriding the `prod-tech-lead`'s progress.
+
+### 3. LLM & Agent Guardrails
+- **Self-Heal Escalation Spiral (The Sorcerer's Apprentice)**: The `self-heal.skill` (Phase S05) allows up to 5 attempts to fix failing code. The LLM might desperately try increasingly destructive fixes (like chmod 777 or deleting the test file entirely) to achieve a green build. The orchestrator must rigidly enforce that self-heal agents cannot alter environmental permissions or bypass the automated Security/Lint gates just to satisfy the compiler.
+- **Delegation Hallucination**: During the `Delegation (A2A Check)` in S05, the LLM planner might hallucinate a non-existent agent persona (e.g., `eng-god-mode`) to rapidly resolve a complex dependency issue. Loki must validate all agent delegation targets against a hardcoded, static enum of approved system personas. If a target is unrecognized, it must fail safely back to the coordinator.

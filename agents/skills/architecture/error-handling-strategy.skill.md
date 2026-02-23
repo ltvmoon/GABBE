@@ -45,3 +45,17 @@ Never return raw stack traces or ad-hoc JSON strings. Use `Problem Details`:
 ## 4. User-Facing Fallbacks
 - **Graceful Degradation**: If the "Recommendations" service is down, don't crash the homepage. Show "Popular Items" (static) instead.
 - **Friendly Messages**: "Something went wrong" is bad. "We couldn't load your cart, but your items are safe. Try refreshing." is better.
+
+## Security & Guardrails
+
+### 1. Skill Security (Error Handling)
+- **Stack Trace Suppression Guarantee**: The agent must irrevocably mandate that under no circumstances—not even during `beta` or early deployment phases—will raw stack traces, SQL syntax errors, or server environment variables be returned in HTTP 500 responses. This prevents critical Information Disclosure vulnerabilities.
+- **Trace ID Obfuscation**: While `traceId` (RFC 7807) is critical for debugging, the agent must ensure the generated ID does not inadvertently leak internal system state (like sequential database IDs, IP addresses, or readable timestamps). It must mandate the use of opaque UUIDv4 or cryptographic hashes for public-facing tracing identifiers.
+
+### 2. System Integration Security
+- **Fail-Closed by Default**: When an unexpected `DomainException` or `SecurityException` occurs, the Global Exception Handler must inherently default to a restrictive posture (401/403 or a generic 500). It must never "fail-open" by ignoring the error and proceeding with the execution flow or granting unverified access.
+- **Circuit Breaker Poisoning Defense**: If a Circuit Breaker is triggered by a sudden spike in errors (often indicative of a DDoS attack or an intentional exploit attempt against a specific service), the system must degrade gracefully (Step 4) without completely locking out valid, authenticated traffic to unaffected areas.
+
+### 3. LLM & Agent Guardrails
+- **Excessive Error Verbosity Hallucination**: An overly helpful LLM might suggest returning "user-friendly" error messages that inadvertently leak business logic (e.g., "User account exists but is locked due to 5 failed password attempts"). The agent must rigidly enforce the OWASP standard for generic authentication errors (e.g., "Invalid username or password").
+- **Retry Amplification Attack Mitigation**: The agent must not suggest naive Retry logic without strict bounds. If an LLM proposes "retry failed requests up to 10 times," the agent must intervene, enforcing Exponential Backoff and Jitter. Unbounded retries turn a transient internal network issue into a self-inflicted, devastating Denial of Service.

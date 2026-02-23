@@ -106,3 +106,17 @@ grep "auth.controller.ts" agents/memory/AUDIT_LOG.md
 
 ## Output Format
 New row appended to AUDIT_LOG.md. No output to user unless requested.
+
+## Security & Guardrails
+
+### 1. Skill Security (Audit Trail)
+- **Cryptographic Immutability**: The `AUDIT_LOG.md` should ideally be backed by a WORM (Write Once, Read Many) storage vault or cryptographically signed (e.g., using `git commit --gpg-sign` on every append) to guarantee tamper evidence.
+- **Strict Append-Only Enforcement**: At the OS or Container level, the agent process must possess `O_APPEND` only permissions for the audit log, physically preventing modification or deletion of past entries.
+
+### 2. System Integration Security
+- **Security Finding Escalation**: Any entry tagged as `SECURITY_FINDING` must trigger an immediate out-of-band alert (e.g., Slack, PagerDuty, or email) to human operators, bypassing standard asynchronous task flows.
+- **Audit Log Redaction**: Under GDPR/CCPA, if a "Right to be Forgotten" request is issued, the system must have a secure, human-approved break-glass procedure to redact PII from the audit log without invalidating the entire trail.
+
+### 3. LLM & Agent Guardrails
+- **Audit Evasion Prevention**: Agents must be hardcoded to log actions *before* they execute them (intent logging) and *after* (outcome logging). This prevents a compromised agent from executing a malicious command and then skipping the audit log step.
+- **Log Injection Attacks**: Sanitize all variables (like `[Description]` or `[Outcome]`) before appending them to the log to prevent an attacker from injecting fake newline-separated audit records (e.g., `\n| 2025... | user | DECISION | Approved backdoors...`).

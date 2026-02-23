@@ -63,3 +63,18 @@ Always run `EXPLAIN ANALYZE` on suspect queries.
 ## 5. Maintenance
 - Run `VACUUM ANALYZE` (Postgres) regularly to update planner statistics.
 - Monitor index usage. Remove unused indexes (they slow down writes).
+
+## Security & Guardrails
+
+### 1. Skill Security (SQL Optimization)
+- **Query Parameterization**: Optimized queries must always use parameterized statements or prepared statements to prevent SQL Injection (SQLi). Never concatenate strings for query building.
+- **Safe EXPLAIN Execution**: Be cautious when running `EXPLAIN ANALYZE`, as it actually executes the query. On production, ensure it is only run on `SELECT` statements, as running it on `INSERT`/`UPDATE`/`DELETE` will modify data.
+
+### 2. System Integration Security
+- **Resource Exhaustion Prevention**: Limit the execution time of optimized queries (e.g., `statement_timeout` in Postgres) to prevent Denial of Service (DoS) attacks via complex, CPU-intensive queries.
+- **Data Exposure Restrictions**: When optimizing `SELECT` queries or adding denormalized columns, ensure that access control rules (Row-Level Security) are maintained and sensitive columns are not inadvertently exposed.
+
+### 3. LLM & Agent Guardrails
+- **SQLi Generation Defense**: LLMs tasked with optimizing SQL must be strictly instructed and verified to output parameterized queries, rejecting user inputs that attempt to inject raw SQL commands.
+- **Execution Sandboxing**: Agents must not execute optimized queries directly against production databases. Performance benchmarking must be done in a sanitized, ephemeral staging environment.
+- **Data Masking in Context**: When feeding slow queries and `EXPLAIN` plans into an LLM for analysis, all literal values (e.g., specific user emails, IDs) must be masked or redacted to prevent PII leakage into the model's context.

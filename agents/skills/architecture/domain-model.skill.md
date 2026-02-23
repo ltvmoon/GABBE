@@ -277,3 +277,17 @@ For each aggregate:
 - Context map relationships must be explicit — no implicit coupling between contexts
 - Domain events must have clear, specific payload — "all order data" is not acceptable
 - Model is validated against requirements: every use case must be traceable to domain objects
+
+## Security & Guardrails
+
+### 1. Skill Security (Domain Modeling)
+- **Invariant Immutability**: The agent must establish that business invariants (e.g., "An account balance cannot be negative") defined within an Aggregate Root are inviolable security boundaries. It must forbid any design that attempts to bypass the Aggregate Root to modify internal Entity state directly, as this breaks the mathematical guarantee of system consistency.
+- **Confidentiality in Ubiquitous Language**: The agent must ensure that the Ubiquitous Language does not establish a precedent for mishandling data. For example, if the business uses the term "RawCreditCardNumber" casually, the agent must intervene in the modeling phase to ensure the domain formally processes "TokenizedPaymentMethod" instead, embedding security into the vocabulary.
+
+### 2. System Integration Security
+- **Anti-Corruption Layer (ACL) as a Firewall**: When integrating with a legacy or untrusted external context via an ACL in the Context Map, the agent must define the ACL not just as a data translator, but as a strict validation firewall. The ACL must drop malformed, suspicious, or excessively large payloads from the upstream system before they enter the pristine domain core.
+- **Domain Event Sanitization**: In an Event-Driven architecture, Domain Events are broadcast widely across the Context Map. The agent must explicitly define rules stating that Domain Events must not contain sensitive PII or credentials in their payload (e.g., emitting `UserCreated(Email, HashedPassword)` is a critical violation).
+
+### 3. LLM & Agent Guardrails
+- **Tech-Stack Hallucination**: The agent is strictly forbidden from injecting specific database technologies, ORMs, or caching layers (e.g., "Redis", "JPA") into the Domain Model layout. Introducing technical implementation details during the domain phase biases the security architecture prematurely and violates the purity of the DDD process.
+- **Implicit Trust Bias**: The LLM might assume that because two Bounded Contexts are owned by the same company (e.g., "HR Context" and "Billing Context"), they inherently trust each other's data representations. The agent must enforce the "Shared Kernel" or "Customer/Supplier" relationships explicitly, ensuring boundaries are respected mathematically, not merely organizationally.

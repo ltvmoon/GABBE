@@ -118,3 +118,19 @@ Before applying to staging/production:
 
 ## Output Format
 Migration file + updated model/entity + test confirmation. Report: "Migration [name] created. Forward + rollback tested. All [N] tests passing."
+
+## Security & Guardrails
+
+### 1. Skill Security (DB Migration)
+- **Migration Script Review**: All migration scripts (SQL, Prisma, Alembic) must undergo mandatory security review to ensure no unintentional data exposure or destructive operations occur without authorization.
+- **Secure Handling of Secrets**: Migration tools must retrieve database credentials securely at runtime via injected environment variables or secret managers, never from version control.
+
+### 2. System Integration Security
+- **Role-Based Execution**: Migrations must be executed by a dedicated CI/CD service account with scoped DDL permissions, separate from the application's runtime DML service account.
+- **Zero-Downtime Resilience**: Systems must be designed to gracefully handle transient states during migrations (e.g., dual-writing) to prevent denial-of-service or data corruption under load.
+- **Rollback Integrity**: Ensure rollback scripts do not inadvertently delete user data created during the window between the forward migration and the rollback.
+
+### 3. LLM & Agent Guardrails
+- **Destructive Action Blocks**: Agents generating migrations must have hardcoded guardrails preventing the generation of `DROP TABLE`, `DROP DATABASE`, or `TRUNCATE` commands without explicit, multi-stage human approval.
+- **Prompt Injection Prevention**: Sanitize developer prompts to prevent malicious instructions designed to trick the agent into creating backdoors or insecure schema changes.
+- **Schema Validation Restriction**: Agents must only be granted access to the database schema (DDL), strictly prohibiting access to the actual data (DML) during migration planning and generation.

@@ -162,3 +162,17 @@ Identify performance bottlenecks through measurement (never guessing), propose e
 
 ## Output Format
 Performance report with before/after benchmarks + list of optimizations applied + verification results.
+
+## Security & Guardrails
+
+### 1. Skill Security (Performance Audit)
+- **Profiling Payload Security**: Performance profiles (`.pstats`, `.cpuprofile`, flamegraphs) often capture raw memory heaps or live function arguments. These artifacts must be treated as highly sensitive, scrubbed of PII/credentials, and never uploaded to public visualizers (like public speedscope.app).
+- **Non-Destructive Measurement**: The profiling agent must use safe, sampling-based profilers (like `py-spy` or `ebpf`) in production environments to avoid pausing the runtime or causing Out-Of-Memory (OOM) crashes that could lead to a Denial of Service.
+
+### 2. System Integration Security
+- **Safe Load Generation**: When executing `autocannon` or `k6` to establish baselines, the agent must ensure it targets safe, non-mutating endpoints (e.g., `GET /api/users`) or targets dedicated ephemeral staging databases. Executing load tests against production `POST /api/checkout` risks massive data corruption and financial loss.
+- **Query Log Sanitization**: If the agent enables database query logging (e.g., `pg_stat_statements`) to detect N+1 issues, it must ensure that the logging mechanism automatically masks bound variables and PII to prevent passwords traversing the query logs.
+
+### 3. LLM & Agent Guardrails
+- **Blind Optimization Rejection**: The LLM must rigidly refuse to implement a "performance fix" (like ripping out a complex regex or disabling a validation check) if it degrades the security posture of the application. Security boundaries cannot be sacrificed for latency.
+- **Cache Invalidation Hallucination**: When recommending a caching layer to solve an N+1 issue, the agent must immediately define the precise cache invalidation strategy. It must recognize that stale authorization data in a cache is a critical security vulnerability, not just a bug.

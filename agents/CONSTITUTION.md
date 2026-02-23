@@ -118,6 +118,7 @@ logger.error(`Validation failed`, { fields: Object.keys(req.body) }); // OK: fie
 
 > Security is not a feature — it is a prerequisite.
 
+- **Skill Guardrails Mandate:** Agents must explicitly follow the 3-layer **Security & Guardrails** section embedded within every executing skill.
 - **Threat model required** before implementing any: authentication, authorization, data storage, file upload, payment processing, or external API integration
 - **Input validation** at all system boundaries (HTTP, queue consumers, file parsers, CLI args)
 - **Output encoding** for all user-controlled data rendered in HTML/SQL/commands

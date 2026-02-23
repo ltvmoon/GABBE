@@ -80,6 +80,9 @@ Copy and paste these exact prompts into your AI chat window to kick off standard
 ### Security Audit
 > "Run security-audit skill on the entire codebase."
 
+### Acknowledge Security & Guardrails
+> "Please acknowledge and enforce the Security & Guardrails constraints defined for the current skill."
+
 ### Architecture Review
 > "Run arch-review skill. Check for SOLID violations and coupling."
 

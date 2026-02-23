@@ -132,3 +132,17 @@ Generate accurate, useful documentation for public APIs, modules, and the projec
 
 ## Output Format
 Updated docstrings in modified files + updated README sections. Report: "[N] functions documented, README sections updated: [list]."
+
+## Security & Guardrails
+
+### 1. Skill Security (Documentation)
+- **Secret Leakage via Examples**: In Step 2, the agent generates code examples. A critical risk is the LLM hallucinating real, valid API keys, internal network IP addresses, or production passwords it saw elsewhere in the codebase and embedding them into the documentation examples. The agent MUST strictly use RFC-compliant documentation placeholders (e.g., `example.com`, `192.0.2.1`, `sk-proj-xxxx`) and run a secret-scanner regex over all generated docblocks before writing them.
+- **Vulnerability Broadcasting**: When documenting "WHY" (Step 1), the agent might inadvertently document explicit instructions on how to bypass intended limitations (e.g., `@note This function is vulnerable to timing attacks, so limit its use`). Documenting a vulnerability without fixing it provides a roadmap for attackers. The agent must flag any newly discovered structural weakness for immediate patching via the `debug.skill` rather than passively documenting it.
+
+### 2. System Integration Security
+- **Executable Documentation Execution (Code Execution)**: Step 3 requires the agent to "Verify examples are working." If the agent autonomously runs arbitrary Python or Bash examples it just generated to test them, it could execute dangerous commands (e.g., `os.system("rm -rf tmp")` accidentally generated in a file-cleanup tutorial). The evaluation of generated examples MUST be statically analyzed or executed in a strictly disconnected, read-only `/tmp` sandbox.
+- **OpenAPI Desync**: In Step 5, API docs are generated. If the agent updates a docblock to say a parameter is "optional," but the backend still strictly requires it, clients using the generated OpenAPI spec will fail. The documentation skill must never dictate truth; it must strictly mirror the static type bindings (TypeScript/PHP) of the actual code. The agent is prohibited from assuming API behavior that isn't statically typed.
+
+### 3. LLM & Agent Guardrails
+- **Hallucinated Parameters**: The LLM might hallucinate elegant, helpful parameters in the documentation (e.g., documenting a `retry_count` parameter that the developer *should* have added, but didn't). This causes immense developer friction. The agent must rigidly extract parameter lists directly via AST (Abstract Syntax Tree) parsing tools, strictly forbidding the LLM from appending speculative kwargs.
+- **Outdated Context Blindness**: In Step 7, the agent checks for outdated documentation. The LLM might read a doc block that says "Requires Admin privileges," see that the code doesn't check for Admin privileges, and *remove the documentation* instead of realizing the code has a critical Missing Authorization bug. The agent must default to assuming the *more secure* constraint is correct and escalate discrepancies to the `ops-security` persona.

@@ -76,3 +76,17 @@ Implement any feature using strict Test-Driven Development: write the failing te
 ## Output Format
 Working implementation with passing tests. Test file and source file updated.
 Report: "DONE — [test name] passes. All [N] tests passing. Coverage: [X]%"
+
+## Security & Guardrails
+
+### 1. Skill Security (TDD Cycle)
+- **Trivial Red Phase (The Illusion of Failure)**: In Phase 1, the agent must write a failing test. If the agent writes a test that expects a specific specific string error ("Invalid email format"), but the code fails by throwing a generic NullPointerException, the test is "Red," but for the *wrong reason*. The agent must semantically verify that the Red state directly maps to the exact EARS requirement, rejecting tests that fail due to arbitrary syntax or unrelated setup errors.
+- **The "Over-Mocked" Green Phase**: To achieve the "Green" state quickly (Phase 2), the agent might rely entirely on deeply mocking the surrounding architecture (mocking the DB, mocking the auth layer, mocking the validation). While this passes the unit test, it creates a massive blind spot where integration vulnerabilities (like SQL injection) emerge in reality. The agent must limit mocking to true external boundaries, testing business logic against real or purely in-memory data structures whenever possible.
+
+### 2. System Integration Security
+- **Test-Induced State Ruin**: When running tests locally or in a shared CI environment, a poorly written failing test might permanently mutate a shared development database or leave dangling file locks, disrupting other team members or parallel sub-agents. The agent must rigorously implement setup/teardown hooks (`beforeEach`/`afterEach`) that cryptographically guarantee environmental state isolation and cleanup, regardless of whether the test passes or fails.
+- **Coverage Masking**: In Phase 2, the agent might write the minimum code to pass. If the test only checks the "Happy Path," the "minimal" implementation will completely omit error handling, input validation, and boundary checks. This artificially inflates test coverage while leaving the application highly vulnerable. The agent must be forced to write separate, explicit "Red" tests for edge cases, null states, and malicious inputs before the TDD cycle is considered complete for a feature.
+
+### 3. LLM & Agent Guardrails
+- **The Self-Heal Infinite Loop**: In Phase 2 (Step 5), if tests fail, `self-heal.skill` is invoked. An LLM stuck on a logical error might enter a loop of tweaking variables, running tests, failing, and tweaking again without understanding the underlying math or architecture. The orchestrator must strictly enforce the `max 5 attempts` limit. Upon hitting the limit, the agent must physically lock the task and immediately escalate to human review.
+- **Hallucinated Test Framework Syntax**: The LLM might confidently generate test syntax that belongs to a different framework (e.g., writing Jest assertions in a Pytest file, or attempting to use `.resolves` on a synchronous function). This creates a syntax error rather than a genuine "Red" test failure. The agent must strictly validate its generated test syntax against the project's explicit testing ecosystem (Vitest/Jest/Pest) before classifying the failure state.

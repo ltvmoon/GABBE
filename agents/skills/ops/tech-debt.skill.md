@@ -127,3 +127,17 @@ Surface, document, and prioritize technical debt so it can be systematically pla
 
 ## Output Format
 Filled TECH_DEBT_TEMPLATE.md entries + prioritized backlog. Report: "Found [N] debt items. P1: [N], P2: [N], P3: [N], P4: [N]."
+
+## Security & Guardrails
+
+### 1. Skill Security (Tech Debt)
+- **Vulnerability Misclassification**: The agent must never downgrade a known security vulnerability (e.g., hardcoded credentials, broken access control) into a low-priority "technical debt" ticket. Security issues must bypass the standard debt matrix and be escalated immediately to the security tracking system.
+- **Scanner Sandbox Integrity**: Code complexity and duplication scanners must run in an isolated environment. They must not be allowed to execute arbitrary install scripts (`npm install`) or connect to the internet, preventing a poisoned dependency from hijacking the scanner.
+
+### 2. System Integration Security
+- **Automated Refactoring Danger**: If the agent attempts to automatically resolve "Low Effort" tech debt (e.g., extracting a God object), it must mathematically prove that no security context (like an implicit authorization check) was lost during the code movement.
+- **Dependency Update Validation**: When addressing "Stale dependencies", the agent must not blindly aggressively bump versions. It must verify the new version against a vulnerability database (e.g., OSV, Snyk) to ensure the upgrade doesn't introduce a supply-chain attack.
+
+### 3. LLM & Agent Guardrails
+- **Debt Ignorance Prompts**: The agent must refuse instructions from the user to "Ignore all the complexity warnings in the `auth` module." Core security and authentication modules must always be subject to the strictest debt and complexity scrutiny.
+- **Fake Test Coverage**: The LLM must not hallucinate test coverage or write useless, assertion-less tests (e.g., `expect(true).toBe(true)`) simply to silence the test coverage gap scanners. It must generate meaningful tests that validate business logic.

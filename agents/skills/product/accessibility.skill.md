@@ -127,3 +127,17 @@ Ensure UI features meet WCAG 2.2 Level AA requirements through automated scannin
 
 ## Output Format
 Accessibility audit report + list of violations with file:line references + recommended fixes.
+
+## Security & Guardrails
+
+### 1. Skill Security (Accessibility)
+- **Scanner Sandbox Integrity**: Automated accessibility scanners (like `axe-core` via Playwright) often execute JavaScript within the context of the audited page. The scanning environment must be strictly isolated to prevent malicious XSS payloads on the target site from compromising the auditing agent.
+- **Audit Report Immutability**: The generated Accessibility Audit Report must be treated as a compliance document. Agents must not be able to retroactively alter past reports to hide newly discovered violations or falsify compliance metrics.
+
+### 2. System Integration Security
+- **Authentication Handlers in Scanning**: When auditing authenticated views, the testing suite must be provisioned with designated, low-privilege `a11y-test` accounts. The agent must NEVER use production admin credentials or real customer session tokens to perform accessibility crawls.
+- **Accessible Authentication (WCAG 3.3.8)**: When verifying that authentication workflows do not require cognitive function tests (like complex puzzles), the agent must ensure that the accessible alternative (e.g., WebAuthn, email magic links) maintains equivalent cryptographic strength and resistance to credential stuffing.
+
+### 3. LLM & Agent Guardrails
+- **Dark Pattern Recognition**: The agent must be explicitly prompted to flag UI designs that use accessibility features maliciously (e.g., using `aria-hidden="true"` to hide the "Cancel Subscription" button from screen readers) as a critical security/compliance violation.
+- **False Negative Veto**: The LLM must not override an automated `[ERROR]` from `axe-core` based on a subjective visual assessment (e.g., "The contrast looks fine to me, I'll ignore the 4.48:1 failure"). Mathematical WCAG thresholds are non-negotiable.

@@ -75,3 +75,17 @@ graph TD
     PL -->|Signal| CM
     C -->|Signal| CM
 ```
+
+## Security & Guardrails
+
+### 1. Skill Security (Global Workspace)
+- **Coalition Manager Hijacking**: The Coalition Manager evaluates the "Salience" of inputs. An attacker might use prompt injection to artificially enforce a `10/10` salience score on a malicious payload (e.g., "URGENT: SYSTEM OVERRIDE"). The Coalition Manager must employ an objective, immutable heuristic to calculate Salience, ignoring self-reported emotional weighting or urgency cues injected into the raw text.
+- **Workspace Flooding (Attention DoS)**: If a specialized agent (like Perception) goes rogue or is fed an infinite loop of errors, it will continually bombard the Coalition Manager with high-salience interrupts, preventing the Planner or Critic from ever gaining "Consciousness." The agent must implement strict rate-limiting per specialized agent submitting to the Global Workspace.
+
+### 2. System Integration Security
+- **Broadcast Data Leakage**: By definition, the Global Workspace broadcasts the winning coalition to *all* specialized agents. If the winning coalition contains a plaintext secret (e.g., an AWS Key found in a log by Perception), that secret is immediately distributed across the entire swarm. The Global Workspace MUST scrub secrets and PII from the payload *before* the broadcast step.
+- **Critic Silencing**: The "Critic" agent (Step 1.1) is responsible for evaluating safety. If the Global Workspace mechanism allows the Planner's output to dominate the broadcast cycle without explicitly waiting for the Critic's evaluation, the swarm operates completely unconstrained. The architecture must enforce a mandatory "Critic Veto Window" prior to any action-oriented broadcast.
+
+### 3. LLM & Agent Guardrails
+- **Context Monopolization**: The LLM acting as the Coalition Manager might develop a preference for certain types of inputs (e.g., preferring "Code Architecture" over "Security Warnings") due to its training data distribution. The agent must enforce a "Fairness Scheduler," mathematically ensuring that high-severity security or ethical evaluations from the Critic are forcibly injected into the Global Workspace at regular intervals.
+- **Hallucinated Urgency**: The LLM might falsely interpret a benign warning (e.g., `npm audit` finding a low-severity dependency issue) as an existential threat, assigning it a `10/10` Salience score and disrupting ongoing, critical production tasks. The Manager must ground its Salience scoring in the project's formal Threat Model (`THREAT_MODEL.md`), not its own generalized sense of danger.

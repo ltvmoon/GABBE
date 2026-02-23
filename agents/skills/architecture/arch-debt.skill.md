@@ -164,3 +164,17 @@ Identify architectural anti-patterns through dependency analysis and propose con
 
 ## Output Format
 Architecture debt report + prioritized migration roadmap + ADR for major changes + tasks in project/tasks.md.
+
+## Security & Guardrails
+
+### 1. Skill Security (Architecture Debt)
+- **Debt Exfiltration via Graphing**: When the agent uses `madge` or `pydeps` to generate visual dependency graphs, the resulting SVG or JSON files maps the entire internal intellectual property of the application. The agent must ensure these artifacts are saved to isolated, local `.gitignored` directories and never transmitted to external, third-party visualization SaaS tools.
+- **Migration Path Exploitation**: During the Strangler Fig migration (Step 4), the system exists in a hybrid state where both legacy and new code run simultaneously. The agent must mandate that the authorization and input validation layers are strictly enforced at the routing gateway, preventing attackers from bypassing security by targeting the deprecated legacy endpoints.
+
+### 2. System Integration Security
+- **Security Debt Equivalence**: The agent must elevate "Security Architecture Debt" (e.g., hardcoded cryptographic salts, custom pseudo-random auth tokens scattered across modules) to a `CRITICAL` priority, placing it above purely structural concerns like Layer Violations. A God Object is a maintenance problem; scattered, outdated crypto is an imminent breach.
+- **Dependency Confusion during Refactor**: As the agent proposes splitting a monolith into modules or microservices, it must verify the new package names or internal dependencies cannot succumb to Dependency Confusion attacks (e.g., ensuring local registries take strict precedence over public npm/PyPI registries for newly extracted modules).
+
+### 3. LLM & Agent Guardrails
+- **Automated Demolition Guardrail**: The LLM might enthusiastically propose immediately deleting massive blocks of "legacy" code that appear highly coupled. The agent is strictly forbidden from executing destructive file deletions without human approval; it may only propose the extraction and the subsequent deprecation plan.
+- **Hallucinated Refactoring Patterns**: The agent must not propose overly complex, unproven architectural patterns to solve simple coupling issues (e.g., suggesting a full CQRS/Event-Sourcing rewrite to fix a circular dependency between two basic CRUD services). It must anchor its proposals in the principle of Least Complex Refactoring.

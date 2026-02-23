@@ -59,3 +59,17 @@ nc -zv localhost 3000
 1.  **Authentication**: Verify `auth_token` in handshake if defined in config.
 2.  **Rate Limiting**: Respect `retry-after` headers from peers.
 3.  **Timeout**: Fail connection attempts after 10s (don't hang indefinitely).
+
+## Security & Guardrails
+
+### 1. Skill Security (Agent Interoperability)
+- **Handshake Authentication**: Always verify `auth_token` or cryptographic signatures (mTLS) during the handshake to prevent unauthorized rogue agents from joining the swarm.
+- **Protocol Downgrade Prevention**: Reject connection attempts that try to negotiate insecure fallback protocols (e.g., unencrypted HTTP REST) when secure protocols (MCP over SSE/WSS) are available.
+
+### 2. System Integration Security
+- **Strict Rate Limiting**: Enforce rate limits and respect `retry-after` headers to prevent both accidental self-DDoS (thundering herd) and intentional flooding attacks from compromised network segments.
+- **Connection Timeouts**: Hardcode tight timeouts (e.g., 10s max) for all connection attempts and data streams to prevent slowloris-style resource exhaustion attacks on the orchestrator.
+
+### 3. LLM & Agent Guardrails
+- **Payload Validation Matrix**: Agents parsing inter-agent messages must strictly validate all JSON/RPC payloads against predefined schemas before acting on them, mitigating Cross-Agent Scripting (XAS) or payload injection.
+- **Topology Sandboxing**: Ensure agents follow intended network typologies (e.g., a "Researcher" agent cannot directly open a socket to a "Database" agent if the topology mandates routing through a "Reviewer").

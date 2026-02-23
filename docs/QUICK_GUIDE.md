@@ -731,10 +731,10 @@ No human needed for:
 
 | Category | Templates |
 |---|---|
-| **Core** | `AGENTS`, `MCP_CONFIG`, `DEVCONTAINER`, `DEV_SPACE`, `PLAN`, `TASKS`, `AUDIT_LOG`, `SDLC_TRACKER`, `SESSION_SNAPSHOT`, `SWARM_CONFIG`, `AGENT_HANDSHAKE`, `SYSTEM_ANALYSIS` |
+| **Core** | `AGENTS`, `MCP_CONFIG`, `DEVCONTAINER`, `DEV_SPACE`, `PLAN`, `TASKS`, `AUDIT_LOG`, `SDLC_TRACKER`, `SESSION_SNAPSHOT`, `SWARM_CONFIG`, `AGENT_HANDSHAKE`, `SYSTEM_ANALYSIS`, `PROJECT_STATE`, `CONTINUITY`, `VOTING_LOG` |
 | **Arch** | `ADR`, `ARCH_DECISION_FRAMEWORK`, `ARCHITECTURE_DECISION_MATRIX`, `ARCHITECTURE_REVIEW`, `ARCHITECTURE_VIEWS`, `C4_ARCHITECTURE`, `CONTEXT_MAP`, `DOMAIN_MODEL`, `SYSTEM_CONTEXT`, `SWARM_ARCHITECTURE`, `DESIGN_PATTERN_USAGE`, `CAPABILITY_MAP`, `LEGACY_AUDIT` |
 | **Reqs** | `PRD`, `SPEC`, `BUSINESS_CASE`, `CAPABILITY_MAP`, `EMPATHY_MAP`, `NFR`, `QUALITY_ATTRIBUTES`, `REQUIREMENTS_REVIEW`, `STAKEHOLDER_REGISTER`, `TRACEABILITY_MATRIX`, `ETHICAL_IMPACT_ASSESSMENT` |
-| **Eng** | `CLEAN_CODE_CHECKLIST`, `SECURITY_CHECKLIST`, `THREAT_MODEL`, `TECH_DEBT`, `TEST_PLAN`, `TEST_CASE`, `INTEGRATION_SPEC`, `DATA_PIPELINE`, `DESIGN_TOKENS`, `E2E_TEST_SUITE`, `SAFETY_POLICY` |
+| **Eng** | `CLEAN_CODE_CHECKLIST`, `SECURITY_CHECKLIST`, `THREAT_MODEL`, `TECH_DEBT`, `TEST_PLAN`, `TEST_CASE`, `INTEGRATION_SPEC`, `DATA_PIPELINE`, `DATABASE_SCHEMA`, `DESIGN_TOKENS`, `E2E_TEST_SUITE`, `SAFETY_POLICY` |
 | **Ops** | `DEPLOY_CONFIG`, `INFRA_PLAN`, `BUG_REPORT`, `INCIDENT_POSTMORTEM`, `LEGACY_AUDIT`, `ADAPTIVE_SYSTEM`, `AGENT_PROFILE`, `COST_OPTIMIZATION_REPORT`, `CAPACITY_PLAN`, `RELEASE_READINESS_REPORT`, `BENCHMARK_REPORT` |
 | **Product** | `USER_STORY_MAP`, `KNOWLEDGE_MAP` |
  
@@ -747,6 +747,7 @@ No human needed for:
  | **Agentic** | `agentic-patterns`, `multi-agent-systems`, `autonomous-swarm-patterns`, `agent-communication` |
  | **Lifecycle** | `full-system-lifecycle`, `testing-strategy`, `production-health`, `compliance-audit`, `strategic-analysis`, `troubleshooting-guide`, `self-healing-summary` |
  | **Integration** | `enterprise-patterns`, `knowledge-integration`, `no-code-integration`, `api-standards`, `enterprise-migration-scenario` |
+ | **Security** | `api-security`, `cryptography-standards`, `privacy-data-protection`, `secure-architecture`, `threat-modeling` |
  | **UI/UX** | `visual-design-system`, `a2ui-protocols`, `agent-ui` |
 
 ---
@@ -792,6 +793,15 @@ python3 GABBE/scripts/init.py
 *See agents/skills/brain/README_ORCHESTRATORS.md for Loki Mode multi-agent orchestration.*
 *See agents/skills/brain/README.md for complete brain documentation.*
 
+## 🛡️ Security & Guardrails
+
+All 120+ skills in the GABBE kit feature a heavily enforced **"Security & Guardrails"** section that binds agents to the project's CONSTITUTION.md. The 3-layer security constraints include:
+
+1.  **Skill Security**: Tool-specific protection (e.g., preventing command injection or sandbox escapes).
+2.  **System Integration Security**: Safe external integration (e.g., verifying boundary enforcement or ensuring test coverage).
+3.  **LLM/Agent Guardrails**: Protection from AI-specific failures (e.g., confirmation bias, or prompt injection).
+
+Agents are explicitly configured to **Fail-Closed**—they must wait for human approval rather than bypassing a guardrail.
 
 ---
 
