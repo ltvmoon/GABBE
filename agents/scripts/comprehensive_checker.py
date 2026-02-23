@@ -172,7 +172,7 @@ def main():
     # 5. Workflow Disovery
     print("\n--- WORKFLOWS ---")
     workflows = set()
-    workflow_paths = [root_dir / ".agents/workflows", root_dir / ".agent/workflows", agents_dir / "workflows"]
+    workflow_paths = [root_dir / "agents/workflows", root_dir / ".agent/workflows"]
     for wp in workflow_paths:
         if wp.exists():
             for f in wp.glob("*.md"):

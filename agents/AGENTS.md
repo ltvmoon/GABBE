@@ -466,6 +466,7 @@ Past failures:        agents/memory/CONTINUITY.md
 Decision log:         agents/memory/AUDIT_LOG.md
 ```
 - **Skills**: `agents/skills/` (Master) → `.cursor/rules/` (*.mdc) | `.github/skills/` | `.claude/skills/`
+- **Personas**: `agents/personas/` (30+ specialized agent roles for Loki Mode)
 - **Memory**: `agents/memory/`
 
 ---

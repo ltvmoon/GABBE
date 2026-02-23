@@ -38,6 +38,6 @@ The agent's hands.
 -   **Feedback**: Tool outputs must be descriptive. "Error: File not found" is better than "Error".
 
 ## 6. Multi-Agent Orchestration
-(See `guides/multi-agent-systems.md` for details)
+(See `guides/ai/multi-agent-systems.md` for details)
 -   **Orchestrator-Worker**: Delegating sub-tasks.
 -   **Consensus**: Multiple agents voting on an answer.

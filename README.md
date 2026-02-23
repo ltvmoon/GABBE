@@ -148,7 +148,7 @@ It is a work-in-progress and you can do without it, only with the rest of the ki
 - Python 3.8+
 - **LLM API Key**: For Brain/Route features, set `GABBE_API_KEY` (OpenAI-compatible).
 
-**Environment Variables** (full reference in [CLI_REFERENCE.md](docs/CLI_REFERENCE.md#environment-variables)):
+**Environment Variables** (full reference in [CLI_REFERENCE.md](docs/CLI_REFERENCE.md)):
 
 | Variable | Default | Description |
 |---|---|---|
