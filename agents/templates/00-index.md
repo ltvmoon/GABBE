@@ -81,6 +81,7 @@
 | Template | File | Purpose |
 |---|---|---|
 | Data Pipeline | `data/DATA_PIPELINE_TEMPLATE.md` | ETL/ELT Design |
+| Database Schema | `data/DATABASE_SCHEMA_TEMPLATE.md` | Physical database schema documentation |
 
 ### 7. Coordination & Agents (`coordination/`)
 | Template | File | Purpose |
@@ -120,6 +121,9 @@
 | Template | File | Purpose |
 |---|---|---|
 | Decision Log | `../memory/episodic/DECISION_LOG_TEMPLATE.md` | Sequential decision history |
+| Voting Log | `../memory/episodic/VOTING_LOG_TEMPLATE.md` | Swarm consensus decisions |
 | Project Knowledge | `../memory/semantic/PROJECT_KNOWLEDGE_TEMPLATE.md` | RAG/Long-term knowledge storage |
 | Vector DB Config | `../memory/semantic/VECTOR_DB_CONFIG_TEMPLATE.json` | RAG connection settings |
+| Project State | `../memory/PROJECT_STATE_TEMPLATE.md` | Master SDLC progression tracker |
+| Continuity | `../memory/CONTINUITY_TEMPLATE.md` | Failed experiments and persistent warnings |
 | Project Context | `brain/PROJECT_CONTEXT_TEMPLATE.md` | Working memory snapshot |

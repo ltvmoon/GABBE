@@ -6,7 +6,7 @@
 
 ---
 
-> **Total Guides**: 45
+> **Total Guides**: 48
 > *Registry categorized by domain.*
 
 ## Guides Registry
@@ -22,6 +22,13 @@
 | Beyond LLMs | `ai/beyond-llms.md` | Advanced AI paradigms beyond text gen |
 | Multi-Agent | `ai/multi-agent-systems.md` | Orchestrating swarms and agent topologies |
 | Self-Healing | `ai/self-healing-summary.md` | Overview of system self-healing loops |
+
+### 1b. Processes (`processes/`)
+| Guide | File | Purpose |
+|---|---|---|
+| RARV Cycle | `processes/RARV_CYCLE.md` | Reason Act Reflect Verify loop |
+| System Lifecycle | `processes/full-system-lifecycle.md` | SDLC and traceability |
+| Knowledge Integration | `processes/knowledge-integration.md` | Connectors and RAG overview |
 
 ### 2. Architecture (`architecture/`)
 | Guide | File | Purpose |
