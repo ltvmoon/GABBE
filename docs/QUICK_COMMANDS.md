@@ -86,6 +86,16 @@ Copy and paste these exact prompts into your AI chat window to kick off standard
 ### Architecture Review
 > "Run arch-review skill. Check for SOLID violations and coupling."
 
+> "Use the performant-nodejs skill to audit the current Node.js architecture for scalability bottlenecks and propose optimizations."
+
+> "Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
+
+> "Use the performant-python skill to audit the current Python architecture for scalability bottlenecks and propose optimizations."
+
+> "Use the performant-go skill to audit the current Go architecture for scalability bottlenecks and propose optimizations."
+
+> "Use the performant-ai skill to audit the current AI/LLM architecture for latency and cost bottlenecks."
+
 ### Software Engineering & System Architecture
 > "Act as a Principal Staff Engineer. Review the codebase in [directory] and generate a C4 system architecture diagram (Context and Container levels). Identify any bottlenecks and propose scaling strategies."
 

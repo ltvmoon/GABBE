@@ -32,3 +32,13 @@ Building software is easy. Building software that *lasts*, *scales*, and *adapts
 -   **Logs**: "What happened?" (Events)
 -   **Metrics**: "Is it healthy?" (Aggregates)
 -   **Traces**: "Where did it happen?" (Context)
+
+---
+
+## Core Performance Skills
+- [Performant Node.js](../../skills/coding/performant-nodejs.skill.md)
+- [Performant Laravel](../../skills/coding/performant-laravel.skill.md)
+- [Performant Python](../../skills/coding/performant-python.skill.md)
+- [Performant Go](../../skills/coding/performant-go.skill.md)
+- [Performant AI](../../skills/coding/performant-ai.skill.md)
+- [Performance Optimization](../../skills/ops/performance-optimization.skill.md)

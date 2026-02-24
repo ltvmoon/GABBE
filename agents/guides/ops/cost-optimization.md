@@ -30,3 +30,4 @@ Use the `cost-optimization.skill.md` to autonomously:
 - Generate `COST_OPTIMIZATION_REPORT_TEMPLATE.md`.
 - Analyze IaC (Terraform/CloudFormation) for untagged resources or over-provisioned defaults.
 - Recommend architectural shifts (e.g., "This cron job runs 24/7 on EC2; moving to Serverless framework will save 80%").
+- Audit AI/LLM costs using the [Performant AI Skill](../../skills/coding/performant-ai.skill.md).
