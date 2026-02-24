@@ -300,3 +300,10 @@ Switch to Loki Mode for:
 ```
 
 See `agents/skills/brain/README_ORCHESTRATORS.md` for Loki Mode setup and persona guide.
+
+---
+
+## Core Performance Skills
+- [Performant AI Skill](../../skills/coding/performant-ai.skill.md) — Mastery of Context & Tokens.
+- [Performant Python Skill](../../skills/coding/performant-python.skill.md) — High-throughput AI backends.
+- [Performance Optimization](../../skills/ops/performance-optimization.skill.md) — Infrastructure scaling.

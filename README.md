@@ -117,6 +117,15 @@ chmod +x agents/setup-context.sh && agents/setup-context.sh
 ```
 "Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
 ```
+```
+"Use the performant-python skill to audit the current Python architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-go skill to audit the current Go architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-ai skill to audit the current AI/LLM architecture for latency and cost bottlenecks."
+```
 
 ### Software Engineering & System Architecture
 ```

@@ -212,6 +212,15 @@ gabbe verify
 ```
 "Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
 ```
+```
+"Use the performant-python skill to audit the current Python architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-go skill to audit the current Go architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-ai skill to audit the current AI/LLM architecture for latency and cost bottlenecks."
+```
 
 ### Software Engineering & System Architecture
 ```
@@ -707,7 +716,7 @@ No human needed for:
 |---|---|
 | `code-review`, `tdd-cycle`, `browser-tdd`, `refactor`, `debug`, `api-design`, `db-migration` | review, test, visual, refactor, bug, API, migration |
 | `git-workflow`, `documentation`, `spec-writer`, `spec-analyze`, `adr-writer`, `secure-coding` | commit, docs, spec, analyze spec, ADR, secure |
-| `agentic-linter`, `clean-coder`, `mobile-dev`, `visual-design`, `vibe-coding`, `ci-autofix`, `performant-nodejs`, `performant-laravel` | boundary, clean, mobile, design, vibe, fix, nodejs, performance, laravel |
+| `agentic-linter`, `clean-coder`, `mobile-dev`, `visual-design`, `vibe-coding`, `ci-autofix`, `performant-nodejs`, `performant-laravel`, `performant-python`, `performant-go`, `performant-ai` | boundary, clean, mobile, design, vibe, fix, nodejs, performance, laravel, python, go, ai, llm |
 
 ### Architecture & Design
 | Skill | Triggers |

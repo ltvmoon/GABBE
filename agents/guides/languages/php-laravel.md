@@ -367,3 +367,10 @@ parameters:
     Http:         # HTTP can use Application (not Domain directly)
       - Application
 ```
+
+---
+
+## See Also
+- [Performant Laravel Skill](../../skills/coding/performant-laravel.skill.md) — High-performance Laravel.
+- [Artisan Commands Skill](../../skills/coding/artisan-commands.skill.md) — Laravel task automation.
+- [Secure Coding Skill](../../skills/coding/secure-coding.skill.md) — OWASP Top 10 for Laravel.

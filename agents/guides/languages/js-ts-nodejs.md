@@ -352,3 +352,10 @@ pnpm outdated
 # Architecture violations
 npx dependency-cruiser --config .dependency-cruiser.cjs src/
 ```
+
+---
+
+## See Also
+- [Performant Node.js Skill](../../skills/coding/performant-nodejs.skill.md) — Optimization strategies.
+- [Secure Coding Skill](../../skills/coding/secure-coding.skill.md) — Hardening Node.js apps.
+- [Clean Coder Skill](../../skills/coding/clean-coder.skill.md) — Architecture enforcement.

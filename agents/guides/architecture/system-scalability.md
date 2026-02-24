@@ -36,3 +36,12 @@ Before complex scaling, utilize aggressive caching:
 When working with agents on scalability problems:
 - Invoke the `system-scalability` skill.
 - The agent will evaluate the system and generate a `SCALABILITY_ANALYSIS_TEMPLATE.md` to map out exactly which axis is best suited to the current bottleneck.
+
+---
+
+## Technical Performance Skills
+- [Performant Node.js](../../skills/coding/performant-nodejs.skill.md)
+- [Performant Laravel](../../skills/coding/performant-laravel.skill.md)
+- [Performant Python](../../skills/coding/performant-python.skill.md)
+- [Performant Go](../../skills/coding/performant-go.skill.md)
+- [Performant AI](../../skills/coding/performant-ai.skill.md)

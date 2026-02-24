@@ -248,3 +248,10 @@ class QdrantRetrievalService(IRetrievalService):
         self.client = client
         # ... implementation details ...
 ```
+
+---
+
+## See Also
+- [Performant Python Skill](../../skills/coding/performant-python.skill.md) — FastAPI & Async optimization.
+- [Performant AI Skill](../../skills/coding/performant-ai.skill.md) — LLM context & cost management.
+- [Secure Coding Skill](../../skills/coding/secure-coding.skill.md) — Hardening Python APIs.

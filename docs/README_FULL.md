@@ -266,6 +266,15 @@ gabbe verify
 ```
 "Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
 ```
+```
+"Use the performant-python skill to audit the current Python architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-go skill to audit the current Go architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-ai skill to audit the current AI/LLM architecture for latency and cost bottlenecks."
+```
 
 ### Software Engineering & System Architecture
 ```
@@ -777,6 +786,9 @@ All 120+ skills live in `skills/` subdirectories. Invoke by mentioning the trigg
 | `coding/artisan-commands.skill.md` | artisan, scripts | Custom task automation |
 | `coding/performant-nodejs.skill.md` | nodejs, performance | High-performance Node.js |
 | `coding/performant-laravel.skill.md` | laravel, performance | High-performance Laravel |
+| `coding/performant-python.skill.md` | python, performance | High-performance Python |
+| `coding/performant-go.skill.md` | go, performance | High-performance Go |
+| `coding/performant-ai.skill.md` | ai, llm, performance | High-performance AI/LLM |
 
 
 ### 2. Architecture (`architecture/`)
