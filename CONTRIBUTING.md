@@ -42,9 +42,9 @@ Concise statement of what the agent should accomplish.
 2. Step two
 3. Verify with tests
 
-## Constraints
-- Keep changes focused
-- Run tests after every change
+## Security & Guardrails
+- Keep changes focused and secure
+- Run tests after every change to prevent regressions
 ```
 
 2. Re-run `init.py` to distribute the skill to all configured AI tools:

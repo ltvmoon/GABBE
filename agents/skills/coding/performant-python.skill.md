@@ -44,9 +44,9 @@ Building high-concurrency, low-latency Python services by leveraging asynchronou
 4. **Benchmark**: Use `Locust` or `k6` to verify speed improvements under load.
 
 ## Deliverables
-- `python-perf-audit.md`: Analysis of blocking calls and memory leaks.
-- `async-migration-plan.md`: Roadmap for converting sync logic to async.
-- `benchmarking-results.csv`: Response time comparisons (Before/After).
+- `ARCHITECTURE_REVIEW_TEMPLATE.md`: Analysis of blocking calls and memory architecture.
+- `SCALABILITY_ANALYSIS_TEMPLATE.md`: Roadmap for converting sync logic to async.
+- `BENCHMARK_REPORT_TEMPLATE.md`: Response time comparisons (Before/After load testing).
 
 ## Security & Guardrails
 

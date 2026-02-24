@@ -43,9 +43,9 @@ Optimizing the interaction, speed, and cost-effectiveness of LLM-based systems b
 4. **Cost Projection**: Estimate monthly burn based on different model providers and context sizes.
 
 ## Deliverables
-- `token-usage-audit.md`: Analysis of prompt efficiency.
-- `rag-perf-manifest.md`: Configuration for vector DB, chunking, and search weights.
-- `model-routing-matrix.md`: Logic table for local vs remote model selection.
+- `COST_OPTIMIZATION_REPORT_TEMPLATE.md`: Analysis of prompt efficiency and LLM token usage.
+- `ARCHITECTURE_REVIEW_TEMPLATE.md`: Configuration for vector DB, chunking, and search weights.
+- `SCALABILITY_ANALYSIS_TEMPLATE.md`: Logic table for local vs remote model selection and context scaling.
 
 ## Security & Guardrails
 

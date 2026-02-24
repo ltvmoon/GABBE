@@ -43,9 +43,9 @@ Harnessing Go's concurrency primitives and runtime efficiency to build systems c
 4. **Identify Contention**: Use the Race Detector (`-race`) and look for Mutex contention in pprof.
 
 ## Deliverables
-- `go-pprof-analysis.pdf`: Visualizations of CPU and Memory bottlenecks.
-- `benchmark-data.txt`: Results from `go test -bench . -benchmem`.
-- `alloc-optimization-plan.md`: Strategy for minimizing heap allocations.
+- `ARCHITECTURE_REVIEW_TEMPLATE.md`: Visualizations and analysis of CPU/Memory bottlenecks.
+- `BENCHMARK_REPORT_TEMPLATE.md`: Results from `go test -bench . -benchmem`.
+- `SCALABILITY_ANALYSIS_TEMPLATE.md`: Strategy for minimizing heap allocations and scaling goroutines.
 
 ## Security & Guardrails
 

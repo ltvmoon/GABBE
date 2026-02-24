@@ -51,7 +51,7 @@ def parse_markdown_tasks(content):
                     status = "IN_PROGRESS"
 
                 # Generate a content hash to detect changes
-                content_hash = hashlib.md5(f"{title}|{status}".encode()).hexdigest()
+                content_hash = hashlib.sha256(f"{title}|{status}".encode()).hexdigest()
                 tasks.append({"title": title, "status": status, "hash": content_hash})
     return tasks
 
@@ -125,7 +125,7 @@ def _calculate_state_hash(tasks):
     # Sort by title to ensure consistent ordering for hashing
     sorted_tasks = sorted(tasks, key=lambda x: x['title'])
     combined = "".join(t['hash'] for t in sorted_tasks)
-    return hashlib.md5(combined.encode()).hexdigest()
+    return hashlib.sha256(combined.encode()).hexdigest()
 
 
 def sync_tasks():
@@ -143,7 +143,7 @@ def sync_tasks():
         for row in db_rows:
             title = row['title']
             status = row['status']
-            content_hash = hashlib.md5(f"{title}|{status}".encode()).hexdigest()
+            content_hash = hashlib.sha256(f"{title}|{status}".encode()).hexdigest()
             db_tasks.append({'title': title, 'status': status, 'hash': content_hash})
 
         file_exists = TASKS_FILE.exists()
@@ -203,7 +203,7 @@ def import_from_md(c, tasks_or_content):
         if row:
             db_id, db_title, db_status = row
             # Calculate DB hash
-            db_hash = hashlib.md5(f"{db_title}|{db_status}".encode()).hexdigest()
+            db_hash = hashlib.sha256(f"{db_title}|{db_status}".encode()).hexdigest()
 
             if t["hash"] != db_hash:
                 # Actual change detected

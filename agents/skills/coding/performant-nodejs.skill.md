@@ -48,9 +48,9 @@ Build and maintain high-throughput, low-latency, and horizontally scalable Node.
 4. **Implement Observability**: Add structured logs and basic metrics as the first step of any performance task.
 
 ## Deliverables
-- `performance-audit.md`: Flamegraph analysis and bottleneck identification.
-- `scaling-plan.md`: Strategy for clustering, sharding, or worker usage.
-- `observability-kit.md`: Standardized logging and tracing configuration.
+- `BENCHMARK_REPORT_TEMPLATE.md`: Flamegraph analysis and latency baseline.
+- `SCALABILITY_ANALYSIS_TEMPLATE.md`: Strategy for clustering, sharding, or worker usage.
+- `ARCHITECTURE_REVIEW_TEMPLATE.md`: Standardized logging, tracing configuration, and architecture review.
 
 ## Security & Guardrails
 

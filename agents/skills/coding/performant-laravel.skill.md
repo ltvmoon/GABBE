@@ -50,9 +50,9 @@ Optimize Laravel applications for high-throughput, sub-100ms response times, and
 4. **Tune Environment**: Configure Redis for session/cache and ensure OPcache is optimized.
 
 ## Deliverables
-- `laravel-performance-report.md`: Bottleneck analysis and Octane/FPM comparisons.
-- `caching-manifest.md`: Definition of cached keys and invalidation logic.
-- `scaling-architecture.md`: Queue worker strategy and database replica plan.
+- `BENCHMARK_REPORT_TEMPLATE.md`: Bottleneck analysis and Octane/FPM load comparisons.
+- `ARCHITECTURE_REVIEW_TEMPLATE.md`: Definition of cached keys and invalidation logic.
+- `SCALABILITY_ANALYSIS_TEMPLATE.md`: Queue worker strategy and database replica plan.
 
 ## Security & Guardrails
 
