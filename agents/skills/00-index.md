@@ -45,7 +45,7 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 
 ---
 
-> **Total Skills**: 126
+> **Total Skills**: 128
 > *Registry auto-updated by init.py logic*
 
 ## Skills Registry
@@ -71,6 +71,8 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 | File Processing | `coding/file-processing.skill.md` | stream, large file | medium | Efficient file IO |
 | Testing Strategy | `coding/testing-strategy.skill.md` | test strategy, pyramid | medium | Testing Pyramid Strategy |
 | Artisan Commands | `coding/artisan-commands.skill.md` | artisan, laravel | low | Execute Laravel commands |
+| Performant Node.js | `coding/performant-nodejs.skill.md` | nodejs, performance | medium | High-performance Node.js systems |
+| Performant Laravel | `coding/performant-laravel.skill.md` | laravel, performance | medium | High-performance Laravel systems |
 
 ### 2. Architecture & Design (`architecture/`)
 | Skill | File | Triggers | Purpose |

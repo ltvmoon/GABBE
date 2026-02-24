@@ -111,6 +111,12 @@ chmod +x agents/setup-context.sh && agents/setup-context.sh
 ```
 "Run arch-review skill. Check for SOLID violations and coupling."
 ```
+```
+"Use the performant-nodejs skill to audit the current Node.js architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
+```
 
 ### Software Engineering & System Architecture
 ```

@@ -206,6 +206,12 @@ gabbe verify
 ```
 "Run arch-review skill. Check for SOLID violations and coupling."
 ```
+```
+"Use the performant-nodejs skill to audit the current Node.js architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
+```
 
 ### Software Engineering & System Architecture
 ```
@@ -701,7 +707,7 @@ No human needed for:
 |---|---|
 | `code-review`, `tdd-cycle`, `browser-tdd`, `refactor`, `debug`, `api-design`, `db-migration` | review, test, visual, refactor, bug, API, migration |
 | `git-workflow`, `documentation`, `spec-writer`, `spec-analyze`, `adr-writer`, `secure-coding` | commit, docs, spec, analyze spec, ADR, secure |
-| `agentic-linter`, `clean-coder`, `mobile-dev`, `visual-design`, `vibe-coding`, `ci-autofix` | boundary, clean, mobile, design, vibe, fix |
+| `agentic-linter`, `clean-coder`, `mobile-dev`, `visual-design`, `vibe-coding`, `ci-autofix`, `performant-nodejs`, `performant-laravel` | boundary, clean, mobile, design, vibe, fix, nodejs, performance, laravel |
 
 ### Architecture & Design
 | Skill | Triggers |

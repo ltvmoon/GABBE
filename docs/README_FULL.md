@@ -260,6 +260,12 @@ gabbe verify
 ```
 "Run arch-review skill. Check for SOLID violations and coupling."
 ```
+```
+"Use the performant-nodejs skill to audit the current Node.js architecture for scalability bottlenecks and propose optimizations."
+```
+```
+"Use the performant-laravel skill to audit the current Laravel architecture for scalability bottlenecks and propose optimizations."
+```
 
 ### Software Engineering & System Architecture
 ```
@@ -769,6 +775,8 @@ All 120+ skills live in `skills/` subdirectories. Invoke by mentioning the trigg
 | `coding/secure-coding.skill.md` | secure code, owasp | Security-first coding |
 | `coding/file-processing.skill.md` | file, parse | File manipulation |
 | `coding/artisan-commands.skill.md` | artisan, scripts | Custom task automation |
+| `coding/performant-nodejs.skill.md` | nodejs, performance | High-performance Node.js |
+| `coding/performant-laravel.skill.md` | laravel, performance | High-performance Laravel |
 
 
 ### 2. Architecture (`architecture/`)
