@@ -29,12 +29,14 @@
 - Integration points (database, external APIs, message queues) must have integration tests
 - Violations: No PR merges without this — ever
 
+<!-- OPTIONAL: EARS Example
 **EARS Example:**
 ```
 WHEN a user submits an invalid email address
 THE SYSTEM SHALL return HTTP 422 with field-level validation errors
 ```
 The test for this requirement is written before the validation code.
+-->
 
 ---
 
@@ -48,6 +50,7 @@ The test for this requirement is written before the validation code.
 - **Clean Architecture enforcement:** domain → application → adapters → infrastructure → main
 - No circular dependencies between modules (enforced by agentic-linter on every PR)
 
+<!-- OPTIONAL: Anti-patterns (forbidden)
 **Anti-patterns (forbidden):**
 ```
 // WRONG: Business logic in controller
@@ -64,6 +67,7 @@ app.post('/orders', async (req, res) => {
   res.json(result);
 });
 ```
+-->
 
 ---
 
@@ -79,12 +83,14 @@ app.post('/orders', async (req, res) => {
 - Maximum function length: **30 lines**. Extract smaller functions for complex logic
 - Cyclomatic complexity limit: **10** per function. Exceed this → refactor required
 
+<!-- OPTIONAL: Rule of Three Concept
 **Rule of Three:**
 ```
 // First time: write the code inline
 // Second time: write it inline again (don't abstract yet)
 // Third time: NOW extract an abstraction
 ```
+-->
 
 ---
 
@@ -99,6 +105,7 @@ app.post('/orders', async (req, res) => {
 - **Data retention:** Define explicit retention periods — no indefinite storage of PII
 - **PII definition includes:** names, emails, phone numbers, IP addresses, device IDs, location data, behavioral data that can identify individuals
 
+<!-- OPTIONAL: Logging Examples
 **Forbidden in logs:**
 ```
 # NEVER log these:
@@ -111,6 +118,7 @@ logger.info(`User ${user.id} logged in`);        // OK: only ID
 logger.error(`Payment failed: card ending ${last4}`); // OK: last 4 only
 logger.error(`Validation failed`, { fields: Object.keys(req.body) }); // OK: field names only
 ```
+-->
 
 ---
 
@@ -179,6 +187,7 @@ logger.error(`Validation failed`, { fields: Object.keys(req.body) }); // OK: fie
 <!-- This section is reserved for project-specific rules added by the user or init.py -->
 <!-- Example: Tenant Isolation, Audit Trails, or Performance Budgets -->
 
+<!-- OPTIONAL: Example Articles
 ```
 Example articles for different project types:
 
@@ -206,8 +215,11 @@ Article VIII — Performance Budget
   Any change that degrades p99 latency by > 20% is a performance regression — blocked.
   Database queries must use EXPLAIN ANALYZE before committing any new query.
 ```
+-->
 
 ---
+
+<!-- OPTIONAL BOILERPLATE: EARS Syntax Quick Reference & Example Clauses
 
 ## Section 3 — EARS Syntax Quick Reference
 
@@ -291,6 +303,7 @@ THE SYSTEM SHALL NOT expose stack traces in HTTP responses in production.
 - Article on: all config changes backward compatible for 2 minor versions
 - Article on: exit codes: 0 = success, 1 = user error, 2 = system error
 ```
+-->
 
 ---
 
