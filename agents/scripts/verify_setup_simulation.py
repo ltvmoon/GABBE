@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 import sys
-import os
-import shutil
-import json
 from pathlib import Path
 import tempfile
 from unittest.mock import patch
@@ -19,7 +16,7 @@ GREEN = "\0.2.0;32m"
 NC = "\0.2.0m"
 
 def test_tech_map_generation():
-    print(f"\nTesting build_tech_map_from_skills...")
+    print("\nTesting build_tech_map_from_skills...")
     # Point to the actual agents dir
     agents_dir = PROJECT_ROOT / "agents"
     tech_map = init.build_tech_map_from_skills(agents_dir)
@@ -41,13 +38,13 @@ def test_tech_map_generation():
     print(f"Total keys in TECH_MAP: {len(tech_map)}")
 
 def test_platform_setup():
-    print(f"\nTesting setup_skills_for_platform...")
+    print("\nTesting setup_skills_for_platform...")
     with tempfile.TemporaryDirectory() as temp_dir_str:
         temp_dir = Path(temp_dir_str)
         skills_src = PROJECT_ROOT / "agents" / "skills"
         
         # Test Claude (Symlinking)
-        claude_target = temp_dir / "claude_skills"
+        # claude_target = temp_dir / "claude_skills"
         # init.setup_skills_for_platform doesn't handle symlinking logic for Claude, 
         # that's handled in main. But we can test "VS Code" or "Cursor" flows which modify files.
         
@@ -68,7 +65,7 @@ def test_platform_setup():
              print(f"{RED}[FAIL] Cursor rules not generated{NC}")
 
 def test_symlink_fallback():
-    print(f"\nTesting symlink fallback mechanism...")
+    print("\nTesting symlink fallback mechanism...")
     with tempfile.TemporaryDirectory() as temp_dir_str:
         temp_dir = Path(temp_dir_str)
         source = temp_dir / "source"

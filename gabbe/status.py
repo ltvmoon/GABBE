@@ -34,6 +34,6 @@ def show_dashboard():
             f"Tasks: {Colors.GREEN}{done} Done{Colors.ENDC} | {Colors.YELLOW}{in_progress} In Progress{Colors.ENDC} | {Colors.BLUE}{todo} Todo{Colors.ENDC}"
         )
         print(f"Progress: [{Colors.GREEN}{bar}{Colors.ENDC}] {percent}%")
-        print(f"===============================\n")
+        print("===============================\n")
     finally:
         conn.close()

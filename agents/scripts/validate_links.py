@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import re
-import os
 from pathlib import Path
-from urllib.parse import unquote
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 

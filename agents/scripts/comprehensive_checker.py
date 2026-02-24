@@ -3,7 +3,10 @@ import re
 from pathlib import Path
 
 def main():
-    root_dir = Path("../../GABBE")
+    # Use path relative to this script location to find project root reliability
+    script_dir = Path(__file__).parent.resolve()
+    # script is in agents/scripts, so root is 2 levels up
+    root_dir = script_dir.parent.parent
     agents_dir = root_dir / "agents"
     
     # Exclude these directories
@@ -121,7 +124,7 @@ def main():
         print(f"Total existing: {len(existing[category])}")
         
         if missing:
-            print(f"[⚠️] Mentioned in docs but missing from files:")
+            print("[⚠️] Mentioned in docs but missing from files:")
             for m in sorted(missing):
                 print(f"  - {m}")
         else:
@@ -156,14 +159,14 @@ def main():
             pass
             
     if outdated_version_files:
-        print(f"[❌] Outdated CLI version (0.2.0) found in:")
+        print("[❌] Outdated CLI version (0.2.0) found in:")
         for f in outdated_version_files:
             print(f"  - {f}")
     else:
         print("[✅] No outdated CLI versions found.")
         
     if corrupted_header_files:
-        print(f"[❌] Corrupted headers found in:")
+        print("[❌] Corrupted headers found in:")
         for f in corrupted_header_files:
             print(f"  - {f}")
     else:

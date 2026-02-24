@@ -104,7 +104,6 @@ def main():
                 doc_bm = [b for b in backtick_pattern.findall(content) if b in existing_skills]
                 doc_skills = set(doc_m1 + doc_m2 + doc_bm)
                 
-                not_in_doc = existing_skills - doc_skills
                 print(f"\n[📊] {doc} covers {len(doc_skills)} out of {len(existing_skills)} skills.")
 
 if __name__ == "__main__":

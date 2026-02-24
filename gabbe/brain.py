@@ -1,6 +1,5 @@
 import logging
 import sqlite3
-import requests
 from .config import (
     Colors,
     PROJECT_ROOT,
@@ -131,7 +130,7 @@ def evolve_prompts(skill_name):
             )
             conn.commit()
             print(f"  {Colors.GREEN}Created Generation {next_gen}{Colors.ENDC}")
-            print(f"  - Mutation applied. Ready for testing.")
+            print("  - Mutation applied. Ready for testing.")
         else:
             print(f"  {Colors.FAIL}Mutation Failed (API Error){Colors.ENDC}")
     except sqlite3.Error as e:

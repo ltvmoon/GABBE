@@ -36,7 +36,7 @@ def ensure_yaml_frontmatter(content, filename):
                          k, v = line.split(':', 1)
                          data[k.strip()] = v.strip().strip('"\'')
                 return data, content
-    except Exception as e:
+    except Exception:
         # print(f"Warning: Failed to parse YAML for {filename}: {e}")
         pass
             

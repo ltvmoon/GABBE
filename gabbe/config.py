@@ -1,4 +1,5 @@
 import os
+import re
 import warnings
 from pathlib import Path
 
@@ -18,8 +19,6 @@ def _find_project_root(start_path):
 PROJECT_ROOT = _find_project_root(Path(os.getcwd()))
 
 # Regex Patterns
-import re
-
 PII_PATTERNS = [
     re.compile(r"[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}"),  # email
     re.compile(r"\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b"),  # US phone
