@@ -108,6 +108,8 @@ def _safe_int(env_var, default):
 
 LLM_TEMPERATURE = _safe_float("GABBE_LLM_TEMPERATURE", 0.7)
 LLM_TIMEOUT = max(1, _safe_int("GABBE_LLM_TIMEOUT", 30))
+LLM_MAX_RETRIES = max(1, _safe_int("GABBE_LLM_MAX_RETRIES", 3))
+LOG_LEVEL = os.environ.get("GABBE_LOG_LEVEL", "INFO").upper()
 
 # Router Config
 ROUTE_COMPLEXITY_THRESHOLD = _safe_int("GABBE_ROUTE_THRESHOLD", 50)

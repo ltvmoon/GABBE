@@ -17,12 +17,48 @@ from .escalation import EscalationTrigger
 logger = logging.getLogger("gabbe.brain")
 
 
+_BRAIN_ACTIVATE_SKILL = "brain-activate"
+_DEFAULT_BRAIN_SYSTEM_PROMPT = (
+    "You are the Meta-Cognitive Brain of a software project. "
+    "Analyze the state and suggest the best next strategic action using "
+    "Active Inference principles (minimize free energy/surprise)."
+)
+
+
+def _get_best_gene(conn, skill_name: str):
+    """Return (gene_id, prompt_content) for the best gene, or (None, None) if none exist."""
+    try:
+        c = conn.cursor()
+        c.execute(
+            "SELECT id, prompt_content FROM genes WHERE skill_name=? ORDER BY success_rate DESC, generation DESC LIMIT 1",
+            (skill_name,),
+        )
+        row = c.fetchone()
+        if row:
+            return row["id"], row["prompt_content"]
+    except Exception as e:
+        logger.warning("Could not fetch best gene for %s: %s", skill_name, e)
+    return None, None
+
+
+def _update_gene_success_rate(conn, gene_id: int, delta: float = 0.1):
+    """Increment success_rate for a gene by delta, capped at 1.0."""
+    try:
+        conn.execute(
+            "UPDATE genes SET success_rate = MIN(1.0, success_rate + ?) WHERE id = ?",
+            (delta, gene_id),
+        )
+        conn.commit()
+    except Exception as e:
+        logger.warning("Could not update gene success_rate for id=%s: %s", gene_id, e)
+
+
 def activate_brain(run_context=None):
     """Run the Active Inference Loop with Real LLM using MVA Platform Rules."""
     print(f"{Colors.HEADER}🧠 Brain Mode: Active Inference Loop{Colors.ENDC}")
 
     ctx = run_context or RunContext.from_config(command="brain activate", initiator="cli", agent_persona="brain-mode")
-    
+
     with ctx:
         # 1. Observation (Get State from DB)
         try:
@@ -30,7 +66,6 @@ def activate_brain(run_context=None):
             c = conn.cursor()
             c.execute("SELECT status, count(*) FROM tasks GROUP BY status")
             stats = dict(c.fetchall())
-            conn.close()
         except Exception as e:
             logger.error("Brain Observation Failed: %s", e)
             print(f"  {Colors.FAIL}Error reading project state: {e}{Colors.ENDC}")
@@ -45,12 +80,17 @@ def activate_brain(run_context=None):
         print(f"  {Colors.BLUE}Observation:{Colors.ENDC} {state_desc}")
         logger.info("Brain Observation: %s", state_desc)
 
-        # 2. Prediction & Action Selection via LLM wrapped in Gateway
-        system_prompt = (
-            "You are the Meta-Cognitive Brain of a software project. "
-            "Analyze the state and suggest the best next strategic action using "
-            "Active Inference principles (minimize free energy/surprise)."
-        )
+        # 2. Prediction & Action Selection via LLM wrapped in Gateway.
+        # Use the best evolved gene prompt if available; fall back to default.
+        gene_id, evolved_prompt = _get_best_gene(conn, _BRAIN_ACTIVATE_SKILL)
+        if gene_id is not None:
+            system_prompt = evolved_prompt
+            logger.debug("Using evolved gene id=%s for system prompt", gene_id)
+        else:
+            system_prompt = _DEFAULT_BRAIN_SYSTEM_PROMPT
+
+        conn.close()
+
         prompt = f"""
         Current Reality: {state_desc}
         Goal: Complete the project efficiently with high quality.
@@ -68,21 +108,26 @@ def activate_brain(run_context=None):
                     name="call_llm", description="Call LLM", parameters={},
                     handler=lambda p, s: call_llm(p, s), allowed_roles={"brain-mode"}
                 ))
-            
+
             # Tick the hardstop before LLM calls conceptually
             ctx.hard_stop.tick()
-            
+
             action = ctx.gateway.execute("call_llm", {"p": prompt, "s": system_prompt}, "brain-mode", ctx)
-            
+
             if action:
                 print(f"  {Colors.GREEN}Selected Action:{Colors.ENDC} {action}")
+                # Close the EPO feedback loop: reward the gene that produced a result
+                if gene_id is not None:
+                    reward_conn = get_db()
+                    _update_gene_success_rate(reward_conn, gene_id)
+                    reward_conn.close()
             else:
                 print(f"  {Colors.FAIL}Brain Freeze (API Error){Colors.ENDC}")
-                
+
         except Exception as e:
-             # Escalation or budget failures
-             ctx.escalation.escalate(trigger=EscalationTrigger.REPEATED_TOOL_FAILURE, context_dict={"error": str(e)})
-             print(f"  {Colors.FAIL}Execution Interrupted by Platform Controls: {e}{Colors.ENDC}")
+            # Escalation or budget failures
+            ctx.escalation.escalate(trigger=EscalationTrigger.REPEATED_TOOL_FAILURE, context_dict={"error": str(e)})
+            print(f"  {Colors.FAIL}Execution Interrupted by Platform Controls: {e}{Colors.ENDC}")
 
 
 def evolve_prompts(skill_name):
@@ -131,14 +176,10 @@ def evolve_prompts(skill_name):
         new_prompt = call_llm(mutation_request, system_prompt)
 
         if new_prompt:
-            # 3. Selection (Store new candidate)
-            # NOTE: success_rate starts at 0.0 and is not updated automatically.
-            # For EPO selection to be meaningful, an external process (e.g., human review
-            # or CI pass/fail integration) must update success_rate in the genes table
-            # after evaluating each generated prompt. Until then, gene selection is
-            # effectively FIFO (ORDER BY success_rate DESC returns the first created gene).
-            # This is intentional open-loop design; a future `gabbe brain eval` command
-            # can close the loop by updating success_rate based on observed outcomes.
+            # 3. Selection (Store new candidate).
+            # success_rate starts at 0.0. activate_brain() increments it by +0.1 each
+            # time a gene produces a successful LLM response, closing the feedback loop.
+            # Genes accumulate fitness over repeated `gabbe brain activate` runs.
             next_gen = generation + 1
             c.execute(
                 "INSERT INTO genes (skill_name, prompt_content, generation) VALUES (?, ?, ?)",

@@ -13,7 +13,7 @@ This guide provides a quick reference for the most common commands, setup instru
 
 ---
 
-## 2. GABBE CLI Reference
+## 2. GABBE CLI Reference (Experimental)
 
 | Command | Description |
 |---|---|
@@ -27,6 +27,9 @@ This guide provides a quick reference for the most common commands, setup instru
 | `gabbe route <prompt>` | Arbitrates prompt between Local and Remote LLMs (requires API key). |
 | `gabbe forecast` | Strategic Forecast projects remaining work cost and tokens. |
 | `gabbe serve-mcp` | Zero-dependency JSON-RPC MCP server for agent integration. |
+
+### Platform Control Layer
+The experimental `gabbe` CLI supports a **platform control layer**. It covers budget enforcement, cost and token controls, hard stops, policy rules, the tool gateway, audit tracing, human escalation, and deterministic replay. Detailed documentation is available in [`PLATFORM_CONTROLS.md`](PLATFORM_CONTROLS.md).
 
 ---
 

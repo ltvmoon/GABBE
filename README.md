@@ -154,7 +154,7 @@ Multi-agent swarm with 30+ specialized personas for projects >5 features or >20 
 
 ---
 
-## 🚀 GABBE CLI
+## 🚀 GABBE CLI (Experimental)
 
 GABBE has also an experimental helper, **Zero-Dependency CLI** (`gabbe`) which powers the "Hybrid Mode", to bridge the gap between Markdown files and a SQLite database.
 It is a work-in-progress and you can do without it, only with the rest of the kit.
@@ -199,6 +199,9 @@ gabbe --help
 | `gabbe route` | **Cost Router**: Arbitrates between Local and Remote LLMs based on task complexity (Requires API Key). |
 | `gabbe forecast`| **Strategic Forecast**: Projects remaining work cost and tokens based on historical run data. |
 | `gabbe serve-mcp` | **MCP Gateway**: Zero-dependency JSON-RPC Model Context Protocol server for standalone agents to access tools safely. |
+
+### Platform Control Layer
+The experimental `gabbe` CLI supports a **platform control layer**. It covers budget enforcement, cost and token controls, hard stops, policy rules, the tool gateway, audit tracing, human escalation, and deterministic replay. Detailed documentation is available in [`PLATFORM_CONTROLS.md`](docs/PLATFORM_CONTROLS.md).
 
 ### Architecture
 GABBE uses a **Hybrid Architecture** where agents and humans interact via Markdown, but the system of record is SQLite.

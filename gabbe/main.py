@@ -1,14 +1,14 @@
 import argparse
 import logging
 import sys
-from .config import Colors
+from .config import Colors, LOG_LEVEL
 from .database import init_db
 from . import __version__
 
 
 def main():
     logging.basicConfig(
-        level=logging.INFO,
+        level=getattr(logging, LOG_LEVEL, logging.INFO),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         datefmt="%H:%M:%S",
     )
@@ -95,9 +95,9 @@ def main():
     # Parse arguments
     args = parser.parse_args()
 
-    # Configure Logging based on debug flag
-    log_level = logging.DEBUG if hasattr(args, "debug") and args.debug else logging.INFO
-    logging.getLogger().setLevel(log_level)
+    # --debug flag overrides GABBE_LOG_LEVEL to DEBUG
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
 
     # --- DISPATCH ---
     try:

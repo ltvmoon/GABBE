@@ -8,11 +8,11 @@ from .config import (
     GABBE_API_MODEL,
     LLM_TEMPERATURE,
     LLM_TIMEOUT,
+    LLM_MAX_RETRIES,
 )
 
 logger = logging.getLogger("gabbe.llm")
 
-_LLM_MAX_RETRIES = 3
 _LLM_RETRY_DELAY = 1  # seconds
 
 
@@ -58,12 +58,12 @@ def _call_with_retry(prompt, system_prompt, temperature, timeout):
     }
     payload = _create_payload(prompt, system_prompt, temperature)
 
-    for attempt in range(1, _LLM_MAX_RETRIES + 1):
+    for attempt in range(1, LLM_MAX_RETRIES + 1):
         try:
             logger.debug(
                 "LLM Request (Attempt %d/%d) to %s",
                 attempt,
-                _LLM_MAX_RETRIES,
+                LLM_MAX_RETRIES,
                 GABBE_API_URL,
             )
             response = requests.post(
@@ -73,7 +73,7 @@ def _call_with_retry(prompt, system_prompt, temperature, timeout):
 
         except requests.exceptions.HTTPError as e:
             status = e.response.status_code if e.response else 500
-            if status in (429, 500, 502, 503, 504) and attempt < _LLM_MAX_RETRIES:
+            if status in (429, 500, 502, 503, 504) and attempt < LLM_MAX_RETRIES:
                 logger.warning("Retriable HTTP %d error: %s", status, e)
             elif status == 401 or status == 403:
                 logger.error("Authentication failed (HTTP %d). Check GABBE_API_KEY.", status)
@@ -90,7 +90,7 @@ def _call_with_retry(prompt, system_prompt, temperature, timeout):
             return None, {}
 
         # Backoff logic
-        if attempt < _LLM_MAX_RETRIES:
+        if attempt < LLM_MAX_RETRIES:
             sleep_time = _LLM_RETRY_DELAY * (2 ** (attempt - 1))
             logger.debug("Retrying in %.1fs...", sleep_time)
             time.sleep(sleep_time)

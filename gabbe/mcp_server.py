@@ -1,14 +1,15 @@
 import sys
 import json
+import shlex
 import logging
+import subprocess
 from .context import RunContext
 from .gateway import ToolDefinition
 
 logger = logging.getLogger("gabbe.mcp")
 
 def run_command_handler(command: str):
-    import subprocess
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    result = subprocess.run(shlex.split(command), shell=False, capture_output=True, text=True)
     return {"stdout": result.stdout, "stderr": result.stderr, "returncode": result.returncode}
 
 def serve():

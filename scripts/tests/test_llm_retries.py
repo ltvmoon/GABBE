@@ -1,7 +1,8 @@
 import pytest
 import requests
 from unittest.mock import patch, MagicMock
-from gabbe.llm import call_llm, _LLM_MAX_RETRIES
+from gabbe.llm import call_llm
+from gabbe.config import LLM_MAX_RETRIES as _LLM_MAX_RETRIES
 
 @pytest.fixture
 def mock_env(monkeypatch):

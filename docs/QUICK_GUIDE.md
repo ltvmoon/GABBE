@@ -31,7 +31,7 @@ AI coding agents suffer from three compounding problems:
 
 ```bash
 # 1. Download & Run the Installer
-curl -sL https://raw.githubusercontent.com/andreibesleaga/GABBE/main/init.py | python3 -
+curl -sL https://raw.githubusercontent.com/andreibesleaga/GABBE/main/scripts/init.py | python3 -
 
 # OR if you have the repo cloned:
 python3 GABBE/scripts/init.py
@@ -70,7 +70,7 @@ python3 GABBE/scripts/init.py
 
 ---
 
-## 🚀 GABBE CLI
+## 🚀 GABBE CLI (Experimental)
 
 The core of GABBE 2.0 is the **Zero-Dependency CLI** (`gabbe`) which powers the "Hybrid Mode". It bridges the gap between flexible Markdown files and a robust SQLite database.
 It's an experimental work-in-progress and you can do without the whole package only with the rest of the kit.
@@ -115,6 +115,9 @@ gabbe --help
 | `gabbe route` | **Cost Router**: Arbitrates between Local and Remote LLMs based on task complexity (Requires API Key). |
 | `gabbe forecast`| **Strategic Forecast**: Projects remaining work cost and tokens based on historical run data. |
 | `gabbe serve-mcp` | **MCP Gateway**: Zero-dependency JSON-RPC Model Context Protocol server for standalone agents to access tools safely. |
+
+### Platform Control Layer
+The experimental `gabbe` CLI supports a **platform control layer**. It covers budget enforcement, cost and token controls, hard stops, policy rules, the tool gateway, audit tracing, human escalation, and deterministic replay. Detailed documentation is available in [`PLATFORM_CONTROLS.md`](PLATFORM_CONTROLS.md).
 
 ### Architecture
 GABBE 2.0 uses a **Hybrid Architecture** where agents and humans interact via Markdown, but the system of record is SQLite.

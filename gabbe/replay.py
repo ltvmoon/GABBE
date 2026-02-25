@@ -76,17 +76,23 @@ class ReplayRunner:
             logger.warning(f"No checkpoints found for run {run_id}")
             return []
 
-        # Load recorded tool outputs from audit_spans for this run
+        # Load recorded tool outputs from audit_spans for this run.
+        # audit_spans has no step column, so we assign a per-node sequential index
+        # (0, 1, 2, …) matching the order spans were recorded. This aligns with
+        # checkpoint steps when each node produces one span per invocation.
         recorded_outputs = {}
         try:
             cursor = self.store.db_conn.cursor()
             cursor.execute("""
-                SELECT node_name, step_num, output_data FROM audit_spans
+                SELECT node_name, output_data FROM audit_spans
                 WHERE run_id = ? ORDER BY id ASC
             """, (run_id,))
+            node_occurrence: dict = {}
             for row in cursor.fetchall():
-                key = (row["node_name"], row["step_num"] if "step_num" in row.keys() else 0)
-                recorded_outputs[key] = row["output_data"]
+                nn = row["node_name"]
+                idx = node_occurrence.get(nn, 0)
+                node_occurrence[nn] = idx + 1
+                recorded_outputs[(nn, idx)] = row["output_data"]
         except Exception as e:
             logger.warning(f"Could not load recorded outputs: {e}")
 
