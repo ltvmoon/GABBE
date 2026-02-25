@@ -45,7 +45,7 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 
 ---
 
-> **Total Skills**: 131
+> **Total Skills**: 160+
 > *Registry auto-updated by init.py logic*
 
 ## Skills Registry

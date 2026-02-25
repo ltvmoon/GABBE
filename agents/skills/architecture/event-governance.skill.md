@@ -19,7 +19,7 @@ Use the standard envelope structure:
   "type": "com.example.order.created",
   "source": "/service/order",
   "id": "A234-1234-1234",
-  "time": "20.2.01-01T12:00:00Z",
+  "time": "2020-01-01T12:00:00Z",
   "datacontenttype": "application/json",
   "data": { ... }
 }

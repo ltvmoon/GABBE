@@ -507,5 +507,5 @@ Examples:
 ---
 
 *Last updated: [DATE]*
-*Kit version: 1.0.0*
+*Kit version: 0.7.0*
 *This file is maintained by the team and updated when project conventions change.*
