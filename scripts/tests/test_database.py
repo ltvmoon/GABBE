@@ -1,7 +1,6 @@
 """Unit tests for gabbe.database."""
 import pytest
 import sqlite3
-from unittest.mock import patch
 
 
 def test_init_db_creates_tables(tmp_project):

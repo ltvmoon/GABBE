@@ -155,7 +155,7 @@ def main():
             if "## 🚀- **" in content:
                 corrupted_header_files.append(str(filepath))
                 
-        except:
+        except Exception:
             pass
             
     if outdated_version_files:

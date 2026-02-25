@@ -9,7 +9,6 @@ import init
 
 # We need to temporarily change CWD to a temp dir so we don't overwrite current project
 import tempfile
-import shutil
 
 def run_test_scenario(scenario_name, inputs_sequence, expect_bootstrap, expect_setup):
     with tempfile.TemporaryDirectory() as tempdir:

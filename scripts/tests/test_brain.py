@@ -1,7 +1,4 @@
 """Unit tests for gabbe.brain."""
-import io
-import pytest
-from pathlib import Path
 from unittest.mock import patch
 
 

@@ -1,7 +1,6 @@
 
-import pytest
 from unittest.mock import MagicMock, patch
-from gabbe.sync import sync_tasks, TASKS_FILE, _MARKER_START, _MARKER_END
+from gabbe.sync import sync_tasks, _MARKER_START, _MARKER_END
 
 def test_sync_preserves_preamble_no_markers(tmp_path):
     """

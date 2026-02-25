@@ -1,6 +1,5 @@
 """End-to-end tests for the GABBE CLI toolkit."""
 import unittest
-import os
 import io
 import shutil
 import tempfile
@@ -128,7 +127,6 @@ class TestGabbeE2E(unittest.TestCase):
     def test_05_status(self):
         """Dashboard renders expected sections."""
         from gabbe.status import show_dashboard
-        import io, sys
 
         captured = io.StringIO()
         with patch("sys.stdout", captured):
@@ -165,7 +163,6 @@ class TestGabbeE2E(unittest.TestCase):
     def test_07_brain_activate(self):
         """Brain activate calls LLM and prints an action."""
         from gabbe.brain import activate_brain
-        import io, sys
 
         captured = io.StringIO()
         with patch("gabbe.brain.call_llm", return_value="Focus on critical path"), \
@@ -182,7 +179,6 @@ class TestGabbeE2E(unittest.TestCase):
     def test_08_brain_heal(self):
         """Healer reports DB as reachable and lists file statuses."""
         from gabbe.brain import run_healer
-        import io, sys
 
         # Create required files so healer finds them
         agents = self.project_root / "agents"

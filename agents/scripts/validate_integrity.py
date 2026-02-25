@@ -50,23 +50,27 @@ def main():
     # 1. Check Essential Files
     print(f"\n{BLUE}1. Checking Essential Files...{NC}")
     for f in REQUIRED_FILES:
-        if not check_exists(f): errors += 1
+        if not check_exists(f):
+            errors += 1
         
     for d in REQUIRED_DIRS:
-        if not check_exists(d): errors += 1
+        if not check_exists(d):
+            errors += 1
         
     # 2. Check Python Syntax
     print(f"\n{BLUE}2. Checking Python Scripts...{NC}")
     python_files = list(PROJECT_ROOT.glob("*.py")) + list(AGENTS_DIR.rglob("*.py"))
     for py_file in python_files:
-        if not check_python_syntax(py_file): errors += 1
+        if not check_python_syntax(py_file):
+            errors += 1
 
     # 3. Check Templates (Basic Existence)
     print(f"\n{BLUE}3. Checking Template Directories...{NC}")
     template_cats = ["coding", "architecture", "ops", "security", "product", "core", "coordination", "brain"]
     for cat in template_cats:
         d = AGENTS_DIR / "templates" / cat
-        if not check_exists(d): errors += 1
+        if not check_exists(d):
+            errors += 1
 
     print("-" * 40)
     if errors > 0:

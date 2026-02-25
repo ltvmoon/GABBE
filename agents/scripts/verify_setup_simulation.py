@@ -9,7 +9,7 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.append(str(PROJECT_ROOT))
 sys.path.append(str(PROJECT_ROOT / "scripts"))
 
-import init
+import init  # noqa: E402
 
 RED = "\0.2.0;31m"
 GREEN = "\0.2.0;32m"

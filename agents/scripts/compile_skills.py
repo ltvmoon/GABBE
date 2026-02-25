@@ -80,10 +80,12 @@ def create_symlink(source, target, project_root):
         print(f"  {YELLOW}! Symlink failed ({e}), falling back to copy...{NC}")
         try:
             if source.is_dir():
-                if target.exists(): shutil.rmtree(target)
+                if target.exists():
+                    shutil.rmtree(target)
                 shutil.copytree(source, target)
             else:
-                if target.exists(): target.unlink()
+                if target.exists():
+                    target.unlink()
                 shutil.copy2(source, target)
             print(f"  {GREEN}✓ Copied {target.name} (Symlink fallback){NC}")
         except Exception as e2:

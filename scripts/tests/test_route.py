@@ -1,5 +1,4 @@
 """Unit tests for gabbe.route."""
-import pytest
 from unittest.mock import patch
 from gabbe.route import detect_pii, calculate_complexity, route_request
 

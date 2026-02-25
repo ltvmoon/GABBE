@@ -1,10 +1,7 @@
 
-import pytest
-import time
 import requests
 from unittest.mock import MagicMock, patch
 from gabbe.llm import call_llm
-from gabbe.config import Colors
 
 @patch("gabbe.llm.time.sleep")
 @patch("gabbe.llm.requests.post")

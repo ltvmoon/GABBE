@@ -1,7 +1,6 @@
 """Unit tests for gabbe.main — CLI dispatch and error handling."""
-import sys
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 
 # ---------------------------------------------------------------------------

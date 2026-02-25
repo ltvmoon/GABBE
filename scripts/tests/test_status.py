@@ -1,6 +1,4 @@
 """Unit tests for gabbe.status."""
-import pytest
-from unittest.mock import patch
 
 
 def test_dashboard_renders_sections(tmp_project, capsys):

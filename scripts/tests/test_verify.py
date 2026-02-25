@@ -1,7 +1,5 @@
 """Unit tests for gabbe.verify."""
-import pytest
 from unittest.mock import patch
-from pathlib import Path
 
 
 def test_check_files_all_present(tmp_project):
@@ -79,7 +77,6 @@ def test_parse_agents_config_ignores_content_outside_section(tmp_project):
 def test_run_command_uses_shlex_not_shell(tmp_project):
     """run_command must pass a list to subprocess, not shell=True."""
     import gabbe.verify as verify_mod
-    import subprocess
     calls = []
 
     def fake_run(args, **kwargs):

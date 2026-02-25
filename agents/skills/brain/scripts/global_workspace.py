@@ -5,7 +5,6 @@ Demonstrates specialized "Unconscious" agents competing for access
 to the "Conscious" Global Workspace.
 """
 
-import time
 import random
 
 class GlobalWorkspace:

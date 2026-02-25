@@ -1,6 +1,4 @@
-import pytest
-from pathlib import Path
-from gabbe.sync import parse_markdown_tasks, generate_markdown_tasks, _generate_task_lines, _MARKER_START, _MARKER_END
+from gabbe.sync import parse_markdown_tasks, _generate_task_lines, _MARKER_START, _MARKER_END
 
 def test_generate_task_lines():
     tasks = [

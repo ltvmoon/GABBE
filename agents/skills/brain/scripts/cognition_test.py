@@ -5,8 +5,6 @@ Simulates a full "Consciousness Loop" integrating Sensation, Perception,
 Decision (OODA), and Action with Self-Improvement.
 """
 
-import time
-import random
 
 class CognitiveAgent:
     def __init__(self):

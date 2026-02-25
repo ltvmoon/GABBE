@@ -46,7 +46,8 @@ def main():
     
     for md_file in PROJECT_ROOT.rglob("*.md"):
         # Skip node_modules or hidden dirs if any (besides agents which we want to check)
-        if "node_modules" in str(md_file): continue
+        if "node_modules" in str(md_file):
+            continue
         
         checked_files += 1
         content = md_file.read_text()

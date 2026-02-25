@@ -63,7 +63,7 @@ def build_tech_map_from_skills(agents_dir):
                 if skill_name not in tech_map[tag]["skills"]:
                     tech_map[tag]["skills"].append(skill_name)
 
-        except Exception as e:
+        except Exception:
             # print(f"Warning: Failed to parse {skill_file.name}: {e}")
             pass
 
@@ -212,7 +212,7 @@ def ensure_yaml_frontmatter(content, filename):
                         k, v = line.split(":", 1)
                         data[k.strip()] = v.strip().strip("\"'")
                 return data, content
-    except Exception as e:
+    except Exception:
         # print(f"Warning: Failed to parse YAML for {filename}: {e}")
         pass
 
@@ -297,7 +297,7 @@ def main():
 
     # --- Step 1: Install Location ---
     print(f"{YELLOW}Part 1: Installation{NC}")
-    print(f"Where should the Agent Kit be installed?")
+    print("Where should the Agent Kit be installed?")
 
     install_opts = [
         f"Local (Recommended) - Installs to {PROJECT_ROOT}/agents",
@@ -395,7 +395,7 @@ def main():
         "DigitalOcean",
         "On-Prem",
     ]
-    clouds = ask_multiselect("Infrastructure / Cloud", cloud_options)
+    clouds = ask_multiselect("Infrastructure / Cloud", cloud_options)  # noqa: F841
 
     # --- Dynamic Setup Check ---
     dynamic_setup = False
@@ -434,7 +434,7 @@ def main():
         ask("Enable Self-Evolving Capabilities (Meta-Optimization)? (y/n)", "y").lower()
         == "y"
     ):
-        enable_meta = True
+        enable_meta = True  # noqa: F841
 
     # --- Step 3: Gap Analysis ---
 

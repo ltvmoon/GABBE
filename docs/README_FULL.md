@@ -122,7 +122,7 @@ python3 scripts/init.py
 
 ---
 
-## 3.1. GABBE CLI 0.2.0 (experimental)
+## 3.1. GABBE CLI (experimental)
 
 The core of GABBE 2.0 is the **Zero-Dependency CLI** (`gabbe`) which powers the "Hybrid Mode". It bridges the gap between flexible Markdown files and a robust SQLite database.
 It's an experimental work-in-progress and you can do without the whole package only with the rest of the kit.
@@ -172,7 +172,7 @@ graph TD
         Edit[Edit project/TASKS.md]
     end
 
-    subgraph CLI["GABBE CLI 0.2.0 (pip installed)"]
+    subgraph CLI["GABBE CLI (pip installed)"]
         Sync[gabbe sync]
         Verify[gabbe verify]
         Brain[gabbe brain]

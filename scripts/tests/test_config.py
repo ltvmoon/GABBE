@@ -58,7 +58,7 @@ def test_gabbe_api_model_env_override():
 
 def test_colors_no_duplicate_values():
     from gabbe.config import Colors
-    values = [v for k, v in vars(Colors).items() if not k.startswith("_")]
+    # Just assert the colors are distinct
     # HEADER and MAGENTA should differ now
     assert Colors.HEADER != Colors.MAGENTA
 

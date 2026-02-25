@@ -154,7 +154,7 @@ Multi-agent swarm with 30+ specialized personas for projects >5 features or >20 
 
 ---
 
-## 🚀 GABBE CLI 0.2.0
+## 🚀 GABBE CLI
 
 GABBE has also an experimental helper, **Zero-Dependency CLI** (`gabbe`) which powers the "Hybrid Mode", to bridge the gap between Markdown files and a SQLite database.
 It is a work-in-progress and you can do without it, only with the rest of the kit.
@@ -204,7 +204,7 @@ graph TD
         Edit[Edit project/TASKS.md]
     end
 
-    subgraph CLI["GABBE CLI 0.2.0 (pip installed)"]
+    subgraph CLI["GABBE CLI (pip installed)"]
         Sync[gabbe sync]
         Verify[gabbe verify]
         Brain[gabbe brain]
