@@ -561,11 +561,12 @@ Examples:
 
 - **Role**: Meta-Cognitive Orchestrator.
 - **Function**: Plans, Routes, and Optimizes.
-- **Logic**: Active Inference (Free Energy Principle).
+- **Logic**: Active Inference (Free Energy Principle) & Experimental CLI Platform Controls (`gabbe/brain.py`).
 - **Use Case**: Complex, ambiguous, or high-stakes projects.
 - **Key Feature**: **Dynamic Cost Routing** (Local vs Remote).
+- **Standalone Mode**: Can fully run purely via LLM markdown inference without the `gabbe` CLI.
 
-**Trigger**: `brain activate`, `supermode`
+**Trigger**: `gabbe brain activate`, `supermode`
 
 ---
 
@@ -576,7 +577,8 @@ Examples:
 - **Function**: Executes the 10-Phase Engineering Lifecycle.
 - **Logic**: Deterministic Workflow (S01 -> S10).
 - **Use Case**: Building software with strict process requirements.
-- **Key Feature**: **Human-in-the-Loop Gates**.
+- **Key Feature**: **Human-in-the-Loop Gates** and strictly bounds execution within `gabbe` CLI limits.
+- **Standalone Mode**: Can fully run purely via LLM markdown inference without the `gabbe` CLI.
 
 **Trigger**: `loki`, `orchestrate`
 
