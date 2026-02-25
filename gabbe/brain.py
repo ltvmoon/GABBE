@@ -10,63 +10,79 @@ from .config import (
 )
 from .database import get_db
 from .llm import call_llm
+from .context import RunContext
+from .gateway import ToolDefinition
+from .escalation import EscalationTrigger
 
 logger = logging.getLogger("gabbe.brain")
 
 
-def activate_brain():
-    """Run the Active Inference Loop with Real LLM."""
+def activate_brain(run_context=None):
+    """Run the Active Inference Loop with Real LLM using MVA Platform Rules."""
     print(f"{Colors.HEADER}🧠 Brain Mode: Active Inference Loop{Colors.ENDC}")
 
-    # 1. Observation (Get State from DB)
-    try:
-        conn = get_db()
-        c = conn.cursor()
-        c.execute("SELECT status, count(*) FROM tasks GROUP BY status")
-        stats = dict(c.fetchall())
-        conn.close()
-    except sqlite3.Error as e:
-        logger.error("Brain Observation Failed (DB): %s", e)
-        print(f"  {Colors.FAIL}Error reading project state: {e}{Colors.ENDC}")
-        return
-    except Exception as e:
-        logger.error("Brain Observation Failed: %s", e)
-        print(f"  {Colors.FAIL}Unexpected error: {e}{Colors.ENDC}")
-        return
+    ctx = run_context or RunContext.from_config(command="brain activate", initiator="cli", agent_persona="brain-mode")
+    
+    with ctx:
+        # 1. Observation (Get State from DB)
+        try:
+            conn = get_db()
+            c = conn.cursor()
+            c.execute("SELECT status, count(*) FROM tasks GROUP BY status")
+            stats = dict(c.fetchall())
+            conn.close()
+        except Exception as e:
+            logger.error("Brain Observation Failed: %s", e)
+            print(f"  {Colors.FAIL}Error reading project state: {e}{Colors.ENDC}")
+            return
 
-    todo = stats.get(TASK_STATUS_TODO, 0)
-    in_progress = stats.get(TASK_STATUS_IN_PROGRESS, 0)
-    done = stats.get(TASK_STATUS_DONE, 0)
-    total = todo + in_progress + done
+        todo = stats.get(TASK_STATUS_TODO, 0)
+        in_progress = stats.get(TASK_STATUS_IN_PROGRESS, 0)
+        done = stats.get(TASK_STATUS_DONE, 0)
+        total = todo + in_progress + done
 
-    state_desc = f"Project State: {todo} TODO, {in_progress} IN_PROGRESS, {done} DONE (Total: {total})."
-    print(f"  {Colors.BLUE}Observation:{Colors.ENDC} {state_desc}")
-    logger.info("Brain Observation: %s", state_desc)
+        state_desc = f"Project State: {todo} TODO, {in_progress} IN_PROGRESS, {done} DONE (Total: {total})."
+        print(f"  {Colors.BLUE}Observation:{Colors.ENDC} {state_desc}")
+        logger.info("Brain Observation: %s", state_desc)
 
-    # 2. Prediction & Action Selection via LLM
-    system_prompt = (
-        "You are the Meta-Cognitive Brain of a software project. "
-        "Analyze the state and suggest the best next strategic action using "
-        "Active Inference principles (minimize free energy/surprise)."
-    )
-    prompt = f"""
-    Current Reality: {state_desc}
-    Goal: Complete the project efficiently with high quality.
+        # 2. Prediction & Action Selection via LLM wrapped in Gateway
+        system_prompt = (
+            "You are the Meta-Cognitive Brain of a software project. "
+            "Analyze the state and suggest the best next strategic action using "
+            "Active Inference principles (minimize free energy/surprise)."
+        )
+        prompt = f"""
+        Current Reality: {state_desc}
+        Goal: Complete the project efficiently with high quality.
 
-    Predict the likely outcome if we continue as is.
-    Then, select the best high-level action (e.g., "Focus on critical path",
-    "Stop and Refactor", "Add more tests").
-    Return purely the Action Description.
-    """
+        Predict the likely outcome if we continue as is.
+        Then, select the best high-level action.
+        Return purely the Action Description.
+        """
 
-    print(f"  {Colors.CYAN}Consulting LLM...{Colors.ENDC}")
-    action = call_llm(prompt, system_prompt)
-
-    if action:
-        print(f"  {Colors.GREEN}Selected Action:{Colors.ENDC} {action}")
-        logger.info("Brain Selected Action: %s", action)
-    else:
-        print(f"  {Colors.FAIL}Brain Freeze (API Error){Colors.ENDC}")
+        print(f"  {Colors.CYAN}Consulting LLM...{Colors.ENDC}")
+        try:
+            # Register the call_llm tool dynamically for the execution loop
+            if "call_llm" not in ctx.gateway.registry:
+                ctx.gateway.register(ToolDefinition(
+                    name="call_llm", description="Call LLM", parameters={},
+                    handler=lambda p, s: call_llm(p, s), allowed_roles={"brain-mode"}
+                ))
+            
+            # Tick the hardstop before LLM calls conceptually
+            ctx.hard_stop.tick()
+            
+            action = ctx.gateway.execute("call_llm", {"p": prompt, "s": system_prompt}, "brain-mode", ctx)
+            
+            if action:
+                print(f"  {Colors.GREEN}Selected Action:{Colors.ENDC} {action}")
+            else:
+                print(f"  {Colors.FAIL}Brain Freeze (API Error){Colors.ENDC}")
+                
+        except Exception as e:
+             # Escalation or budget failures
+             ctx.escalation.escalate(trigger=EscalationTrigger.REPEATED_TOOL_FAILURE, context_dict={"error": str(e)})
+             print(f"  {Colors.FAIL}Execution Interrupted by Platform Controls: {e}{Colors.ENDC}")
 
 
 def evolve_prompts(skill_name):

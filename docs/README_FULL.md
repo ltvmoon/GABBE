@@ -141,6 +141,9 @@ It's an experimental work-in-progress and you can do without the whole package o
 | `GABBE_LLM_TEMPERATURE` | `0.7` | Sampling temperature (0.0–1.0) |
 | `GABBE_LLM_TIMEOUT` | `30` | HTTP timeout in seconds |
 | `GABBE_ROUTE_THRESHOLD` | `50` | Complexity score above which prompts route REMOTE |
+| `GABBE_MAX_COST_USD` | `5.0` | Maximum cost (USD) budget per run |
+| `GABBE_MAX_TOKENS_PER_RUN` | `100000` | Maximum token limit per run |
+| `GABBE_OTEL_ENABLED` | `false` | Enable OpenTelemetry tracing |
 
 ### Installation
 The CLI is a Python package.
@@ -162,6 +165,8 @@ gabbe --help
 | `gabbe status`| **Dashboard**: Visualizes project phase and task progress. |
 | `gabbe brain` | **Meta-Cognition**: Activates Active Inference loop or Evolutionary Prompt Optimization (Requires API Key). |
 | `gabbe route` | **Cost Router**: Arbitrates between Local and Remote LLMs based on task complexity (Requires API Key). |
+| `gabbe forecast`| **Strategic Forecast**: Projects remaining work cost and tokens based on historical run data. |
+| `gabbe serve-mcp` | **MCP Gateway**: Zero-dependency JSON-RPC Model Context Protocol server for standalone agents to access tools safely. |
 
 ### Architecture
 GABBE 2.0 uses a **Hybrid Architecture** where agents and humans interact via Markdown, but the system of record is SQLite.
@@ -177,6 +182,8 @@ graph TD
         Verify[gabbe verify]
         Brain[gabbe brain]
         Router[gabbe route]
+        Forecast[gabbe forecast]
+        MCP[gabbe serve-mcp]
     end
 
     subgraph Storage["Hybrid Memory"]
@@ -190,6 +197,8 @@ graph TD
     Brain -->|Read/Write| DB
     Verify -->|Check| MD
     Verify -->|Check| DB
+    Forecast -->|Analyze| DB
+    MCP -->|Write Telemetry| DB
 ```
 
 ### Text Overview (ASCII)
@@ -200,6 +209,8 @@ graph TD
 [gabbe brain] --(Read/Write)-----------------------------------------------------------+      |
 [gabbe verify] --(Check)--> [Markdown Files]                                                  |
 [gabbe verify] --(Check)----------------------------------------------------------------------+
+[gabbe forecast] --(Analyze)------------------------------------------------------------------+
+[gabbe serve-mcp] --(Write Telemetry)---------------------------------------------------------+
 ```
 
 ### How to Use

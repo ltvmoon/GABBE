@@ -117,6 +117,18 @@ PROGRESS_BAR_LEN = 20
 # Subprocess timeout for verify commands (test, lint, security_scan) in seconds
 SUBPROCESS_TIMEOUT = max(1, _safe_int("GABBE_SUBPROCESS_TIMEOUT", 300))
 
+# MVA Platform Controls
+GABBE_MAX_TOKENS_PER_RUN = _safe_int("GABBE_MAX_TOKENS_PER_RUN", 100000)
+GABBE_MAX_TOOL_CALLS_PER_RUN = _safe_int("GABBE_MAX_TOOL_CALLS_PER_RUN", 50)
+GABBE_MAX_ITERATIONS = _safe_int("GABBE_MAX_ITERATIONS", 25)
+GABBE_MAX_WALL_TIME = _safe_int("GABBE_MAX_WALL_TIME", 300)
+GABBE_MAX_RECURSION_DEPTH = _safe_int("GABBE_MAX_RECURSION_DEPTH", 5)
+GABBE_MAX_RETRIES_PER_TOOL = _safe_int("GABBE_MAX_RETRIES_PER_TOOL", 3)
+GABBE_MAX_COST_USD = _safe_float("GABBE_MAX_COST_USD", 5.0)
+GABBE_POLICY_FILE = PROJECT_ROOT / os.environ.get("GABBE_POLICY_FILE", "project/policies.yml")
+GABBE_ESCALATION_MODE = os.environ.get("GABBE_ESCALATION_MODE", "cli") # cli, file, silent
+GABBE_OTEL_ENABLED = os.environ.get("GABBE_OTEL_ENABLED", "false").lower() == "true"
+
 # Task status constants — single source of truth used across brain, sync, status
 TASK_STATUS_TODO = "TODO"
 TASK_STATUS_IN_PROGRESS = "IN_PROGRESS"

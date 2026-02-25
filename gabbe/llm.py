@@ -29,26 +29,19 @@ def _create_payload(prompt, system_prompt, temperature):
 def _handle_response(response):
     response.raise_for_status()
     data = response.json()
+    usage = data.get("usage", {})
     if "choices" in data and data["choices"]:
         content = data["choices"][0]["message"]["content"].strip()
         logger.debug("LLM Response received (%d chars)", len(content))
-        return content
-    
+        return content, usage
+
     msg = "Unexpected API response format"
     logger.error("%s: %s", msg, str(data)[:200])
-    return None
+    return None, usage
 
 
-def call_llm(
-    prompt, system_prompt="You are a helpful assistant.", temperature=None, timeout=None
-):
-    """
-    Call an LLM via an OpenAI-compatible API.
-
-    Raises EnvironmentError if GABBE_API_KEY is not set so callers can
-    distinguish missing configuration from actual API failures.
-    Returns the response string on success, or None on network/API error.
-    """
+def _call_with_retry(prompt, system_prompt, temperature, timeout):
+    """Shared retry loop. Returns (content, usage) tuple."""
     if not GABBE_API_KEY:
         raise EnvironmentError(
             "GABBE_API_KEY is not set. "
@@ -57,7 +50,7 @@ def call_llm(
 
     temperature = temperature if temperature is not None else LLM_TEMPERATURE
     timeout = timeout if timeout is not None else LLM_TIMEOUT
-    
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {GABBE_API_KEY}",
@@ -83,17 +76,17 @@ def call_llm(
                 logger.warning("Retriable HTTP %d error: %s", status, e)
             elif status == 401 or status == 403:
                 logger.error("Authentication failed (HTTP %d). Check GABBE_API_KEY.", status)
-                return None
+                return None, {}
             else:
                 logger.error("Non-retriable HTTP error (status %d): %s", status, e)
-                return None
+                return None, {}
 
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
             logger.warning("LLM transient error: %s", e)
 
         except requests.exceptions.RequestException as e:
             logger.error("LLM request failed: %s", e)
-            return None
+            return None, {}
 
         # Backoff logic
         if attempt < _LLM_MAX_RETRIES:
@@ -103,4 +96,28 @@ def call_llm(
         else:
             logger.error("LLM call failed after %d attempts.", attempt)
 
-    return None
+    return None, {}
+
+
+def call_llm(
+    prompt, system_prompt="You are a helpful assistant.", temperature=None, timeout=None
+):
+    """
+    Call an LLM via an OpenAI-compatible API.
+
+    Raises EnvironmentError if GABBE_API_KEY is not set so callers can
+    distinguish missing configuration from actual API failures.
+    Returns the response string on success, or None on network/API error.
+    """
+    content, _ = _call_with_retry(prompt, system_prompt, temperature, timeout)
+    return content
+
+
+def call_llm_with_usage(
+    prompt, system_prompt="You are a helpful assistant.", temperature=None, timeout=None
+):
+    """
+    Like call_llm() but also returns the token usage dict for budget tracking.
+    Returns (str|None, dict) where dict contains prompt_tokens, completion_tokens, total_tokens.
+    """
+    return _call_with_retry(prompt, system_prompt, temperature, timeout)

@@ -25,6 +25,8 @@ This guide provides a quick reference for the most common commands, setup instru
 | `gabbe brain evolve --skill NAME` | Evolutionary Prompt Optimization for a named skill. |
 | `gabbe brain heal` | Self-healing watchdog: checks DB and required files. |
 | `gabbe route <prompt>` | Arbitrates prompt between Local and Remote LLMs (requires API key). |
+| `gabbe forecast` | Strategic Forecast projects remaining work cost and tokens. |
+| `gabbe serve-mcp` | Zero-dependency JSON-RPC MCP server for agent integration. |
 
 ---
 
