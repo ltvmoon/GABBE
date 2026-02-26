@@ -695,6 +695,7 @@ def main():
 ## Agent instructions
 - Read AGENTS.md and CONSTITUTION.md for more information on this agentic system.
 - Make sure that the project state, audit, gates, human-in-the-loop, and workflows, are always taken into account.
+- Read agents/guides/ skills/ templates/ for any relevant information discovered during research and added by you or other agents.
 
 ## Phase 1: Dynamic Research (The "Search" Phase)
 You are authorized to use `search_web` and `run_command` freely.
@@ -740,6 +741,7 @@ Here is your mission to finalize the setup:
 0. Agent instructions
     - Read AGENTS.md and CONSTITUTION.md for more information on this agentic system.
     - Make sure that the project state, audit, gates, human-in-the-loop, and workflows, are always taken into account.
+    - Read agents/guides/ skills/ templates/ for any relevant information discovered during research and added by you or other agents.
 
 1.  **Analyze the Gap**: We are using {language} and {framework}.
     -   Missing Skills: {', '.join(missing_skills) if missing_skills else 'None detected'}.

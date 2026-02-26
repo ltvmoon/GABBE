@@ -40,22 +40,22 @@ The `init.py` script is a **Universal Skill Compiler**. It generates the correct
 - **Claude Code**: Symlinks `.claude/skills` for instant updates
 - **Gemini**: Wires up `.gemini/settings.json`
 
+1. Run the Wizard
 ```bash
-# 1. Run the Wizard
 python3 scripts/init.py
 ```
 
-2. **Feed the Mission**
+2. **Verify Context**
+   - Open `agents/AGENTS.md` and check the `Tech Stack` section and other [PLACEHOLDER] or Optional sections.
+   - Open `agents/CONSTITUTION.md` and review project laws.
+
+3. **Feed the Mission**
    - The script generates `BOOTSTRAP_MISSION.md` (or `SETUP_MISSION.md` if dynamic setup is disabled) in your root.
    - **Copy its content** and paste it into your AI Agent's chat window.
    - This aligns the agent with your project context immediately.
 
-3. **Verify Context**
-   - Open `agents/AGENTS.md` and check the `Tech Stack` section.
-   - Open `agents/CONSTITUTION.md` and review project laws.
-
 4. **Git Tracking**
-   - To keep the initial structure of `agents/memory/` and `project/` in your repository but prevent Git from tracking the continuous autonomous modifications your agents will make to them locally, run:
+   - If you want to keep the initial structure of `agents/memory/` and `project/` in your repository but prevent Git from tracking the continuous autonomous modifications your agents will make to them locally, run:
      ```bash
      git ls-files agents/memory/ project/ | xargs git update-index --skip-worktree
      ```
@@ -155,133 +155,7 @@ Multi-agent swarm with 30+ specialized personas for projects >5 features or >20 
 
 ---
 
-## 🚀 GABBE CLI (Experimental)
-
-GABBE has also an experimental helper, **Zero-Dependency CLI** (`gabbe`) which powers the "Hybrid Mode", to bridge the gap between Markdown files and a SQLite database.
-It is a work-in-progress and you can do without it, only with the rest of the kit.
-
-### Prerequisites
-- Python 3.8+
-- **LLM API Key**: For Brain/Route features, set `GABBE_API_KEY` (OpenAI-compatible).
-
-**Environment Variables** (full reference in [CLI_REFERENCE.md](docs/CLI_REFERENCE.md)):
-
-| Variable | Default | Description |
-|---|---|---|
-| `GABBE_API_URL` | `https://api.openai.com/v1/chat/completions` | OpenAI-compatible endpoint |
-| `GABBE_API_KEY` | *(required for LLM features)* | Bearer token for the LLM API |
-| `GABBE_API_MODEL` | `gpt-4o` | Model name sent in API requests |
-| `GABBE_LLM_TEMPERATURE` | `0.7` | Sampling temperature (0.0–1.0) |
-| `GABBE_LLM_TIMEOUT` | `30` | HTTP timeout in seconds |
-| `GABBE_LLM_MAX_RETRIES` | `3` | Number of LLM retry attempts on transient errors |
-| `GABBE_LOG_LEVEL` | `INFO` | Logging verbosity (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
-| `GABBE_ROUTE_THRESHOLD` | `50` | Complexity score above which prompts route REMOTE |
-| `GABBE_MAX_COST_USD` | `5.0` | Maximum cost (USD) budget per run |
-| `GABBE_MAX_TOKENS_PER_RUN` | `100000` | Maximum token limit per run |
-| `GABBE_MAX_TOOL_CALLS_PER_RUN` | `50` | Maximum tool calls allowed per run |
-| `GABBE_MAX_ITERATIONS` | `25` | Maximum active-inference iterations per run |
-| `GABBE_MAX_WALL_TIME` | `300` | Maximum wall-clock time (seconds) per run |
-| `GABBE_MAX_RECURSION_DEPTH` | `5` | Maximum agent recursion depth |
-| `GABBE_MAX_RETRIES_PER_TOOL` | `3` | Maximum retries for a single tool call |
-| `GABBE_POLICY_FILE` | `project/policies.yml` | Path to the YAML policy file |
-| `GABBE_ESCALATION_MODE` | `cli` | Escalation mode: `cli`, `file`, or `silent` |
-| `GABBE_SUBPROCESS_TIMEOUT` | `300` | Timeout (seconds) for verify sub-commands |
-| `GABBE_OTEL_ENABLED` | `false` | Enable OpenTelemetry tracing |
-
-### Installation
-The CLI is a Python package.
-
-```bash
-# 1. Install locally (Recommended)
-pip install -e .
-
-# 2. Verify installation
-gabbe --help
-```
-
-### Core Commands
-| Command | Description |
-|---|---|
-| `gabbe init` | Initialize the SQLite Database (Run this after `python scripts/init.py`). |
-| `gabbe sync` | **Hybrid Sync**: Bidirectional sync between `project/TASKS.md` and SQLite DB. |
-| `gabbe verify`| **Enforcer**: programmable integrity check (files, tests, lint). |
-| `gabbe status`| **Dashboard**: Visualizes project phase and task progress. |
-| `gabbe brain` | **Meta-Cognition**: Activates Active Inference loop or Evolutionary Prompt Optimization (Requires API Key). |
-| `gabbe route` | **Cost Router**: Arbitrates between Local and Remote LLMs based on task complexity (Requires API Key). |
-| `gabbe forecast`| **Strategic Forecast**: Projects remaining work cost and tokens based on historical run data. |
-| `gabbe serve-mcp` | **MCP Gateway**: Zero-dependency JSON-RPC Model Context Protocol server for standalone agents to access tools safely. |
-| `gabbe runs` | **Run History**: List recent agent runs with status, cost, and timestamps. |
-| `gabbe audit <run-id>` | **Audit Trace**: Display structured span-level trace for a past run (`--format json\|table`). |
-| `gabbe replay <run-id>` | **Deterministic Replay**: Replay a past run from its checkpoints (`--from-step N`). |
-| `gabbe resume <run-id>` | **Escalation Resume**: Approve or reject pending escalations for a paused run. |
-
-### Platform Control Layer
-The experimental `gabbe` CLI supports a **platform control layer**. It covers budget enforcement, cost and token controls, hard stops, policy rules, the tool gateway, audit tracing, human escalation, and deterministic replay. Detailed documentation is available in [`PLATFORM_CONTROLS.md`](docs/PLATFORM_CONTROLS.md).
-
-### Architecture
-GABBE uses a **Hybrid Architecture** where agents and humans interact via Markdown, but the system of record is SQLite.
-
-```mermaid
-graph TD
-    subgraph User["User (Legacy Flow)"]
-        Edit[Edit project/TASKS.md]
-    end
-
-    subgraph CLI["GABBE CLI (pip installed)"]
-        Sync[gabbe sync]
-        Verify[gabbe verify]
-        Brain[gabbe brain]
-        Router[gabbe route]
-        Forecast[gabbe forecast]
-        MCP[gabbe serve-mcp]
-    end
-
-    subgraph Storage["Hybrid Memory"]
-        MD[Markdown Files]
-        DB[(SQLite state.db)]
-    end
-
-    User -->|Manual Edits| MD
-    MD <-->|Bi-Directional| Sync
-    Sync <--> DB
-    Brain -->|Read/Write| DB
-    Verify -->|Check| MD
-    Verify -->|Check| DB
-    Forecast -->|Analyze| DB
-    MCP -->|Write Telemetry| DB
-```
-
-### How to Use
-
-#### Setup
-```bash
-# 1. Generate Context Configs
-python3 scripts/init.py
-
-# 2. Initialize Database
-gabbe init
-```
-
-#### Daily Workflow
-```bash
-# Check status
-gabbe status
-
-# Sync tasks (manual edits)
-gabbe sync
-
-# Optimize a skill (Requires GABBE_API_KEY)
-gabbe brain evolve --skill tdd-cycle
-```
-
-#### Verification
-```bash
-gabbe verify
-```
-
----
-
-## 4. End-to-End Workflow & Architecture
+## End-to-End Workflow & Architecture
 
 ### Visual Overview (Mermaid)
 
@@ -369,9 +243,7 @@ graph TD
 
 ---
 
----
-
-## 5. System Architecture
+## System Architecture
 
 How the pieces fit together to create a "Cognitive Entity".
 
@@ -446,7 +318,7 @@ graph TB
 
 ---
 
-## 6. Spec-Driven SDLC Lifecycle
+## Spec-Driven SDLC Lifecycle
 
 The "Golden Path" for every feature.
 
@@ -510,7 +382,7 @@ flowchart TD
 
 ---
 
-## 7. Kit Structure Map
+## Agents Kit Structure Map
 
 ```
 agents/
@@ -728,8 +600,7 @@ Task → Knowledge gap? → research.skill → Execute → Verify
 | Troubleshooting | `guides/ops/troubleshooting-guide.md` |
 | Enterprise Migration | `guides/patterns/enterprise-migration-scenario.md` |
 
-
-
+---
 
 ## 🛡️ Security & Guardrails
 
@@ -740,6 +611,132 @@ All 120+ skills in the GABBE kit feature a heavily enforced **"Security & Guardr
 3.  **LLM/Agent Guardrails**: Protection from AI-specific failures (e.g., hallucinated metrics, confirmation bias, or prompt injection).
 
 Agents are explicitly configured to **Fail-Closed**—they must wait for human approval rather than bypassing a guardrail.
+
+---
+
+
+## 🚀 GABBE CLI (Experimental)
+
+GABBE has also an experimental helper, **Zero-Dependency CLI** (`gabbe`) for a "Hybrid Mode" (Markdown files and a SQLite database) and launching different commands. It is a work-in-progress and you can do without it, only with the rest of the kit.
+
+### Prerequisites
+- Python 3.8+
+- **LLM API Key**: For Brain/Route features, set `GABBE_API_KEY` (OpenAI-compatible).
+
+**Environment Variables** (full reference in [CLI_REFERENCE.md](docs/CLI_REFERENCE.md)):
+
+| Variable | Default | Description |
+|---|---|---|
+| `GABBE_API_URL` | `https://api.openai.com/v1/chat/completions` | OpenAI-compatible endpoint |
+| `GABBE_API_KEY` | *(required for LLM features)* | Bearer token for the LLM API |
+| `GABBE_API_MODEL` | `gpt-4o` | Model name sent in API requests |
+| `GABBE_LLM_TEMPERATURE` | `0.7` | Sampling temperature (0.0–1.0) |
+| `GABBE_LLM_TIMEOUT` | `30` | HTTP timeout in seconds |
+| `GABBE_LLM_MAX_RETRIES` | `3` | Number of LLM retry attempts on transient errors |
+| `GABBE_LOG_LEVEL` | `INFO` | Logging verbosity (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
+| `GABBE_ROUTE_THRESHOLD` | `50` | Complexity score above which prompts route REMOTE |
+| `GABBE_MAX_COST_USD` | `5.0` | Maximum cost (USD) budget per run |
+| `GABBE_MAX_TOKENS_PER_RUN` | `100000` | Maximum token limit per run |
+| `GABBE_MAX_TOOL_CALLS_PER_RUN` | `50` | Maximum tool calls allowed per run |
+| `GABBE_MAX_ITERATIONS` | `25` | Maximum active-inference iterations per run |
+| `GABBE_MAX_WALL_TIME` | `300` | Maximum wall-clock time (seconds) per run |
+| `GABBE_MAX_RECURSION_DEPTH` | `5` | Maximum agent recursion depth |
+| `GABBE_MAX_RETRIES_PER_TOOL` | `3` | Maximum retries for a single tool call |
+| `GABBE_POLICY_FILE` | `project/policies.yml` | Path to the YAML policy file |
+| `GABBE_ESCALATION_MODE` | `cli` | Escalation mode: `cli`, `file`, or `silent` |
+| `GABBE_SUBPROCESS_TIMEOUT` | `300` | Timeout (seconds) for verify sub-commands |
+| `GABBE_OTEL_ENABLED` | `false` | Enable OpenTelemetry tracing |
+
+### Installation
+The CLI is a Python package.
+
+```bash
+# 1. Install locally (Recommended)
+pip install -e .
+
+# 2. Verify installation
+gabbe --help
+```
+
+### Core Commands
+| Command | Description |
+|---|---|
+| `gabbe init` | Initialize the SQLite Database (Run this after `python scripts/init.py`). |
+| `gabbe sync` | **Hybrid Sync**: Bidirectional sync between `project/TASKS.md` and SQLite DB. |
+| `gabbe verify`| **Enforcer**: programmable integrity check (files, tests, lint). |
+| `gabbe status`| **Dashboard**: Visualizes project phase and task progress. |
+| `gabbe brain` | **Meta-Cognition**: Activates Active Inference loop or Evolutionary Prompt Optimization (Requires API Key). |
+| `gabbe route` | **Cost Router**: Arbitrates between Local and Remote LLMs based on task complexity (Requires API Key). |
+| `gabbe forecast`| **Strategic Forecast**: Projects remaining work cost and tokens based on historical run data. |
+| `gabbe serve-mcp` | **MCP Gateway**: Zero-dependency JSON-RPC Model Context Protocol server for standalone agents to access tools safely. |
+| `gabbe runs` | **Run History**: List recent agent runs with status, cost, and timestamps. |
+| `gabbe audit <run-id>` | **Audit Trace**: Display structured span-level trace for a past run (`--format json\|table`). |
+| `gabbe replay <run-id>` | **Deterministic Replay**: Replay a past run from its checkpoints (`--from-step N`). |
+| `gabbe resume <run-id>` | **Escalation Resume**: Approve or reject pending escalations for a paused run. |
+
+### Platform Control Layer
+The experimental `gabbe` CLI supports a **platform control layer**. It covers budget enforcement, cost and token controls, hard stops, policy rules, the tool gateway, audit tracing, human escalation, and deterministic replay. Detailed documentation is available in [`PLATFORM_CONTROLS.md`](docs/PLATFORM_CONTROLS.md).
+
+### Architecture
+GABBE uses a **Hybrid Architecture** where agents and humans interact via Markdown, but the system of record is SQLite.
+
+```mermaid
+graph TD
+    subgraph User["User (Legacy Flow)"]
+        Edit[Edit project/TASKS.md]
+    end
+
+    subgraph CLI["GABBE CLI (pip installed)"]
+        Sync[gabbe sync]
+        Verify[gabbe verify]
+        Brain[gabbe brain]
+        Router[gabbe route]
+        Forecast[gabbe forecast]
+        MCP[gabbe serve-mcp]
+    end
+
+    subgraph Storage["Hybrid Memory"]
+        MD[Markdown Files]
+        DB[(SQLite state.db)]
+    end
+
+    User -->|Manual Edits| MD
+    MD <-->|Bi-Directional| Sync
+    Sync <--> DB
+    Brain -->|Read/Write| DB
+    Verify -->|Check| MD
+    Verify -->|Check| DB
+    Forecast -->|Analyze| DB
+    MCP -->|Write Telemetry| DB
+```
+
+### How to Use
+
+#### Setup
+```bash
+# 1. Generate Context Configs
+python3 scripts/init.py
+
+# 2. Initialize Database
+gabbe init
+```
+
+#### Daily Workflow
+```bash
+# Check status
+gabbe status
+
+# Sync tasks (manual edits)
+gabbe sync
+
+# Optimize a skill (Requires GABBE_API_KEY)
+gabbe brain evolve --skill tdd-cycle
+```
+
+#### Verification
+```bash
+gabbe verify
+```
 
 ---
 

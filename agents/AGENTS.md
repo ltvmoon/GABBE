@@ -173,6 +173,10 @@ Import style:
 
 Agents MUST follow this order. Skipping steps is forbidden.
 
+Agents must always verify that agents/memory files are kept up-to-date at each task (episodic, metrics, semantic, AUDIT_LOG, CONTINUITY, PROJECT_STATE), according to this project structure and logic.
+
+Agents must read agents/guides/ skills/ templates/ for any relevant information discovered during research and added by you or other agents, and use appropiate ones or knowledge in them, at each step and task of R&D, if needed.
+
 ### Step 1 — Load Context (every session start)
 ```
 1. Read this AGENTS.md completely
@@ -481,7 +485,7 @@ Agent context priority: Package AGENTS.md > Root AGENTS.md
 
 ## 12. References
 
-### 3. Skill Access
+### Skill Access
 - **Search First**: Before coding, search for relevant skills:
     - **Cursor**: Check `.cursor/rules/` for `.mdc` files.
     - **VS Code / Copilot**: Check `.github/skills/` or invoke via slash command.
