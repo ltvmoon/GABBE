@@ -27,12 +27,20 @@ class TestGabbeE2E(unittest.TestCase):
             self.project_root / "agents/CONSTITUTION.md",
             self.project_root / "project/TASKS.md",
         ]
+
+        # Create a permissive policies.yml so RunContext uses allow-all in tests.
+        self.project_dir.mkdir(parents=True, exist_ok=True)
+        _policy_file = self.project_dir / "policies.yml"
+        _policy_file.write_text("version: '1'\ntools:\n  allowed:\n    - '*'\n")
+
         self._patches = [
             patch("gabbe.config.PROJECT_ROOT", self.project_root),
             patch("gabbe.config.GABBE_DIR", self.project_dir),
             patch("gabbe.config.DB_PATH", self.db_path),
             patch("gabbe.config.TASKS_FILE", self.tasks_file),
             patch("gabbe.config.REQUIRED_FILES", _required_files),
+            patch("gabbe.config.GABBE_POLICY_FILE", _policy_file),
+            patch("gabbe.policy.GABBE_POLICY_FILE", _policy_file),
             patch("gabbe.database.GABBE_DIR", self.project_dir),
             patch("gabbe.database.DB_PATH", self.db_path),
             patch("gabbe.sync.TASKS_FILE", self.tasks_file),

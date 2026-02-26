@@ -13,6 +13,7 @@ def tmp_project(tmp_path):
     Patches applied:
     - gabbe.config.PROJECT_ROOT
     - gabbe.config.REQUIRED_FILES  (derived from tmp_path)
+    - gabbe.config.GABBE_POLICY_FILE
     - gabbe.database.GABBE_DIR
     - gabbe.database.DB_PATH
     - gabbe.sync.TASKS_FILE
@@ -20,6 +21,7 @@ def tmp_project(tmp_path):
     - gabbe.brain.PROJECT_ROOT     (brain imports PROJECT_ROOT at module top)
     - gabbe.brain.REQUIRED_FILES   (brain imports REQUIRED_FILES at module top)
     - gabbe.audit.GABBE_DIR        (audit imports GABBE_DIR at module top for log path)
+    - gabbe.policy.GABBE_POLICY_FILE (policy module caches this at import time)
 
     Yields the temporary project root Path.
     """
@@ -32,11 +34,18 @@ def tmp_project(tmp_path):
         tmp_path / "project/TASKS.md",
     ]
 
+    # Create a permissive policies.yml so RunContext uses allow-all in tests.
+    gabbe_dir.mkdir(parents=True, exist_ok=True)
+    policy_file = gabbe_dir / "policies.yml"
+    policy_file.write_text("version: '1'\ntools:\n  allowed:\n    - '*'\n")
+
     with patch("gabbe.config.PROJECT_ROOT", tmp_path), \
          patch("gabbe.config.GABBE_DIR", gabbe_dir), \
          patch("gabbe.config.DB_PATH", db_path), \
          patch("gabbe.config.TASKS_FILE", tasks_file), \
          patch("gabbe.config.REQUIRED_FILES", required_files), \
+         patch("gabbe.config.GABBE_POLICY_FILE", policy_file), \
+         patch("gabbe.policy.GABBE_POLICY_FILE", policy_file), \
          patch("gabbe.database.GABBE_DIR", gabbe_dir), \
          patch("gabbe.database.DB_PATH", db_path), \
          patch("gabbe.sync.TASKS_FILE", tasks_file), \
