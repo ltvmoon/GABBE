@@ -692,6 +692,10 @@ def main():
 - **Constraints**: {', '.join(compliance) if compliance else 'None'}
 - **Missing Skills**: {', '.join(missing_skills) if missing_skills else 'Standard Set'}
 
+## Agent instructions
+- Read AGENTS.md and CONSTITUTION.md for more information on this agentic system.
+- Make sure that the project state, audit, gates, human-in-the-loop, and workflows, are always taken into account.
+
 ## Phase 1: Dynamic Research (The "Search" Phase)
 You are authorized to use `search_web` and `run_command` freely.
 1.  **Landscape Analysis**: Search for "best {language} libraries for {problem_statement} in 2026".
@@ -732,6 +736,10 @@ Start by running: `setup-context.sh` to confirm your environment.
         mission = f"""
 I have initialized the GABBE Agentic Engineering Kit for this project.
 Here is your mission to finalize the setup:
+
+0. Agent instructions
+    - Read AGENTS.md and CONSTITUTION.md for more information on this agentic system.
+    - Make sure that the project state, audit, gates, human-in-the-loop, and workflows, are always taken into account.
 
 1.  **Analyze the Gap**: We are using {language} and {framework}.
     -   Missing Skills: {', '.join(missing_skills) if missing_skills else 'None detected'}.

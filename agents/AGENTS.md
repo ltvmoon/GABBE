@@ -141,8 +141,8 @@ Example:
 
 ## 4. Code Style & Patterns
 
-```
 <!-- OPTIONAL: Code Style Specifics
+```
 Naming conventions:
   Files:        [PLACEHOLDER: kebab-case.ts | PascalCase.php | snake_case.py]
   Classes:      PascalCase
@@ -164,9 +164,9 @@ API response format:
 
 Import style:
   [PLACEHOLDER: "Absolute imports using @/ alias" or "Relative imports only"]
--->
-```
 
+```
+-->
 ---
 
 ## 5. Workflow for Agents — Review-Driven Development
@@ -178,23 +178,21 @@ Agents MUST follow this order. Skipping steps is forbidden.
 1. Read this AGENTS.md completely
 2. Read CONSTITUTION.md if it exists
 3. Read the relevant task from project/TASKS.md (if project/TASKS.md exists)
-<!-- OPTIONAL: Historical Context Loading
 4. If agents/memory/PROJECT_STATE.md exists: read it (understand current SDLC phase)
 5. If agents/memory/CONTINUITY.md exists: read it (understand past failures to avoid)
--->
 ```
 
 ### Step 2 — Plan Before Coding
 ```
 Before touching any file, write a brief implementation plan.
-<!-- OPTIONAL: Planning Questions
+
   - What files will you create or modify?
   - What is the expected behavior change?
   - What tests will you write?
   - Does this change affect any architecture boundaries?
   - Are there any knowledge gaps? (If yes -> invoke knowledge-gap.skill)
-For complex tasks: write plan.md or use PLAN_TEMPLATE.md
--->
+For complex tasks: write PLAN.md or use PLAN_TEMPLATE.md
+
 ```
 
 ### Step 3 — Test First (TDD Red Phase)
@@ -382,7 +380,7 @@ Agents may autonomously fix failures up to 5 attempts.
 ### Self-Heal Escalation Protocol
 After 5 failed attempts, agent MUST:
 ```
-<!-- OPTIONAL: Escalation Protocol Steps
+
 1. STOP all autonomous action
 2. Create structured escalation report:
    - Error description
@@ -391,7 +389,7 @@ After 5 failed attempts, agent MUST:
    - Recommended human decision
 3. Write to AUDIT_LOG.md
 4. Wait for human response before continuing
--->
+
 ```
 
 ---
@@ -514,7 +512,6 @@ Decision log:         agents/memory/AUDIT_LOG.md
 Every session, agents MUST:
 
 ```
-<!-- OPTIONAL: Session & Continuity Procedures
 START of session:
   1. Read this AGENTS.md
   2. Read agents/memory/PROJECT_STATE.md (if exists) -> understand current state
@@ -530,7 +527,6 @@ END of session:
   4. Write all decisions/outcomes to agents/memory/AUDIT_LOG.md
   5. Create SDLC checkpoint if a phase was completed
   6. If stopping mid-task: note exactly where you stopped and why
--->
 ```
 
 ---
@@ -596,7 +592,8 @@ Brain Mode **wraps** Loki Mode.
     - Errors loop.
     - Requirements drift.
 
-<!-- OPTIONAL: Active Orchestration Diagram
+### Active Orchestration Diagram
+
 ```mermaid
 graph TD
     User -->|Request| Brain[🧠 Brain Mode]
@@ -616,12 +613,12 @@ Text Overview (ASCII):
                         |                           |
                         +--(Route: Simple)---- [Local Script 💻]
 ```
--->
+
 
 ---
 
 *Last updated: [DATE]*
-*Kit version: 0.7.0*
+*GABBE Kit version: 0.7.0*
 *This file is maintained by the team and updated when project conventions change.*
 
 ---
