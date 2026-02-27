@@ -29,11 +29,15 @@ It provides:
 
 ---
 
-*Full documentation: [README_FULL.md](docs/README_FULL.md) · Full quick guide: [QUICK_GUIDE.md](docs/QUICK_GUIDE.md) · Quick commands: [QUICK_COMMANDS.md](docs/QUICK_COMMANDS.md) · CLI reference: [CLI_REFERENCE.md](docs/CLI_REFERENCE.md) · Online articles: [Medium](https://medium.com/towards-artificial-intelligence/gabbe-the-cognitive-engineering-platform-that-transforms-ai-coding-agents-into-engineering-teams-580226b05373), [Substack](https://andreibesleaga.substack.com/p/gabbe-the-cognitive-engineering-platform)*
+*Full documentation: [README_FULL.md](docs/README_FULL.md) · Full quick guide: [QUICK_GUIDE.md](docs/QUICK_GUIDE.md) · Quick commands: [QUICK_COMMANDS.md](docs/QUICK_COMMANDS.md) · CLI reference: [CLI_REFERENCE.md](docs/CLI_REFERENCE.md)*
 
 ---
 
-*An example project where GABBE is used, is here: [Agentic AI Medical Imagery Diagnostic Helper](https://github.com/andreibesleaga/AgenticMedicalImagingHelper)*
+*Online articles: [Medium](https://medium.com/towards-artificial-intelligence/gabbe-the-cognitive-engineering-platform-that-transforms-ai-coding-agents-into-engineering-teams-580226b05373), [Substack](https://andreibesleaga.substack.com/p/gabbe-the-cognitive-engineering-platform), [TechRxiv](https://www.techrxiv.org/users/980097/articles/1391107-gabbe-a-neurocognitive-swarm-architecture-for-agentic-ai-software-engineering)*
+
+---
+
+*Example project where GABBE is used: [Agentic AI Medical Imagery Diagnostic Helper](https://github.com/andreibesleaga/AgenticMedicalImagingHelper)*
 
 ---
 
