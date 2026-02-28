@@ -33,6 +33,14 @@ It provides:
 
 ---
 
+*Online articles: [Medium](https://medium.com/towards-artificial-intelligence/gabbe-the-cognitive-engineering-platform-that-transforms-ai-coding-agents-into-engineering-teams-580226b05373), [Substack](https://andreibesleaga.substack.com/p/gabbe-the-cognitive-engineering-platform), [TechRxiv](https://www.techrxiv.org/users/980097/articles/1391107-gabbe-a-neurocognitive-swarm-architecture-for-agentic-ai-software-engineering)*
+
+---
+
+*Example project where GABBE is used: [Agentic AI Medical Imagery Diagnostic Helper](https://github.com/andreibesleaga/AgenticMedicalImagingHelper)*
+
+---
+
 ### ⚡ Automated Setup (Recommended)
 The `init.py` script is a **Universal Skill Compiler**. It generates the correct formats for your AI tools:
 - **Cursor**: Generates `.cursor/rules/*.mdc` (Optimized with Globs)
