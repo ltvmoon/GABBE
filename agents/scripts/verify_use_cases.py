@@ -122,8 +122,12 @@ def verify_edge_cases(ctx):
     ctx.assert_exists(AGENTS_DIR / "skills/ops/system-benchmark.skill.md", "Benchmarking skill")
 
     print("\n--- Memory Architecture ---")
-    ctx.assert_exists(AGENTS_DIR / "memory/PROJECT_STATE_TEMPLATE.md", "Project state tracker")
-    ctx.assert_exists(AGENTS_DIR / "memory/CONTINUITY_TEMPLATE.md", "Continuity failures tracking")
+    ctx.assert_exists(AGENTS_DIR / "memory/PROJECT_STATE.md", "Project state tracker")
+    ctx.assert_exists(AGENTS_DIR / "memory/CONTINUITY.md", "Continuity failures tracking")
+    ctx.assert_exists(AGENTS_DIR / "memory/AUDIT_LOG.md", "Append-only decision audit log")
+    ctx.assert_exists(AGENTS_DIR / "memory/episodic/DECISION_LOG_TEMPLATE.md", "Episodic decision log template")
+    ctx.assert_exists(AGENTS_DIR / "memory/semantic/PROJECT_KNOWLEDGE_TEMPLATE.md", "Semantic knowledge template")
+    ctx.assert_exists(AGENTS_DIR / "memory/semantic/VECTOR_DB_CONFIG_TEMPLATE.json", "Vector DB config template")
     ctx.assert_exists(AGENTS_DIR / "templates/core/AUDIT_LOG_TEMPLATE.md", "Append-only project decision log")
 
     print("\n--- Advanced Migration Flows ---")
