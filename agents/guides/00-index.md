@@ -22,6 +22,7 @@
 | Beyond LLMs | `ai/beyond-llms.md` | Advanced AI paradigms beyond text gen |
 | Multi-Agent | `ai/multi-agent-systems.md` | Orchestrating swarms and agent topologies |
 | Self-Healing | `ai/self-healing-summary.md` | Overview of system self-healing loops |
+| Visual Integration | `ai/visual-mcp-integration.md` | Guide on Mermaid vs Canvas tools |
 
 ### 1b. Processes (`processes/`)
 | Guide | File | Purpose |

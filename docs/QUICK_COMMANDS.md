@@ -108,6 +108,8 @@ Copy and paste these exact prompts into your AI chat window to kick off standard
 ### Software Engineering & System Architecture
 > "Act as a Principal Staff Engineer. Review the codebase in [directory] and generate a C4 system architecture diagram (Context and Container levels). Identify any bottlenecks and propose scaling strategies."
 
+> "Use the visual-whiteboarding skill. Connect to the Draw.io/Miro MCP and generate a visual spatial architecture diagram for the current microservice layout."
+
 > "Use the design-patterns and domain-model skills. We are building a [feature segment]. Propose the optimum architecture pattern (e.g. Event-driven, CQRS, Hexagonal) and define the core domain entities."
 
 ### Vibe-Coding (Creative Frontend)

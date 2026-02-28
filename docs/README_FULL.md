@@ -840,6 +840,7 @@ All 120+ skills live in `skills/` subdirectories. Invoke by mentioning the trigg
 | `architecture/design-patterns.skill.md` | factory, strategy | GoF patterns |
 | `architecture/diagramming.skill.md` | diagram, mermaid | Technical diagrams |
 | `architecture/domain-model.skill.md` | domain, ddd | Context mapping |
+| `architecture/visual-whiteboarding.skill.md` | drawio, miro, figma | Map spatial architecture |
 | `architecture/api-design.skill.md` | api, openapi | API contract design |
 | `architecture/legacy-modernization.skill.md` | cobol, legacy | Modernization |
 | `architecture/middleware-design.skill.md` | middleware, pipeline | Middleware patterns |
@@ -974,6 +975,7 @@ All templates now live in categorized subdirectories under `agents/templates/`.
 | `architecture/DOMAIN_MODEL_TEMPLATE.md` | DDD Entity & Relationship map |
 | `architecture/DESIGN_PATTERN_USAGE.md` | Pattern Justification |
 | `architecture/C4_ARCHITECTURE_TEMPLATE.md` | C4 Model | C4 Container/Component diagrams |
+| `core/WHITEBOARD_DESIGN_TEMPLATE.md` | Canvas Blueprint | Whiteboard mapping prep |
 | `architecture/CONTEXT_MAP_TEMPLATE.md` | Context Map | Bounded Context relationships |
 | `architecture/SYSTEM_CONTEXT_TEMPLATE.md` | System Context | High-level system dependencies |
 | `architecture/INTEGRATION_SPEC_TEMPLATE.md` | Integration Spec | API/Service integration details |
@@ -1286,6 +1288,7 @@ Copy and paste these exact prompts into your AI chat window to kick off standard
 | `guides/planning/product-requirements.md` | Product | EARS syntax, user stories, prioritization |
 | `guides/planning/strategic-analysis.md` | Strategy | Business case, design thinking, systems loops |
 | `guides/principles/diagramming-standards.md` | Diagrams | Mermaid.js class, sequence, state diagrams |
+| `guides/ai/visual-mcp-integration.md` | Diagrams | Rules for Visual vs Text diagramming rendering |
 | `guides/principles/visual-design-system.md` | Design | Design Tokens & UI Architecture |
 | `guides/ai/agent-ui.md` | UI/UX | Generative UI, HTMX, TUI, ShadCN |
 | `guides/principles/no-code-integration.md` | No-Code | n8n, Make, Zapier, Hybrid Workflows |

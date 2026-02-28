@@ -109,6 +109,7 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 | Enterprise Patterns | `architecture/enterprise-patterns.skill.md` | saga, bff | Enterprise design |
 | Scalability | `architecture/system-scalability.skill.md` | horizontal, scale | Auditing system bottlenecks |
 | Blockchain DLT | `architecture/blockchain-dlt.skill.md` | dlt, web3 | Smart contracts & Ledgers |
+| Visual Whiteboard | `architecture/visual-whiteboarding.skill.md` | drawio, miro, figma | Map spatial architecture |
 
 ### 3. Operations & SRE (`ops/`)
 | Skill | File | Triggers | Purpose |

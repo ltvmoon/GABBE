@@ -613,6 +613,10 @@ def main():
         [
             "Claude Code",
             "Cursor",
+            "Windsurf",
+            "Cline",
+            "Aider",
+            "Devin / Cognition",
             "Gemini / Antigravity",
             "OpenAI / Codex",
             "GitHub Copilot",
@@ -632,6 +636,31 @@ def main():
         cursor_rules_dir = cursor_dir / "rules"
         create_symlink(agents_md_src, PROJECT_ROOT / ".cursorrules")
         setup_skills_for_platform("Cursor", AGENTS_DIR, cursor_rules_dir)
+        
+    if "Windsurf" in agents:
+        create_symlink(agents_md_src, PROJECT_ROOT / ".windsurfrules")
+        windsurf_dir = PROJECT_ROOT / ".windsurf"
+        windsurf_dir.mkdir(exist_ok=True)
+        create_symlink(skills_src, windsurf_dir / "skills")
+
+    if "Cline" in agents:
+        create_symlink(agents_md_src, PROJECT_ROOT / ".clinerules")
+        cline_dir = PROJECT_ROOT / ".cline"
+        if not cline_dir.exists():
+            cline_dir.mkdir(exist_ok=True)
+        create_symlink(skills_src, cline_dir / "skills")
+
+    if "Devin / Cognition" in agents:
+        create_symlink(agents_md_src, PROJECT_ROOT / ".devinrules")
+        devin_dir = PROJECT_ROOT / ".devin"
+        devin_dir.mkdir(exist_ok=True)
+        create_symlink(skills_src, devin_dir / "skills")
+
+    if "Aider" in agents:
+        aider_conf = PROJECT_ROOT / ".aider.conf.yml"
+        if not aider_conf.exists():
+            aider_conf.write_text("read:\n  - agents/AGENTS.md\n  - agents/skills/\n")
+            print(f"  {GREEN}✓ Wired .aider.conf.yml{NC}")
 
     if "Gemini / Antigravity" in agents:
         gemini_dir = PROJECT_ROOT / ".gemini"

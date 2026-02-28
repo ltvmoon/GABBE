@@ -67,7 +67,7 @@ def test_legacy_modernization_global(temp_project):
         "n",                     # Analytics: NO
         "n",                     # Meta: NO
         # Java doesn't ask for PM explicitly 
-        "5,6",                   # Agents: Copilot, VS Code
+        "9,10",                   # Agents: Copilot, VS Code
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()
@@ -92,7 +92,7 @@ def test_data_science_ai(temp_project):
         "y",                    # Analytics
         "y",                    # Meta
         # Python doesn't ask PM explicitly
-        "3",                    # Agents: Gemini
+        "7",                    # Agents: Gemini
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()
@@ -115,7 +115,7 @@ def test_other_language(temp_project):
         "n",                    # Analytics
         "n",                    # Meta
         "mix",                  # Enter PM manually for 'Other' languages
-        "3",                    # Agents
+        "7",                    # Agents: Gemini
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()
@@ -141,7 +141,7 @@ def test_reinstallation(temp_project):
         "n",                    # Dynamic
         "n",                    # Analytics
         "n",                    # Meta
-        "3",                    # Gemini
+        "7",                    # Gemini
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()

@@ -60,6 +60,29 @@
       }
     },
 
+    "greptime": {
+      "_description": "Time-series analytics and robust metrics logging.",
+      "command": "npx",
+      "args": ["-y", "@greptimedb/mcp-server"],
+      "env": {
+        "GREPTIME_HOST": "${GREPTIME_HOST}",
+        "GREPTIME_DB": "${GREPTIME_DB}",
+        "GREPTIME_USERNAME": "${GREPTIME_USERNAME}",
+        "GREPTIME_PASSWORD": "${GREPTIME_PASSWORD}"
+      }
+    },
+
+    "clickhouse": {
+      "_description": "Agentic OLAP and real-time reporting via ClickHouse.",
+      "command": "npx",
+      "args": ["-y", "@clickhouse/mcp-server"],
+      "env": {
+        "CLICKHOUSE_URL": "${CLICKHOUSE_URL}",
+        "CLICKHOUSE_USER": "${CLICKHOUSE_USER}",
+        "CLICKHOUSE_PASSWORD": "${CLICKHOUSE_PASSWORD}"
+      }
+    },
+
     "postgres-prod": {
       "_description": "PostgreSQL for production — READ-ONLY. Schema introspection only.",
       "_security": "PRODUCTION — read-only access enforced by database user permissions",
@@ -113,7 +136,58 @@
       }
     },
 
+    "_section_infrastructure": "=== CLOUD & INFRASTRUCTURE ===",
+
+    "terraform": {
+      "_description": "Agentic Infrastructure as Code (IaC) via HashiCorp Terraform.",
+      "command": "npx",
+      "args": ["-y", "@hashicorp/terraform-mcp-server"],
+      "env": {
+        "TERRAFORM_CLOUD_TOKEN": "${TERRAFORM_CLOUD_TOKEN}"
+      }
+    },
+
     "_section_optional": "=== OPTIONAL — Enable as needed ===",
+
+    "docker": {
+      "_enabled": false,
+      "_description": "Docker daemon integration — manage containers, images, and read local logs.",
+      "command": "npx",
+      "args": ["-y", "@docker/mcp-server"],
+      "env": {}
+    },
+
+    "google-cloud": {
+      "_enabled": false,
+      "_description": "Google Cloud Platform access — manage Firebase, Cloud Run, GKE, BigQuery.",
+      "command": "npx",
+      "args": ["-y", "@googlecloud/mcp-server"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}"
+      }
+    },
+
+    "azure": {
+      "_enabled": false,
+      "_description": "Azure Resource management — Key Vault, CosmosDB, Azure Storage.",
+      "command": "npx",
+      "args": ["-y", "@microsoft/azure-mcp-server"],
+      "env": {
+        "AZURE_CLIENT_ID": "${AZURE_CLIENT_ID}",
+        "AZURE_CLIENT_SECRET": "${AZURE_CLIENT_SECRET}",
+        "AZURE_TENANT_ID": "${AZURE_TENANT_ID}"
+      }
+    },
+
+    "vercel": {
+      "_enabled": false,
+      "_description": "Vercel deployments, aliases, and serverless log integration.",
+      "command": "npx",
+      "args": ["-y", "@vercel/mcp-server"],
+      "env": {
+        "VERCEL_API_TOKEN": "${VERCEL_API_TOKEN}"
+      }
+    },
 
     "gitlab": {
       "_enabled": false,
@@ -216,14 +290,42 @@
       }
     },
 
+    "_section_design_visual": "=== DESIGN & VISUAL ARCHITECTURE ===",
+
     "figma": {
       "_enabled": false,
-      "_description": "Design-to-code context, component specs, FigJam.",
+      "_description": "UI/UX semantic understanding, component specs, and design-to-code.",
       "command": "npx",
       "args": ["-y", "@figma/mcp-server"],
       "env": {
         "FIGMA_ACCESS_TOKEN": "${FIGMA_ACCESS_TOKEN}"
       }
+    },
+
+    "drawio": {
+      "_enabled": false,
+      "_description": "Programmatic generation and editing of C4, UML, and Network diagrams in Draw.io.",
+      "command": "npx",
+      "args": ["-y", "@jgraph/drawio-mcp-server"],
+      "env": {}
+    },
+
+    "miro": {
+      "_enabled": false,
+      "_description": "Read context from virtual whiteboards and continuously sync architecture PRDs.",
+      "command": "npx",
+      "args": ["-y", "@mirohq/miro-mcp-server"],
+      "env": {
+        "MIRO_ACCESS_TOKEN": "${MIRO_ACCESS_TOKEN}"
+      }
+    },
+
+    "mermaid": {
+      "_enabled": false,
+      "_description": "Translate Mermaid/PlantUML text syntax into immediately viewable SVG/PNG images.",
+      "command": "npx",
+      "args": ["-y", "mermaid-mcp-server"],
+      "env": {}
     },
 
     "dbhub": {
