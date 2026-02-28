@@ -45,4 +45,4 @@ gabbe = "gabbe.main:main"
 include = ["gabbe*"]
 
 [tool.pytest.ini_options]
-testpaths = ["scripts/tests"]
+testpaths = ["gabbe/tests", "scripts/tests"]

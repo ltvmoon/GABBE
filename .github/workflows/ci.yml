@@ -36,5 +36,11 @@ jobs:
     - name: Verify Setup Simulation
       run: python3 agents/scripts/verify_setup_simulation.py
 
+    - name: Verify Use Cases
+      run: python3 agents/scripts/verify_use_cases.py
+
+    - name: Verify Triggers and MCP Bindings
+      run: python3 agents/scripts/verify_triggers_and_mcps.py
+
     - name: Run tests
-      run: pytest scripts/tests/ -v
+      run: pytest gabbe/tests/ scripts/tests/ -v

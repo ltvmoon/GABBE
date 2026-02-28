@@ -118,7 +118,7 @@ Run project integrity checks:
 **`AGENTS.md` Commands section format:**
 ```markdown
 ## Commands
-test: pytest scripts/tests/ -v
+test: pytest gabbe/tests/ scripts/tests/ -v
 lint: ruff check .
 security_scan: bandit -r gabbe/
 ```

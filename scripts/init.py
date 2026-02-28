@@ -436,6 +436,27 @@ def main():
     ):
         enable_meta = True  # noqa: F841
 
+    # --- GABBE CLI Integration ---
+    enable_gabbe_cli = False
+    gabbe_cli_mode = "manual"  # "manual" | "mcp"
+    print(f"\n{YELLOW}Part 3.2: GABBE CLI Platform Controls{NC}")
+    print("The GABBE CLI provides optional budget enforcement, audit trails,")
+    print("replay, escalation, and cost routing for agent runs.")
+    print("It can be used manually or enforced through the MCP server.")
+    if (
+        ask(
+            "Enable GABBE CLI platform controls? (y/n)",
+            "n",
+        ).lower()
+        == "y"
+    ):
+        enable_gabbe_cli = True
+        mode_idx = select_index("CLI Integration Mode", [
+            "Manual Only — You run gabbe commands yourself when needed",
+            "MCP Enforced — Agents use gabbe exclusively through the MCP server",
+        ])
+        gabbe_cli_mode = ["manual", "mcp"][mode_idx]
+
     # --- Step 3: Gap Analysis ---
 
     missing_skills = []
@@ -539,6 +560,38 @@ def main():
                 new_lines.append(line)
 
         content = "\n".join(new_lines)
+
+        # --- Conditional GABBE CLI Section ---
+        cli_start = "<!-- GABBE_CLI_START -->"
+        cli_end = "<!-- GABBE_CLI_END -->"
+        if not enable_gabbe_cli:
+            # Strip the entire CLI section
+            if cli_start in content and cli_end in content:
+                before = content[:content.find(cli_start)]
+                after = content[content.find(cli_end) + len(cli_end):]
+                content = before + after
+                print(f"  {BLUE}→ GABBE CLI section removed (disabled){NC}")
+        else:
+            # Keep the section, inject mode-specific notice
+            if gabbe_cli_mode == "mcp":
+                mcp_notice = (
+                    "\n> [!IMPORTANT]\n"
+                    "> **MCP Enforced Mode**: All gabbe CLI commands MUST be executed through the `gabbe serve-mcp` MCP server.\n"
+                    "> Agents must NOT run `gabbe` commands directly. Use the MCP `tools/call` JSON-RPC method instead.\n"
+                )
+                content = content.replace(cli_start, cli_start + mcp_notice)
+                print(f"  {GREEN}✓ GABBE CLI enabled (MCP Enforced mode){NC}")
+            else:
+                manual_notice = (
+                    "\n> [!NOTE]\n"
+                    "> **Manual Mode**: The gabbe CLI is available for human use. Run commands directly when needed.\n"
+                    "> Agents are NOT required to use these commands but may reference them.\n"
+                )
+                content = content.replace(cli_start, cli_start + manual_notice)
+                print(f"  {GREEN}✓ GABBE CLI enabled (Manual mode){NC}")
+            # Strip the marker comments themselves for clean output
+            content = content.replace(cli_start, "").replace(cli_end, "")
+
         target_agents_md = AGENTS_DIR / "AGENTS.md"
         target_agents_md.write_text(content)
         print(f"  {GREEN}✓ Configured {target_agents_md}{NC}")

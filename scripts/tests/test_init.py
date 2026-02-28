@@ -40,6 +40,7 @@ def test_golden_modern_greenfield(temp_project):
         "Build a SaaS",   # Problem Statement
         "y",              # Analytics
         "y",              # Meta
+        "n",              # GABBE CLI: No
         "1",              # PM: npm
         "1,2",            # Agents: Claude Code, Cursor
     ]
@@ -66,6 +67,7 @@ def test_legacy_modernization_global(temp_project):
         "n",                     # Dynamic: NO
         "n",                     # Analytics: NO
         "n",                     # Meta: NO
+        "n",                     # GABBE CLI: NO
         # Java doesn't ask for PM explicitly 
         "9,10",                   # Agents: Copilot, VS Code
     ]
@@ -91,6 +93,7 @@ def test_data_science_ai(temp_project):
         "AI Modeling",          # Problem Statement
         "y",                    # Analytics
         "y",                    # Meta
+        "n",                    # GABBE CLI: NO
         # Python doesn't ask PM explicitly
         "7",                    # Agents: Gemini
     ]
@@ -114,6 +117,7 @@ def test_other_language(temp_project):
         "n",                    # Dynamic Setup
         "n",                    # Analytics
         "n",                    # Meta
+        "n",                    # GABBE CLI: NO
         "mix",                  # Enter PM manually for 'Other' languages
         "7",                    # Agents: Gemini
     ]
@@ -141,6 +145,7 @@ def test_reinstallation(temp_project):
         "n",                    # Dynamic
         "n",                    # Analytics
         "n",                    # Meta
+        "n",                    # GABBE CLI: NO
         "7",                    # Gemini
     ]
     with patch('builtins.input', side_effect=inputs):

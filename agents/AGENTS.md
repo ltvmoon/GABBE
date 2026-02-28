@@ -552,6 +552,58 @@ Examples:
 
 ---
 
+# GABBE CLI Workflows (Optional)
+
+> **Complete reference**: See `agents/guides/ops/gabbe-cli-workflows.md` for full details.
+>
+> **This section is optional.** The GABBE CLI provides platform controls (budget, audit, replay, escalation) but is NOT required. Agents can fully operate via markdown inference without it.
+
+### Integration Modes
+
+| Mode | Description |
+|---|---|
+| **Disabled** (default) | CLI not used. Agents operate via markdown inference only. |
+| **Manual** | Human runs `gabbe` commands directly when needed. Agents are not required to use them. |
+| **MCP Enforced** | All `gabbe` commands flow through `gabbe serve-mcp`. Agents MUST use the MCP JSON-RPC interface. |
+
+## Essential Commands
+
+| Command | Purpose |
+|---|---|
+| `gabbe init` | Initialize DB (first-time setup) |
+| `gabbe sync` | Sync `project/TASKS.md` ↔ SQLite |
+| `gabbe status` | Project dashboard |
+| `gabbe verify` | Integrity checks (files, lint, tests) |
+| `gabbe route "<prompt>"` | LOCAL or REMOTE routing |
+| `gabbe brain activate` | Active Inference Loop (**needs API key**) |
+| `gabbe brain evolve --skill <name>` | EPO prompt optimization (**needs API key**) |
+| `gabbe brain heal` | Self-healing watchdog |
+| `gabbe forecast` | Cost/token projections |
+| `gabbe serve-mcp` | MCP JSON-RPC server |
+| `gabbe runs` | List recent runs |
+| `gabbe audit <run-id>` | Audit trace for a run |
+| `gabbe replay <run-id>` | Replay from checkpoints |
+| `gabbe resume <run-id>` | Resume paused runs |
+
+## Standard Workflow Order
+
+```text
+gabbe init → gabbe sync → gabbe status → gabbe verify
+→ gabbe brain activate → gabbe forecast → gabbe runs → gabbe audit
+```
+
+## Platform Controls (Active During Runs)
+
+- **Budget**: Token/cost/time limits (env vars: `GABBE_MAX_*`)
+- **HardStop**: Absolute iteration/depth/timeout guards
+- **Policy**: `project/policies.yml` (deny-first, RBAC)
+- **Gateway**: Single mediated tool execution point
+- **Escalation**: Human-in-the-loop when limits hit (`cli`/`file`/`silent` modes)
+- **Audit**: Every event recorded as spans in `audit_spans`
+- **Replay**: Deterministic re-execution from `checkpoints`
+
+---
+
 # Loki & Brain — Agentic Orchestration
 
 ## Modes

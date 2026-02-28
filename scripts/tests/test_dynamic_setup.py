@@ -62,15 +62,17 @@ def main():
     # Problem statement: Test problem
     # Analytics: n
     # Meta: n
-    # Agents: 3 (Gemini)
+    # GABBE CLI: n
+    # Agents: 7 (Gemini)
     seq_dynamic_on = [
-        "1", "", "", "1", "1", "3", "", "6", "7", "y", "Test problem", "n", "n", "3"
+        "1", "", "", "1", "1", "3", "", "6", "7", "y", "Test problem", "n", "n", "n", "7"
     ]
     
     # Scenario 2: Dynamic OFF
     # Same but Dynamic Setup: n, no problem statement required
+    # GABBE CLI: n
     seq_dynamic_off = [
-        "1", "", "", "1", "1", "3", "", "6", "7", "n", "n", "n", "3"
+        "1", "", "", "1", "1", "3", "", "6", "7", "n", "n", "n", "n", "7"
     ]
     
     try:

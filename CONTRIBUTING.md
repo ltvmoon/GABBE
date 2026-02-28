@@ -17,7 +17,9 @@ pip install -e ".[dev]"
 Run the test suite:
 
 ```bash
-pytest scripts/tests/ -v
+pytest gabbe/tests/ scripts/tests/ -v
+python3 agents/scripts/verify_use_cases.py
+python3 agents/scripts/verify_triggers_and_mcps.py
 ```
 
 ---
@@ -74,8 +76,10 @@ python3 scripts/init.py
 
 ## Code Changes to `gabbe/`
 
-- All changes must pass `pytest scripts/tests/ -v`.
-- If you add a feature, add or extend unit tests in `scripts/tests/`.
+- All changes must pass `pytest gabbe/tests/ scripts/tests/ -v`.
+- If you add a CLI feature, add or extend unit tests in `gabbe/tests/`.
+- If you change `scripts/init.py`, add or extend tests in `scripts/tests/`.
+- Run `python3 agents/scripts/verify_use_cases.py` and `verify_triggers_and_mcps.py` after skill/guide/template changes.
 - Follow the existing code style (PEP 8, no type annotations required but welcomed).
 - Add new configurable constants to `config.py` rather than hardcoding them.
 
@@ -89,7 +93,8 @@ python3 scripts/init.py
 
 ## Pull Request Checklist
 
-- [ ] Tests pass: `pytest scripts/tests/ -v`
+- [ ] Tests pass: `pytest gabbe/tests/ scripts/tests/ -v`
+- [ ] Verifiers pass: `python3 agents/scripts/verify_use_cases.py` and `verify_triggers_and_mcps.py`
 - [ ] New behaviour is covered by tests
 - [ ] `CHANGELOG.md` updated under `## [Unreleased]`
 - [ ] `README.md` counts/tables updated if skills/templates/guides were added

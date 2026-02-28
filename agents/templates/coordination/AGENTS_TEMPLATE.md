@@ -506,6 +506,35 @@ Examples:
 
 ---
 
+<!-- GABBE_CLI_START -->
+## GABBE CLI Workflows
+
+> **Full reference**: See `agents/guides/ops/gabbe-cli-workflows.md`
+>
+> **This section is optional.** The GABBE CLI provides platform controls (budget, audit, replay, escalation) but is not required. Agents can operate purely via markdown inference without it.
+
+| Command | Purpose |
+|---|---|
+| `gabbe init` | Initialize DB |
+| `gabbe sync` | Sync `project/TASKS.md` ↔ SQLite |
+| `gabbe status` | Project dashboard |
+| `gabbe verify` | Integrity checks |
+| `gabbe route "<prompt>"` | LOCAL or REMOTE routing |
+| `gabbe brain activate` | Active Inference Loop |
+| `gabbe brain evolve --skill <name>` | EPO optimization |
+| `gabbe brain heal` | Self-healing watchdog |
+| `gabbe forecast` | Cost/token forecast |
+| `gabbe serve-mcp` | MCP JSON-RPC server |
+| `gabbe runs` | List agent runs |
+| `gabbe audit <run-id>` | Audit trace |
+| `gabbe replay <run-id>` | Replay from checkpoints |
+| `gabbe resume <run-id>` | Resume paused runs |
+
+**Workflow**: `gabbe init → gabbe sync → gabbe status → gabbe verify → gabbe brain activate → gabbe forecast → gabbe runs → gabbe audit`
+<!-- GABBE_CLI_END -->
+
+---
+
 *Last updated: [DATE]*
 *GABBE Kit version: 0.7.0*
 *This file is maintained by the team and updated when project conventions change.*
