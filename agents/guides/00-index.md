@@ -83,6 +83,7 @@
 | Design Patterns | `patterns/design-patterns.md` | GoF and modern code patterns |
 | Ent. Migration | `patterns/enterprise-migration-scenario.md` | Legacy to modern code paths |
 | Ent. Patterns | `patterns/enterprise-patterns.md` | CQRS, Saga, and bounded contexts |
+| Time Complexity | `patterns/time-complexity-analysis.md` | Big-O detection and remediation |
 
 ### 7. Product Planning (`planning/`)
 | Guide | File | Purpose |

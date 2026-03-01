@@ -829,6 +829,7 @@ All 120+ skills live in `skills/` subdirectories. Invoke by mentioning the trigg
 | `coding/performant-python.skill.md` | python, performance | High-performance Python |
 | `coding/performant-go.skill.md` | go, performance | High-performance Go |
 | `coding/performant-ai.skill.md` | ai, llm, performance | High-performance AI/LLM |
+| `coding/time-complexity.skill.md` | complexity, big-o, hotspot | Big-O static analysis via MCP |
 
 
 ### 2. Architecture (`architecture/`)
@@ -1088,6 +1089,7 @@ MCP (Model Context Protocol) servers extend agent capabilities. Configure them i
 | **Memory** | Qdrant MCP | Semantic long-term memory retrieval |
 | **Browser** | Playwright MCP | Browser automation for visual TDD |
 | **Monitoring** | Sentry MCP | Error tracking and incident context |
+| **Complexity** | Time Complexity MCP | Big-O static analysis via tree-sitter |
 | **Filesystem** | Filesystem MCP | Local file access for internal RAG |
 
 **Full coverage matrix** (40 MCP servers in `MCP_CONFIG_TEMPLATE.json`):
@@ -1100,7 +1102,7 @@ MCP (Model Context Protocol) servers extend agent capabilities. Configure them i
 | **Web Scraping** | Firecrawl, Brave Search, Tavily, DuckDuckGo |
 | **Internal RAG** | Filesystem, Shell, Jupyter, Context-7 |
 | **Observability** | Sentry, Datadog, Grafana |
-| **Code Quality** | Semgrep, Snyk, SonarQube, Gitleaks |
+| **Code Quality** | Semgrep, Snyk, SonarQube, Gitleaks, Time Complexity |
 | **Project Mgmt** | GitHub, GitLab, Jira, Linear, Notion, Confluence, Slack |
 | **Cloud/Infra** | AWS Core, Kubernetes, Figma |
 

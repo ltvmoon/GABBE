@@ -105,6 +105,14 @@
       }
     },
 
+    "time-complexity": {
+      "_description": "Estimates Big-O time complexity via static analysis (tree-sitter). No code execution.",
+      "_security": "Static analysis only — read-only file access, no code execution",
+      "command": "node",
+      "args": ["/path/to/time-complexity-mcp/dist/index.js"],
+      "env": {}
+    },
+
     "_section_observability": "=== OBSERVABILITY & MONITORING ===",
 
     "sentry": {

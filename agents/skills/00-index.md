@@ -76,6 +76,7 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 | Performant Python | `coding/performant-python.skill.md` | python, performance | medium | High-performance Python systems |
 | Performant Go | `coding/performant-go.skill.md` | go, performance | medium | High-performance Go systems |
 | Performant AI | `coding/performant-ai.skill.md` | ai, llm, performance | medium | High-performance AI/LLM systems |
+| Time Complexity | `coding/time-complexity.skill.md` | complexity, big-o, hotspot | medium | Big-O static analysis via MCP |
 
 ### 2. Architecture & Design (`architecture/`)
 | Skill | File | Triggers | Purpose |

@@ -21,6 +21,7 @@
 | Dev Container | `coding/DEVCONTAINER_TEMPLATE.json` | VS Code Remote Containers config |
 | Dev Space | `coding/DEV_SPACE_TEMPLATE.yaml` | Kubernetes dev environment |
 | Design Tokens | `coding/DESIGN_TOKENS_TEMPLATE.json` | UI Design colors/typography |
+| Time Complexity Report | `coding/TIME_COMPLEXITY_REPORT_TEMPLATE.md` | Big-O analysis and hotspot tracking |
 
 ### 2. Architecture & Design (`architecture/`)
 | Template | File | Purpose |
