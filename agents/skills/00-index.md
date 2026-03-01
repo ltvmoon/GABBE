@@ -77,6 +77,9 @@ ln -sf /path/to/agents/skills/*/*.skill.md ~/.agent/skills/
 | Performant Go | `coding/performant-go.skill.md` | go, performance | medium | High-performance Go systems |
 | Performant AI | `coding/performant-ai.skill.md` | ai, llm, performance | medium | High-performance AI/LLM systems |
 | Time Complexity | `coding/time-complexity.skill.md` | complexity, big-o, hotspot | medium | Big-O static analysis via MCP |
+| Excalidraw | `coding/excalidraw.skill.md` | excalidraw, whiteboard, visual | medium | Excalidraw diagram creation via MCP |
+| Sketch-to-Diagram | `coding/sketch-to-diagram.skill.md` | sketch, hand-drawn, recognize | high | Hand-drawn sketch → formal diagram |
+| tldraw Canvas | `coding/tldraw-canvas.skill.md` | tldraw, canvas, wireframe, UI sketch | medium | Visual canvas for wireframing and design |
 
 ### 2. Architecture & Design (`architecture/`)
 | Skill | File | Triggers | Purpose |

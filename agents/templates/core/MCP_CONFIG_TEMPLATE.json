@@ -144,6 +144,16 @@
       }
     },
 
+    "image-recognition": {
+      "_description": "Vision API proxy for image analysis — sketch recognition, diagram interpretation, OCR.",
+      "_security": "Images are sent to configured vision API (Anthropic/OpenAI/Cloudflare) for processing",
+      "command": "npx",
+      "args": ["-y", "mcp-image-recognition"],
+      "env": {
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+      }
+    },
+
     "_section_infrastructure": "=== CLOUD & INFRASTRUCTURE ===",
 
     "terraform": {
@@ -315,6 +325,22 @@
       "_description": "Programmatic generation and editing of C4, UML, and Network diagrams in Draw.io.",
       "command": "npx",
       "args": ["-y", "@jgraph/drawio-mcp-server"],
+      "env": {}
+    },
+
+    "excalidraw": {
+      "_enabled": false,
+      "_description": "Create and manage Excalidraw diagrams — nodes, edges, and diagram state.",
+      "command": "npx",
+      "args": ["-y", "@cmd8/excalidraw-mcp", "--diagram", "./docs/architecture.excalidraw"],
+      "env": {}
+    },
+
+    "tldraw": {
+      "_enabled": false,
+      "_description": "Persistent visual canvas — create, manage, and search tldraw .tldr files for wireframing and design.",
+      "command": "npx",
+      "args": ["-y", "@talhaorak/tldraw-mcp"],
       "env": {}
     },
 

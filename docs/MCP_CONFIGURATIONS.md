@@ -754,6 +754,42 @@ Turn websites into LLM-ready markdown. Website scraping and content extraction.
 
 ---
 
+### Image Recognition
+
+Vision API proxy for image analysis — sketch recognition, diagram interpretation, and OCR.
+
+| Property | Value |
+|---|---|
+| **Package** | `mcp-image-recognition` |
+| **Website** | [github.com/mario-andreschak/mcp-image-recognition](https://github.com/mario-andreschak/mcp-image-recognition) |
+| **API Key** | **Required** (one of): `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `CLOUDFLARE_API_TOKEN` |
+| **Optional** | Tesseract OCR installed for text extraction |
+| **GABBE Skill** | `coding/sketch-to-diagram.skill` |
+
+**Install & Config:**
+```json
+{
+  "image-recognition": {
+    "command": "npx",
+    "args": ["-y", "mcp-image-recognition"],
+    "env": {
+      "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+    }
+  }
+}
+```
+
+**Usage:**
+```
+> "Analyze this whiteboard photo and describe all architecture elements"
+> "Recognize the hand-drawn flowchart in sketch.jpg and convert to Mermaid"
+```
+
+> [!WARNING]
+> Images are sent to the configured external vision API for processing. Do not send sketches containing sensitive information (credentials, internal IPs) without user consent.
+
+---
+
 ### DuckDuckGo
 
 Privacy-focused web search. No API key required.
@@ -1019,6 +1055,77 @@ Programmatic generation and editing of C4, UML, and network diagrams.
   }
 }
 ```
+
+---
+
+### Excalidraw
+
+Create and manage Excalidraw diagrams — nodes, edges, and diagram state. Hand-drawn aesthetic.
+
+| Property | Value |
+|---|---|
+| **Package** | `@cmd8/excalidraw-mcp` |
+| **Website** | [github.com/cmd8/excalidraw-mcp](https://github.com/cmd8/excalidraw-mcp) |
+| **API Key** | None required |
+| **Prerequisite** | Node.js 18+, local `.excalidraw` file path |
+| **GABBE Skill** | `coding/excalidraw.skill`, `coding/sketch-to-diagram.skill` |
+
+**Install & Config:**
+```json
+{
+  "excalidraw": {
+    "command": "npx",
+    "args": ["-y", "@cmd8/excalidraw-mcp", "--diagram", "./docs/architecture.excalidraw"],
+    "env": {}
+  }
+}
+```
+
+**Tools:** `createNode`, `createEdge`, `deleteElement`, `getFullDiagramState`
+
+**Usage:**
+```
+> "Create an Excalidraw architecture diagram: API Gateway → Auth, Users, Orders"
+```
+
+> [!NOTE]
+> The `--diagram` flag specifies the target `.excalidraw` file. The file is created automatically if it doesn't exist. Excalidraw files are JSON-based and git-diffable.
+
+---
+
+### tldraw
+
+Persistent visual canvas — create, manage, and search `.tldr` files for wireframing, prototyping, and visual scratchpads.
+
+| Property | Value |
+|---|---|
+| **Package** | `@talhaorak/tldraw-mcp` |
+| **Website** | [github.com/talhaorak/tldraw-mcp](https://github.com/talhaorak/tldraw-mcp) |
+| **Canvas viewer** | [tldraw.com](https://www.tldraw.com) or VS Code tldraw extension |
+| **API Key** | None required |
+| **GABBE Skill** | `coding/tldraw-canvas.skill` |
+
+**Install & Config:**
+```json
+{
+  "tldraw": {
+    "command": "npx",
+    "args": ["-y", "@talhaorak/tldraw-mcp"],
+    "env": {}
+  }
+}
+```
+
+**Tools (9):** `tldraw_create`, `tldraw_read`, `tldraw_write`, `tldraw_list`, `tldraw_search`, `tldraw_get_shapes`, `tldraw_add_shape`, `tldraw_update_shape`, `tldraw_delete_shape`
+
+**Usage:**
+```
+> "Create a tldraw wireframe for the login page with a header, form inputs, and submit button"
+> "Search all tldraw canvases for shapes mentioning 'auth'"
+```
+
+> [!TIP]
+> tldraw files are JSON-based and git-diffable. Use them as persistent visual notes that AI agents can read and search across.
 
 ---
 

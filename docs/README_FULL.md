@@ -830,6 +830,9 @@ All 120+ skills live in `skills/` subdirectories. Invoke by mentioning the trigg
 | `coding/performant-go.skill.md` | go, performance | High-performance Go |
 | `coding/performant-ai.skill.md` | ai, llm, performance | High-performance AI/LLM |
 | `coding/time-complexity.skill.md` | complexity, big-o, hotspot | Big-O static analysis via MCP |
+| `coding/excalidraw.skill.md` | excalidraw, whiteboard, visual | Excalidraw diagram creation via MCP |
+| `coding/sketch-to-diagram.skill.md` | sketch, hand-drawn, recognize | Hand-drawn sketch → formal diagram |
+| `coding/tldraw-canvas.skill.md` | tldraw, canvas, wireframe, UI sketch | Visual canvas for wireframing and design |
 
 
 ### 2. Architecture (`architecture/`)
@@ -1090,6 +1093,9 @@ MCP (Model Context Protocol) servers extend agent capabilities. Configure them i
 | **Browser** | Playwright MCP | Browser automation for visual TDD |
 | **Monitoring** | Sentry MCP | Error tracking and incident context |
 | **Complexity** | Time Complexity MCP | Big-O static analysis via tree-sitter |
+| **Diagramming** | Excalidraw MCP | Programmatic Excalidraw diagram creation |
+| **Vision** | Image Recognition MCP | Sketch recognition via vision APIs |
+| **Canvas** | tldraw MCP | Persistent visual canvas for wireframing |
 | **Filesystem** | Filesystem MCP | Local file access for internal RAG |
 
 **Full coverage matrix** (40 MCP servers in `MCP_CONFIG_TEMPLATE.json`):

@@ -22,6 +22,7 @@
 | Dev Space | `coding/DEV_SPACE_TEMPLATE.yaml` | Kubernetes dev environment |
 | Design Tokens | `coding/DESIGN_TOKENS_TEMPLATE.json` | UI Design colors/typography |
 | Time Complexity Report | `coding/TIME_COMPLEXITY_REPORT_TEMPLATE.md` | Big-O analysis and hotspot tracking |
+| Sketch-to-Diagram Report | `coding/SKETCH_TO_DIAGRAM_TEMPLATE.md` | Hand-drawn sketch recognition output |
 
 ### 2. Architecture & Design (`architecture/`)
 | Template | File | Purpose |
