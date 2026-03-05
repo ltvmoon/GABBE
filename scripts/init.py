@@ -316,6 +316,7 @@ def setup_skills_for_platform(platform, agents_dir, target_dir):
 
 
 def main():
+    global PROJECT_ROOT
     if not SOURCE_AGENTS_DIR.exists():
         if (KIT_SOURCE / "AGENTS.md").exists():
             pass
@@ -326,7 +327,7 @@ def main():
             sys.exit(1)
 
     # Validate required subdirectories exist before proceeding
-    for subdir in ["skills", "templates", "personas", "memory"]:
+    for subdir in ["guides", "skills", "templates", "personas", "memory", "scripts"]:
         if not (SOURCE_AGENTS_DIR / subdir).exists():
             print(f"{RED}Error: Missing required subdirectory: agents/{subdir}/{NC}")
             sys.exit(1)
@@ -358,7 +359,14 @@ def main():
         target_agents_dir = Path.home() / "agents"
     else:
         path_str = ask("Enter absolute path")
-        target_agents_dir = Path(path_str)
+        user_path = Path(path_str).resolve()
+        
+        if user_path.name == "agents":
+            target_agents_dir = user_path
+            PROJECT_ROOT = user_path.parent
+        else:
+            target_agents_dir = user_path / "agents"
+            PROJECT_ROOT = user_path
 
     # Perform Install / Copy
     IS_UPDATE = False

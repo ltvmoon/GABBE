@@ -54,7 +54,7 @@ def test_legacy_modernization_global(temp_project):
     global_target = temp_project / "global" / "agents"
     inputs = [
         "3",                     # Custom Path
-        str(global_target),      # Enter path
+        str(global_target),      # Enter path (ends in 'agents', so PROJECT_ROOT -> global/)
         "LegacyBanking",         # Name
         "Old to New",            # Desc
         "3",                     # Team: Large
@@ -73,10 +73,10 @@ def test_legacy_modernization_global(temp_project):
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()
-    p = temp_project
+    project_root = temp_project / "global"  # PROJECT_ROOT rebound to parent of 'agents'
     assert global_target.exists()
     assert (global_target / "AGENTS.md").exists()
-    assert (p / "SETUP_MISSION.md").exists()
+    assert (project_root / "SETUP_MISSION.md").exists()
 
 def test_data_science_ai(temp_project):
     inputs = [
@@ -230,7 +230,7 @@ def test_install_custom_first_time(temp_project):
     custom_target = temp_project / "custom_agents_dir"
     inputs = [
         "3",                    # Custom Path
-        str(custom_target),     # The path
+        str(custom_target),     # The path (not ending in 'agents', so agents/ is appended)
         "",                     # Name
         "",                     # Desc
         "1",                    # Team: Solo
@@ -247,19 +247,30 @@ def test_install_custom_first_time(temp_project):
     ]
     with patch('builtins.input', side_effect=inputs):
         init.main()
-        
+    
+    agents_dir = custom_target / "agents"
     assert custom_target.exists()
-    assert (custom_target / "AGENTS.md").exists()
+    assert agents_dir.exists()
+    assert (agents_dir / "AGENTS.md").exists()
+    assert (agents_dir / "skills").exists()
+    assert (agents_dir / "templates").exists()
+    assert (agents_dir / "guides").exists()
+    assert (agents_dir / "personas").exists()
+    assert (agents_dir / "memory").exists()
+    # Wiring goes into custom_target (PROJECT_ROOT)
+    assert (custom_target / ".gemini").exists()
 
 def test_update_custom(temp_project):
     custom_target = temp_project / "custom_agents_dir"
-    custom_target.mkdir(parents=True)
-    (custom_target / "user_data.json").write_text('{"key": "value"}')
-    (custom_target / "TASKS.md").write_text('my tasks')
+    custom_agents = custom_target / "agents"
+    custom_agents.mkdir(parents=True)
+    (custom_agents / "user_data.json").write_text('{"key": "value"}')
+    (custom_agents / "project").mkdir()
+    (custom_agents / "project" / "TASKS.md").write_text('my tasks')
     
     inputs = [
         "3",                    # Custom Path
-        str(custom_target),     # The path
+        str(custom_target),     # The path (not ending in 'agents', so agents/ appended)
         "y",                    # Merge kit files? Yes
         "",                     # Name
         "",                     # Desc
@@ -278,10 +289,10 @@ def test_update_custom(temp_project):
     with patch('builtins.input', side_effect=inputs):
         init.main()
         
-    assert custom_target.exists()
-    assert (custom_target / "AGENTS.md").exists()
-    assert (custom_target / "user_data.json").exists()
-    assert (custom_target / "TASKS.md").read_text() == "my tasks"
+    assert custom_agents.exists()
+    assert (custom_agents / "AGENTS.md").exists()
+    assert (custom_agents / "user_data.json").exists()
+    assert (custom_agents / "project" / "TASKS.md").read_text() == 'my tasks'
 
 def test_missing_source_directory(temp_project):
     init.SOURCE_AGENTS_DIR = init.KIT_SOURCE / "invalid_non_existent"
@@ -294,7 +305,7 @@ def test_same_source_and_target_directory(temp_project):
     init.SOURCE_AGENTS_DIR = temp_project / "agents"
     init.SOURCE_AGENTS_DIR.mkdir(parents=True)
     # create required directories to pass early validation
-    for subdir in ["skills", "templates", "personas", "memory"]:
+    for subdir in ["guides", "skills", "templates", "personas", "memory", "scripts"]:
         (init.SOURCE_AGENTS_DIR / subdir).mkdir(parents=True, exist_ok=True)
         
     (init.SOURCE_AGENTS_DIR / "foo.txt").write_text("bar")
