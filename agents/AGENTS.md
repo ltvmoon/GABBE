@@ -391,7 +391,6 @@ Agent context priority: Package AGENTS.md > Root AGENTS.md
 Project law:          agents/CONSTITUTION.md
 Skills registry:      agents/skills/00-index.md
 Language guides:      agents/guides/
-Orchestrators:        agents/skills/brain/README_ORCHESTRATORS.md
 Brain Patterns:       agents/skills/brain/README.md
 Templates:            agents/templates/00-index.md
 Quick reference:      QUICK_GUIDE.md
