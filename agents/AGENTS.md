@@ -390,9 +390,10 @@ Agent context priority: Package AGENTS.md > Root AGENTS.md
 ```
 Project law:          agents/CONSTITUTION.md
 Skills registry:      agents/skills/00-index.md
-Language guides:      agents/guides/
-Brain Patterns:       agents/skills/brain/README.md
+Language guides:      agents/guides/00-index.md
 Templates:            agents/templates/00-index.md
+Personas agents:      agents/personas/00-index.md
+Brain Patterns:       agents/skills/brain/README.md
 Quick reference:      QUICK_GUIDE.md
 Project memory:       agents/memory/PROJECT_STATE.md
 Past failures:        agents/memory/CONTINUITY.md
@@ -422,8 +423,9 @@ END of session:
   2. Write session summary to agents/memory/episodic/ (DECISION_LOG_TEMPLATE.md)
   3. Update agents/memory/PROJECT_STATE.md with current SDLC phase
   4. Write all decisions/outcomes to agents/memory/AUDIT_LOG.md
-  5. Create SDLC checkpoint if a phase was completed
-  6. If stopping mid-task: note exactly where you stopped and why
+  5. Update agents/memory/CONTINUITY.md with lessons learned
+  6. Create SDLC checkpoint if a phase was completed
+  7. If stopping mid-task: note exactly where you stopped and why
 ```
 
 ---
